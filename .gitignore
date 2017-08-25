@@ -1,0 +1,14 @@
+
+bin/Debug/libtiff-5.dll
+bin/Debug/libjpeg-9.dll
+bin/Debug/libpng16-16.dll
+bin/Debug/libwebp-4.dll
+bin/Debug/SDL2.dll
+bin/Debug/SDL2_image.dll
+bin/Debug/zlib1.dll
+George.cbp
+George.depend
+George.layout
+obj/Debug/main.o
+obj/Release/main.o
+bin/Debug/George.exe
