@@ -1,8 +1,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <stdio.h>
 
 #define FILE_TILES  "tiles.png"
+#define FILE_FONT   "FSEX300.ttf"
 
 #define FPS_LIMIT   60
 
@@ -12,6 +14,8 @@
 #define MAX_TILES   8
 #define TILE_HEIGHT 32
 #define TILE_WIDTH  32
+
+#define FONT_SIZE   16
 
 // Physics
 #define GRAVITY             9
@@ -27,6 +31,9 @@ SDL_Window* window = NULL;
 SDL_Surface* screen = NULL;
 SDL_Surface* palette = NULL;
 SDL_Surface* bg = NULL;
+
+TTF_Font* font = NULL;
+SDL_Color black={0,0,0};
 
 SDL_Rect tile[MAX_TILES];
 int collides[MAX_TILES]; // which tiles colide and don't
@@ -73,9 +80,15 @@ int initSDL()
         {
             screen = SDL_GetWindowSurface(window);
 
+            // Initialize libraries
             if(IMG_Init(IMG_INIT_PNG) < 0)
             {
                 printf("SDL_Image library failed to initialize: %s", IMG_GetError());
+                returnflag = 1;
+            }
+            if(TTF_Init()==-1)
+            {
+                printf("SDL_TTF library failed to initialize: %s", TTF_GetError());
                 returnflag = 1;
             }
         }
@@ -86,6 +99,9 @@ int initSDL()
 void cleanup()
 {
     SDL_DestroyWindow(window);
+    TTF_CloseFont(font);
+    TTF_Quit();
+    IMG_Quit();
     SDL_Quit();
 }
 
@@ -206,6 +222,20 @@ void drawPlayer(int x, int y)
     blitTile(palette, tile[7], screen, x, y);
 }
 
+void drawText(char *text, int x, int y, SDL_Color fg)
+{
+    SDL_Surface* textSurface;
+    SDL_Rect dest;
+    dest.x = x;
+    dest.y = y;
+    dest.w = SCREEN_WIDTH;  // can't be bigger than the screen width
+    dest.h = SCREEN_HEIGHT; // same as above but with height
+
+    textSurface = TTF_RenderText_Solid(font, text, fg);
+    SDL_BlitSurface(textSurface, NULL, screen, &dest);
+}
+
+
 int checkCollision(int x, int y, int x1, int y1)
 {
     SDL_Rect A, B;
@@ -310,13 +340,16 @@ void applyVelocity(int *x, int *y, int dx, int dy)
 
 int main(int argc, char* args[])
 {
+    int quit = 1;
     unsigned int ticksLastFrame = 0;
+    SDL_Event eve;
+
+    char playercoords[15];
+    char playerstate[30];
 
     if(initSDL() > 0)
         printf("Failed to initialize\n");
 
-    int quit = 1;
-    SDL_Event eve;
 
     // setup tile source rectangles
     for (int i=0; i < MAX_TILES; i++)
@@ -352,6 +385,7 @@ int main(int argc, char* args[])
     tile[7].y = 0;
     collides[1] = 0;
 
+    font = TTF_OpenFont(FILE_FONT, FONT_SIZE);
     palette = loadImage(FILE_TILES, screen);
     bg = loadImage("bg.png", screen);
     loadLevel("level1.txt", lvl);
@@ -413,7 +447,6 @@ int main(int argc, char* args[])
         }
 
         // Check level entities
-
         if(lvlent[player.y / TILE_HEIGHT][player.x / TILE_WIDTH] == 1)
         {
             // Next level!
@@ -426,6 +459,12 @@ int main(int argc, char* args[])
         // Draw
         drawLevel(lvl);
         drawPlayer(player.x, player.y);
+
+        // debug text
+        sprintf(playercoords, "X: %d, Y: %d", player.x, player.y);
+        drawText(playercoords, 0, 0, black);
+        sprintf(playerstate, "states: %d,%d,%d,%d,%d", pstate.movingLeft, pstate.movingRight, pstate.jumping, pstate.falling, pstate.onGround);
+        drawText(playerstate, 0, 20, black);
 
         // Update
         while (SDL_GetTicks() < (1000/FPS_LIMIT + ticksLastFrame))

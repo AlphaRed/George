@@ -7,5 +7,10 @@
 *.depend
 *.layout
 
+# linux dev
+*.swp
+makefile
+george
+
 # Misc.
 *.dll
