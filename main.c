@@ -138,7 +138,7 @@ int checkEvents(SDL_Event eve)
 {
     if(eve.type == SDL_QUIT)
         return 0;
-    else if(eve.type == SDL_KEYDOWN)
+    else if((eve.type == SDL_KEYDOWN) && (eve.key.repeat == 0))
     {
         switch(eve.key.keysym.sym)
         {
