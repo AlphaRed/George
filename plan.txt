@@ -1,0 +1,80 @@
+ _           _
+| | ___  ___(_)_ __   __ _   _ __   _____      _____ _ __
+| |/ _ \/ __| | '_ \ / _` | | '_ \ / _ \ \ /\ / / _ \ '__|
+| | (_) \__ \ | | | | (_| | | |_) | (_) \ V  V /  __/ |
+|_|\___/|___/_|_| |_|\__, | | .__/ \___/ \_/\_/ \___|_|
+                     |___/  |_|
+
+==========================================================
+
+idea:
+    - power generator goes out
+    - need to fix generator
+    - fix with parts from around the area
+    - each part brings you closer to the goal of fixing the machine
+    - machine will start up again with each part but will break down unless
+      it's the last item
+
+theme:
+    - wacky, evil scientist/dr. frankenstein vibe
+    - comedy - really strange
+
+characters:
+    - player, fritz/igor/ygor
+	- his eyes are both vacant and disturbingly present. That is because he is cross-eyed and each is lost in the wide white sclera of alertness. The rest of his face is rather telling: a tense jaw, appeasing tiny smile, a crooked nose, bald brows, surrounded in fitted hood. The large hump in his back and how it forces his posture to hunch in compensation can explain the mix of long gangly limbs on a short, pudgy body. The final disturbing detail only becomes noticeable when he travels- a dead leg which must be dragged along with every step
+    - scientist
+        under house arrest for some stupid reason
+    - welder
+    - glider pilot dude
+    - hairdresser
+    - diver
+    - windmill operator
+    - street vender
+
+generator parts:
+    real parts              replaced with
+    magnetic coil           bed spring
+    exhaust pipe            snorkel
+    transmission            <wacky machine> transmission
+    cooling fan             windmill wheel
+    fuel                    lamp fuel
+    flexible piston         accordian
+    pump/piston             bike pump
+
+places:
+    mansion
+    generator room
+    street
+    windmill - beside geysers
+    car repair shop
+    hairdressers
+    cliff
+    pond
+    dump
+
+car-repair shop must have a piston or something atleast
+help car-repair welder somehow?
+get oxygen tank from car-repair welder
+give oxygen tanks to diver
+diver near pond
+diver gives snorkel
+
+spinning fan in hairdressers
+ask for fan, he only wants to cut your hair
+get haircut @ hairdressers
+get geothermal brochure from hairdressers
+convince windmill operator to change to geothermal plant
+windmill operator gives windmill
+
+dump probably has something right?
+can't get into dump
+paraglider gives you a ride on his glider that he thinks is broken
+get into dump by paragliding
+mattress from dump
+old mattress has an old bedspring
+
+street vendor selling mangos
+find monsters/beings in dump scavenging for food
+direct monsters/beings to street vendor
+trash monsters buy all mangos from vendor
+street vendor/gypsy gives accordian in thanks
