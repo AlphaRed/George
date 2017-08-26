@@ -22,7 +22,7 @@
 #define MOVE_SPEED_LIMIT    8  // player movement limit
 #define TERMINAL_VELOCITY   20
 #define PLAYER_MOVE_ACCEL   2
-#define PLAYER_JUMP_VEL     20
+#define PLAYER_JUMP_VEL     17
 #define PLAYER_FRICTION_X   1
 #define PLAYER_FRICTION_Y   1
 
@@ -70,7 +70,9 @@ int initSDL()
     }
     else
     {
-        window = SDL_CreateWindow("Biggun", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        window = SDL_CreateWindow("Biggun", SDL_WINDOWPOS_UNDEFINED,
+                SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
+                SDL_WINDOW_SHOWN);
         if(window == NULL)
         {
             printf("Window failed to be created: %s\n", SDL_GetError());
@@ -145,7 +147,7 @@ int checkEvents(SDL_Event eve)
         case SDLK_w:
             if (pstate.falling != 1) // can't double jump
             {
-                pstate.jumping = 10;
+                pstate.jumping = 6; // ticks the jumpvel is applied
             }
             break;
         case SDLK_s:
@@ -463,7 +465,9 @@ int main(int argc, char* args[])
         // debug text
         sprintf(playercoords, "X: %d, Y: %d", player.x, player.y);
         drawText(playercoords, 0, 0, black);
-        sprintf(playerstate, "states: %d,%d,%d,%d,%d", pstate.movingLeft, pstate.movingRight, pstate.jumping, pstate.falling, pstate.onGround);
+        sprintf(playerstate, "states: %d,%d,%d,%d,%d",
+                pstate.movingLeft, pstate.movingRight,
+                pstate.jumping, pstate.falling, pstate.onGround);
         drawText(playerstate, 0, 20, black);
 
         // Update
