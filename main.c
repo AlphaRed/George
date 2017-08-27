@@ -15,6 +15,8 @@
 #define TILE_HEIGHT 32
 #define TILE_WIDTH  32
 
+#define MAX_ENTITIES    20
+
 #define FONT_SIZE   16
 
 // Physics
@@ -59,6 +61,13 @@ struct states
     int falling;
     int onGround;
 } pstate;
+
+struct entity
+{
+    int x;
+    int y;
+    int type;
+} entities[MAX_ENTITIES];
 
 int initSDL()
 {
@@ -138,6 +147,8 @@ void blitTile(SDL_Surface* image, SDL_Rect tileRect, SDL_Surface* dest, int x, i
 
 int checkEvents(SDL_Event eve)
 {
+    int ptx, pty;   // tile the player is mostly on coordinates for use command
+
     if(eve.type == SDL_QUIT)
         return 0;
     else if((eve.type == SDL_KEYDOWN) && (eve.key.repeat == 0))
@@ -151,7 +162,31 @@ int checkEvents(SDL_Event eve)
             }
             break;
         case SDLK_s:
-            // zippo
+            // find tile player is mostly on
+            if ((player.x % TILE_WIDTH) > (TILE_WIDTH/2))
+                ptx = (player.x / TILE_WIDTH) + 1;
+            else
+                ptx = (player.x / TILE_WIDTH);
+            if ((player.y % TILE_WIDTH) > (TILE_WIDTH/2))
+                pty = (player.y / TILE_WIDTH) + 1;
+            else
+                pty = (player.y / TILE_WIDTH);
+            // check if entity resides there
+            for (int i = 0; i < MAX_ENTITIES; i++)
+            {
+                if ((entities[i].x == ptx) && (entities[i].y == pty)) {
+                    // handle entity
+                    fprintf(stderr, "Used entity %d of type %d\n",
+                            i, entities[i].type);
+                    if (entities[i].type == 2) {
+                        // Next level!
+                        loadLevel("level2.txt", lvl);
+                        loadEntities("1.ent", entities);
+                        player.x = 0;
+                        player.y = 0;
+                    }
+                }
+            }
             break;
         case SDLK_a:
             pstate.movingLeft = 1;
@@ -217,6 +252,21 @@ void drawLevel(int array[21][21])
             blitTile(palette, tile[array[y][x]], screen, x * 32, y * 32);
         }
     }
+}
+
+int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
+{
+    FILE* f = fopen(filename, "r");
+    int i = 0;
+
+    while((f != NULL) && (i < MAX_ENTITIES)) // file ends or too many entities
+    {
+        fscanf(f, "%d,%d;%d", &entities[i].x, &entities[i].y, &entities[i].type);
+        i++;
+    }
+    fclose(f);
+
+    return 0;
 }
 
 void drawPlayer(int x, int y)
@@ -391,7 +441,7 @@ int main(int argc, char* args[])
     palette = loadImage(FILE_TILES, screen);
     bg = loadImage("bg.png", screen);
     loadLevel("level1.txt", lvl);
-    loadLevel("level1ent.txt", lvlent);
+    loadEntities("1.ent", entities);
 
     player.x = 5;
     player.y = 5;
@@ -403,7 +453,6 @@ int main(int argc, char* args[])
     pstate.falling = 0;
     pstate.jumping = 0;
 
-    //SDL_FlushEvent(SDL_USEREVENT);
 
     // Game Loop
     while(quit)
@@ -446,16 +495,6 @@ int main(int argc, char* args[])
         {
             player.y = 448;
             pstate.falling = 0;
-        }
-
-        // Check level entities
-        if(lvlent[player.y / TILE_HEIGHT][player.x / TILE_WIDTH] == 1)
-        {
-            // Next level!
-            printf("Next Level!\n");
-            loadLevel("level2.txt", lvl);
-            player.x = 0;
-            player.y = 0;
         }
 
         // Draw
