@@ -21,10 +21,11 @@
 
 // Physics
 #define GRAVITY             9
-#define MOVE_SPEED_LIMIT    8  // player movement limit
-#define TERMINAL_VELOCITY   20
+#define MOVE_SPEED_LIMIT    5  // player movement limit
+#define TERMINAL_VELOCITY   25
 #define PLAYER_MOVE_ACCEL   2
-#define PLAYER_JUMP_VEL     17
+#define PLAYER_JUMP_VEL     15
+#define PLAYER_JUMP_LIMIT   10
 #define PLAYER_FRICTION_X   1
 #define PLAYER_FRICTION_Y   1
 
@@ -156,10 +157,9 @@ int checkEvents(SDL_Event eve)
         switch(eve.key.keysym.sym)
         {
         case SDLK_w:
-            if (pstate.falling != 1) // can't double jump
-            {
-                pstate.jumping = 6; // ticks the jumpvel is applied
-            }
+            // can't jump when falling
+            if (pstate.falling != 1)
+                pstate.jumping = 1;
             break;
         case SDLK_s:
             // find tile player is mostly on
@@ -219,6 +219,10 @@ int checkEvents(SDL_Event eve)
     {
         switch(eve.key.keysym.sym)
         {
+        case SDLK_w:
+            pstate.jumping = 0;
+            pstate.falling = 1;
+            break;
         case SDLK_a:
             pstate.movingLeft = 0;
             break;
@@ -484,8 +488,12 @@ int main(int argc, char* args[])
         if (pstate.jumping)
         {
             player.dy = -PLAYER_JUMP_VEL;
-            pstate.jumping--; // state is also a counter
-            if (pstate.jumping == 0) pstate.falling = 1; // fall when done jumping
+            pstate.jumping++;
+            if (pstate.jumping >= PLAYER_JUMP_LIMIT)
+            {
+                pstate.jumping = 0;
+                pstate.falling = 1;
+            }
         }
 
         applyVelocity(&player.x, &player.y, player.dx, player.dy);
