@@ -42,15 +42,15 @@ generator parts:
     pump/piston             bike pump
 
 places:
-    mansion
-    generator room
-    street
-    windmill - beside geysers
-    car repair shop
-    hairdressers
-    cliff
-    pond
-    dump
+0   mansion
+1   generator room
+2   street
+3   windmill - beside geysers
+4   car repair shop
+5   hairdressers
+6   cliff
+7   pond
+8   dump
 
 car-repair shop must have a piston or something atleast
 help car-repair welder somehow?

@@ -174,16 +174,28 @@ int checkEvents(SDL_Event eve)
             // check if entity resides there
             for (int i = 0; i < MAX_ENTITIES; i++)
             {
-                if ((entities[i].x == ptx) && (entities[i].y == pty)) {
+                if ((entities[i].x == ptx) && (entities[i].y == pty))
+                {
                     // handle entity
                     fprintf(stderr, "Used entity %d of type %d\n",
                             i, entities[i].type);
-                    if (entities[i].type == 2) {
-                        // Next level!
-                        loadLevel("level2.txt", lvl);
-                        loadEntities("1.ent", entities);
-                        player.x = 0;
-                        player.y = 0;
+                    switch (entities[i].type)
+                    {
+                        case 1:
+                            loadLevel("level1.txt", lvl);
+                            loadEntities("1.ent", entities);
+                            player.x = 20 * TILE_WIDTH;
+                            player.y = 13 * TILE_HEIGHT;
+                            break;
+                        case 2:
+                            loadLevel("level2.txt", lvl);
+                            loadEntities("2.ent", entities);
+                            player.x = 0 * TILE_WIDTH;
+                            player.y = 13 * TILE_HEIGHT;
+                            break;
+                        default:
+                            break;
+
                     }
                 }
             }
