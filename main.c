@@ -11,7 +11,7 @@
 #define SCREEN_WIDTH    672
 #define SCREEN_HEIGHT   672
 
-#define MAX_TILES   8
+#define MAX_TILES   256
 #define TILE_HEIGHT 32
 #define TILE_WIDTH  32
 
@@ -287,7 +287,7 @@ int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
 
 void drawPlayer(int x, int y)
 {
-    blitTile(palette, tile[7], screen, x, y);
+    blitTile(palette, tile[6], screen, x, y);
 }
 
 void drawText(char *text, int x, int y, SDL_Color fg)
@@ -331,7 +331,7 @@ void gravity(int *x, int *y)
         {
             if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
             {
-                if(lvl[i][j] == 3)
+                if(lvl[i][j] == 2)
                 {
                     if(*y < i * TILE_HEIGHT) // coming from top
                     {
@@ -367,7 +367,7 @@ void applyVelocity(int *x, int *y, int dx, int dy)
         {
             if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
             {
-                if(lvl[i][j] == 3)
+                if(lvl[i][j] == 2)
                 {
                     if(*x < j * TILE_WIDTH) // coming from the left
                     {
@@ -424,34 +424,9 @@ int main(int argc, char* args[])
     {
         tile[i].w = TILE_WIDTH;
         tile[i].h = TILE_HEIGHT;
+        tile[i].x = (i%16) * TILE_WIDTH;
+        tile[i].y = (i/16) * TILE_HEIGHT;
     }
-    tile[1].x = 0;
-    tile[1].y = 0;
-    collides[1] = 0;
-
-    tile[2].x = 32;
-    tile[2].y = 0;
-    collides[1] = 1;
-
-    tile[3].x = 64;
-    tile[3].y = 0;
-    collides[1] = 1;
-
-    tile[4].x = 96;
-    tile[4].y = 0;
-    collides[1] = 1;
-
-    tile[5].x = 128;
-    tile[5].y = 0;
-    collides[1] = 0;
-
-    tile[6].x = 160;
-    tile[6].y = 0;
-    collides[1] = 0;
-
-    tile[7].x = 192;
-    tile[7].y = 0;
-    collides[1] = 0;
 
     font = TTF_OpenFont(FILE_FONT, FONT_SIZE);
     palette = loadImage(FILE_TILES, screen);
