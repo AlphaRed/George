@@ -11,7 +11,7 @@
 #define SCREEN_WIDTH    672
 #define SCREEN_HEIGHT   672
 
-#define MAX_TILES   8
+#define MAX_TILES   100
 #define TILE_HEIGHT 32
 #define TILE_WIDTH  32
 
@@ -42,8 +42,6 @@ SDL_Rect tile[MAX_TILES];
 int collides[MAX_TILES]; // which tiles colide and don't
 
 int lvl[21][21];
-int lvlent[21][21];
-int nextlvl[21][21];
 
 struct protagonist
 {
@@ -287,7 +285,7 @@ int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
 
 void drawPlayer(int x, int y)
 {
-    blitTile(palette, tile[7], screen, x, y);
+    blitTile(palette, tile[6], screen, x, y);
 }
 
 void drawText(char *text, int x, int y, SDL_Color fg)
@@ -331,7 +329,7 @@ void gravity(int *x, int *y)
         {
             if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
             {
-                if(lvl[i][j] == 3)
+                if(lvl[i][j] == 2)
                 {
                     if(*y < i * TILE_HEIGHT) // coming from top
                     {
@@ -342,14 +340,6 @@ void gravity(int *x, int *y)
             }
         }
     }
-
-//    if(checkCollision(*x, *y, 64, 448))
-//    {
-//        *x -= 0;
-//        *y -= GRAVITY;
-//        //*y = 448 - TILE_HEIGHT;
-//        pstate.falling = 0;
-//    }
 }
 
 void applyVelocity(int *x, int *y, int dx, int dy)
@@ -367,9 +357,13 @@ void applyVelocity(int *x, int *y, int dx, int dy)
         {
             if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
             {
-                if(lvl[i][j] == 3)
+                if(lvl[i][j] == 2)
                 {
-                    if(*x < j * TILE_WIDTH) // coming from the left
+                    if(*y > i * TILE_HEIGHT) // coming from below, works better if check this first
+                    {
+                        *y = (i + 1) * TILE_HEIGHT;
+                    }
+                    else if(*x < j * TILE_WIDTH) // coming from the left
                     {
                         *x = (j - 1) * TILE_WIDTH;
                     }
@@ -382,28 +376,10 @@ void applyVelocity(int *x, int *y, int dx, int dy)
                         *y = (i - 1) * TILE_HEIGHT;
                         pstate.falling = 0;
                     }
-                    else if(*y > i * TILE_HEIGHT) // coming from below
-                    {
-                        *y = (i + 1) * TILE_HEIGHT;
-                    }
                 }
             }
         }
     }
-
-//    if(checkCollision(*x, *y, 64, 448))
-//    {
-//        //*x -= *dx;
-//        //*y -= *dy;
-//        if(*dx > 0) // moving right
-//            *x = 64 - TILE_WIDTH;
-//        if(*dx < 0) // moving left
-//            *x = 200 + 64;
-//        if(*dy > 0) // moving down
-//            *y = 448 - TILE_HEIGHT;
-//        else // moving up
-//            *y -= *dy;
-//    }
 }
 
 int main(int argc, char* args[])
@@ -424,34 +400,9 @@ int main(int argc, char* args[])
     {
         tile[i].w = TILE_WIDTH;
         tile[i].h = TILE_HEIGHT;
+        tile[i].x = (i % 10) * 32; // should work, but don't have enough tiles to test
+        tile[i].y = (i / 10) * 32;
     }
-    tile[1].x = 0;
-    tile[1].y = 0;
-    collides[1] = 0;
-
-    tile[2].x = 32;
-    tile[2].y = 0;
-    collides[1] = 1;
-
-    tile[3].x = 64;
-    tile[3].y = 0;
-    collides[1] = 1;
-
-    tile[4].x = 96;
-    tile[4].y = 0;
-    collides[1] = 1;
-
-    tile[5].x = 128;
-    tile[5].y = 0;
-    collides[1] = 0;
-
-    tile[6].x = 160;
-    tile[6].y = 0;
-    collides[1] = 0;
-
-    tile[7].x = 192;
-    tile[7].y = 0;
-    collides[1] = 0;
 
     font = TTF_OpenFont(FILE_FONT, FONT_SIZE);
     palette = loadImage(FILE_TILES, screen);
