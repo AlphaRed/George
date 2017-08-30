@@ -11,7 +11,11 @@
 #define SCREEN_WIDTH    672
 #define SCREEN_HEIGHT   672
 
+<<<<<<< HEAD
 #define MAX_TILES   100
+=======
+#define MAX_TILES   256
+>>>>>>> 3bac2138b64738603142cc486248a7ad3c890731
 #define TILE_HEIGHT 32
 #define TILE_WIDTH  32
 
@@ -400,8 +404,13 @@ int main(int argc, char* args[])
     {
         tile[i].w = TILE_WIDTH;
         tile[i].h = TILE_HEIGHT;
+<<<<<<< HEAD
         tile[i].x = (i % 10) * 32; // should work, but don't have enough tiles to test
         tile[i].y = (i / 10) * 32;
+=======
+        tile[i].x = (i%16) * TILE_WIDTH;
+        tile[i].y = (i/16) * TILE_HEIGHT;
+>>>>>>> 3bac2138b64738603142cc486248a7ad3c890731
     }
 
     font = TTF_OpenFont(FILE_FONT, FONT_SIZE);
