@@ -136,6 +136,41 @@ SDL_Surface* loadImage(char* filename, SDL_Surface* dest)
     return optimized;
 }
 
+int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
+{
+    FILE* f = fopen(filename, "r");
+    int i = 0;
+
+    while((f != NULL) && (i < MAX_ENTITIES)) // file ends or too many entities
+    {
+        fscanf(f, "%d,%d;%d", &entities[i].x, &entities[i].y, &entities[i].type);
+        i++;
+    }
+    fclose(f);
+
+    return 0;
+}
+
+int loadLevel(char* filename, int array[21][21])
+{
+    int x, y;
+
+    FILE* f = fopen(filename, "r");
+    if(f != NULL)
+    {
+        for(y = 0; y < 21; y++)
+        {
+            for(x = 0; x < 21; x++)
+            {
+                fscanf(f, "%d", &array[y][x]);
+            }
+        }
+        fclose(f);
+    }
+    return 0;
+}
+
+
 void blitImage(SDL_Surface* image, SDL_Surface* dest, int x, int y)
 {
     SDL_Rect destRect;
@@ -255,25 +290,6 @@ int checkEvents(SDL_Event eve)
     return 1;
 }
 
-int loadLevel(char* filename, int array[21][21])
-{
-    int x, y;
-
-    FILE* f = fopen(filename, "r");
-    if(f != NULL)
-    {
-        for(y = 0; y < 21; y++)
-        {
-            for(x = 0; x < 21; x++)
-            {
-                fscanf(f, "%d", &array[y][x]);
-            }
-        }
-        fclose(f);
-    }
-    return 0;
-}
-
 void drawLevel(int array[21][21])
 {
     int x, y;
@@ -285,21 +301,6 @@ void drawLevel(int array[21][21])
             blitTile(palette, tile[array[y][x]], screen, x * 32, y * 32);
         }
     }
-}
-
-int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
-{
-    FILE* f = fopen(filename, "r");
-    int i = 0;
-
-    while((f != NULL) && (i < MAX_ENTITIES)) // file ends or too many entities
-    {
-        fscanf(f, "%d,%d;%d", &entities[i].x, &entities[i].y, &entities[i].type);
-        i++;
-    }
-    fclose(f);
-
-    return 0;
 }
 
 void drawItems()
@@ -491,7 +492,7 @@ int main(int argc, char* args[])
         if (player.dy > 0) player.dy -= PLAYER_FRICTION_Y;
         if (player.dy < 0) player.dy += PLAYER_FRICTION_Y;
 
-        //Outer bounds
+        // Outer bounds
         if(player.x < 0)
             player.x = 0;
         if(player.x > 640)
@@ -505,6 +506,8 @@ int main(int argc, char* args[])
         }
 
         // Draw
+        //SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 255, 0, 255));
+        blitImage(bg, screen, 0, 0);
         drawLevel(lvl);
         drawItems();
         drawPlayer(player.x, player.y);
