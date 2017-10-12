@@ -1,0 +1,25 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include "video.h"
+
+struct protagonist
+{
+    int x;
+    int y;
+    // current velocities
+    int dx;
+    int dy;
+    int inventory[MAX_ITEMS]; // 0 -> no item, 1 -> have item, 2 -> used item
+} player;
+
+struct states
+{
+    int movingLeft;
+    int movingRight;
+    int jumping;
+    int falling;
+    int onGround;
+} pstate;
+
+#endif

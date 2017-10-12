@@ -3,23 +3,9 @@
 #include <SDL_ttf.h>
 #include <stdio.h>
 
-#define FILE_TILES  "tiles.png"
-#define FILE_FONT   "FSEX300.ttf"
-
-#define FPS_LIMIT   60
-
-#define SCREEN_WIDTH    672
-#define SCREEN_HEIGHT   672
-
-#define MAX_TILES   100
-#define TILE_HEIGHT 32
-#define TILE_WIDTH  32
-
-#define MAX_ENTITIES    20
-
-#define MAX_ITEMS   2
-
-#define FONT_SIZE   16
+#include "player.h"
+#include "map.h"
+#include "video.h"
 
 // Physics
 #define GRAVITY             9
@@ -31,52 +17,6 @@
 #define PLAYER_FRICTION_X   1
 #define PLAYER_FRICTION_Y   1
 
-
-SDL_Window* window = NULL;
-SDL_Surface* screen = NULL;
-SDL_Surface* palette = NULL;
-SDL_Surface* bg = NULL;
-SDL_Surface* items = NULL;
-
-TTF_Font* font = NULL;
-SDL_Color black={0,0,0};
-
-SDL_Rect tile[MAX_TILES];
-int collides[MAX_TILES]; // which tiles collide and don't
-
-int lvl[21][21];
-
-enum Levels
-{
-    Level1,
-    Level2
-} CurrLevel;
-
-struct protagonist
-{
-    int x;
-    int y;
-    // current velocities
-    int dx;
-    int dy;
-    int inventory[MAX_ITEMS]; // 0 -> no item, 1 -> have item, 2 -> used item
-} player;
-
-struct states
-{
-    int movingLeft;
-    int movingRight;
-    int jumping;
-    int falling;
-    int onGround;
-} pstate;
-
-struct entity
-{
-    int x;
-    int y;
-    int type;
-} entities[MAX_ENTITIES];
 
 int initSDL()
 {
@@ -125,69 +65,6 @@ void cleanup()
     SDL_Quit();
 }
 
-SDL_Surface* loadImage(char* filename, SDL_Surface* dest)
-{
-    SDL_Surface* optimized = NULL;
-    SDL_Surface* loaded = IMG_Load(filename);
-    if(!loaded)
-        printf("Image failed to load: %s", IMG_GetError());
-    optimized = SDL_ConvertSurface(loaded, dest->format, 0);
-    SDL_FreeSurface(loaded);
-    return optimized;
-}
-
-int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
-{
-    FILE* f = fopen(filename, "r");
-    int i = 0;
-
-    while((f != NULL) && (i < MAX_ENTITIES)) // file ends or too many entities
-    {
-        fscanf(f, "%d,%d;%d", &entities[i].x, &entities[i].y, &entities[i].type);
-        i++;
-    }
-    fclose(f);
-
-    return 0;
-}
-
-int loadLevel(char* filename, int array[21][21])
-{
-    int x, y;
-
-    FILE* f = fopen(filename, "r");
-    if(f != NULL)
-    {
-        for(y = 0; y < 21; y++)
-        {
-            for(x = 0; x < 21; x++)
-            {
-                fscanf(f, "%d", &array[y][x]);
-            }
-        }
-        fclose(f);
-    }
-    return 0;
-}
-
-
-void blitImage(SDL_Surface* image, SDL_Surface* dest, int x, int y)
-{
-    SDL_Rect destRect;
-    destRect.x = x;
-    destRect.y = y;
-
-    SDL_BlitSurface(image, NULL, dest, &destRect);
-}
-
-void blitTile(SDL_Surface* image, SDL_Rect tileRect, SDL_Surface* dest, int x, int y)
-{
-    SDL_Rect destRect;
-    destRect.x = x;
-    destRect.y = y;
-
-    SDL_BlitSurface(image, &tileRect, dest, &destRect);
-}
 
 int checkEvents(SDL_Event eve)
 {
@@ -288,51 +165,6 @@ int checkEvents(SDL_Event eve)
         }
     }
     return 1;
-}
-
-void drawLevel(int array[21][21])
-{
-    int x, y;
-
-    for(y = 0; y < 15; y++)
-    {
-        for(x = 0; x < 21; x++)
-        {
-            blitTile(palette, tile[array[y][x]], screen, x * 32, y * 32);
-        }
-    }
-}
-
-void drawItems()
-{
-    if(CurrLevel == Level1) // find current level!
-    {
-        if(player.inventory[0] == 0) // check if in inventory or not!
-            blitImage(items, screen, 6 * TILE_WIDTH, 13 * TILE_HEIGHT);
-    }
-    else if(CurrLevel == Level2)
-    {
-        if(player.inventory[1] == 0)
-            blitImage(items, screen, 8 * TILE_WIDTH, 13 * TILE_HEIGHT);
-    }
-}
-
-void drawPlayer(int x, int y)
-{
-    blitTile(palette, tile[6], screen, x, y);
-}
-
-void drawText(char *text, int x, int y, SDL_Color fg)
-{
-    SDL_Surface* textSurface;
-    SDL_Rect dest;
-    dest.x = x;
-    dest.y = y;
-    dest.w = SCREEN_WIDTH;  // can't be bigger than the screen width
-    dest.h = SCREEN_HEIGHT; // same as above but with height
-
-    textSurface = TTF_RenderText_Solid(font, text, fg);
-    SDL_BlitSurface(textSurface, NULL, screen, &dest);
 }
 
 int checkCollision(int x, int y, int x1, int y1)
