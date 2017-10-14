@@ -52,15 +52,36 @@ void drawLevel(int array[21][21])
 
 void drawItems()
 {
-    if(CurrLevel == Level1) // find current level!
+    if(CurrLevel == LEVEL1) // find current level!
     {
         if(player.inventory[0] == 0) // check if in inventory or not!
             blitImage(items, screen, 6 * TILE_WIDTH, 13 * TILE_HEIGHT);
     }
-    else if(CurrLevel == Level2)
+    else if(CurrLevel == LEVEL2)
     {
         if(player.inventory[1] == 0)
             blitImage(items, screen, 8 * TILE_WIDTH, 13 * TILE_HEIGHT);
+    }
+}
+
+void drawEntities()
+{
+    for(int i = 0; i < MAX_ENTITIES; i++)
+    {
+        switch(entities[i].type)
+        {
+            case ITEM1:
+                if (player.inventory[0] == 0)
+                    blitImage(items, screen, 6*TILE_WIDTH, 13*TILE_HEIGHT);
+                break;
+            case ITEM2:
+                if (player.inventory[1] == 0)
+                    blitImage(items, screen, 8*TILE_WIDTH, 13*TILE_HEIGHT);
+                break;
+
+            default:
+                break;
+        }
     }
 }
 

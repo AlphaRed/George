@@ -97,26 +97,26 @@ int checkEvents(SDL_Event eve)
                             loadEntities("1.ent", entities);
                             player.x = 20 * TILE_WIDTH;
                             player.y = 13 * TILE_HEIGHT;
-                            CurrLevel = Level1;
+                            CurrLevel = LEVEL1;
                             break;
                         case 2:
                             loadLevel("level2.txt", lvl);
                             loadEntities("2.ent", entities);
                             player.x = 0 * TILE_WIDTH;
                             player.y = 13 * TILE_HEIGHT;
-                            CurrLevel = Level2;
+                            CurrLevel = LEVEL2;
                             break;
                         default:
                             break;
                     }
                 }
             }
-            if(CurrLevel == Level1) // check current level first
+            if(CurrLevel == LEVEL1) // check current level first
             {
                 if(ptx == 6 && pty == 13)
                     player.inventory[0] = 1; // grab the item
             }
-            else if(CurrLevel == Level2)
+            else if(CurrLevel == LEVEL2)
             {
                 if(ptx == 8 && pty == 13)
                     player.inventory[1] = 1;
@@ -185,7 +185,7 @@ int main(int argc, char* args[])
     bg = loadImage("bg.png", screen);
     items = loadImage("items.png", screen);
     loadLevel("level1.txt", lvl);
-    CurrLevel = Level1;
+    CurrLevel = LEVEL1;
     loadEntities("1.ent", entities);
 
 
@@ -252,7 +252,7 @@ int main(int argc, char* args[])
         //SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 255, 0, 255));
         blitImage(bg, screen, 0, 0);
         drawLevel(lvl);
-        drawItems();
+        drawEntities();
         drawPlayer(player.x, player.y);
 
 

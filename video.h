@@ -17,8 +17,6 @@
 #define TILE_HEIGHT 32
 #define TILE_WIDTH  32
 
-#define MAX_ITEMS   2
-
 #define FONT_SIZE   16
 
 SDL_Window* window;
@@ -39,6 +37,7 @@ void blitTile(SDL_Surface* image, SDL_Rect tileRect, SDL_Surface* dest, int x, i
 
 void drawLevel(int array[21][21]);
 void drawItems();
+void drawEntities();
 void drawPlayer(int x, int y);
 void drawText(char *text, int x, int y, SDL_Color fg);
 

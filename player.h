@@ -1,7 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "video.h"
+
+#define MAX_ITEMS   4
 
 struct protagonist
 {

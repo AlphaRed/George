@@ -9,7 +9,7 @@ int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
 
     while((f != NULL) && (i < MAX_ENTITIES)) // file ends or too many entities
     {
-        fscanf(f, "%d,%d;%d", &entities[i].x, &entities[i].y, &entities[i].type);
+        fscanf(f, "%d,%d;%d", &entities[i].x, &entities[i].y, (int*)&entities[i].type);
         i++;
     }
     fclose(f);
