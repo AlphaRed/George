@@ -113,6 +113,9 @@ int checkEvents(SDL_Event eve)
                             break;
                         case NPC1:
                             pstate.talking = 1;
+                            pstate.movingLeft = 0;
+                            pstate.movingRight = 0;
+                            pstate.jumping = 0;
                             break;
                         default:
                             break;
