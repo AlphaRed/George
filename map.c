@@ -7,12 +7,24 @@ int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
     FILE* f = fopen(filename, "r");
     int i = 0;
 
-    while((f != NULL) && (i < MAX_ENTITIES)) // file ends or too many entities
+    // file can't open
+    if (f == NULL)
+        return 1;
+
+    while((i < MAX_ENTITIES) &&
+         (fscanf(f, "%d,%d;%d", &entities[i].x, &entities[i].y, (int*)&entities[i].type) != EOF))
     {
-        fscanf(f, "%d,%d;%d", &entities[i].x, &entities[i].y, (int*)&entities[i].type);
         i++;
     }
     fclose(f);
+
+    // fill rest of entities with nothing
+    for (i = i; i < MAX_ENTITIES; i++)
+    {
+        entities[i].x = 0;
+        entities[i].y = 0;
+        entities[i].type = ZIPPO;
+    }
 
     return 0;
 }

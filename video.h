@@ -36,7 +36,6 @@ void blitImage(SDL_Surface* image, SDL_Surface* dest, int x, int y);
 void blitTile(SDL_Surface* image, SDL_Rect tileRect, SDL_Surface* dest, int x, int y);
 
 void drawLevel(int array[21][21]);
-void drawItems();
 void drawEntities();
 void drawPlayer(int x, int y);
 void drawText(char *text, int x, int y, SDL_Color fg);

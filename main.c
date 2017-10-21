@@ -68,11 +68,17 @@ int checkEvents(SDL_Event eve)
         switch(eve.key.keysym.sym)
         {
         case SDLK_w:
-            // can't jump when falling
-            if (pstate.falling != 1)
+            // can't jump when falling and talking
+            if ((pstate.falling != 1) && (pstate.talking != 1))
                 pstate.jumping = 1;
             break;
         case SDLK_s:
+            // exit talking
+            if (pstate.talking == 1) {
+                pstate.talking = 0;
+                break;
+            }
+
             // find tile player is mostly on
             if ((player.x % TILE_WIDTH) > (TILE_WIDTH/2))
                 ptx = (player.x / TILE_WIDTH) + 1;
@@ -92,19 +98,22 @@ int checkEvents(SDL_Event eve)
                             i, entities[i].type);
                     switch (entities[i].type)
                     {
-                        case 1:
+                        case EXIT1:
                             loadLevel("level1.txt", lvl);
                             loadEntities("1.ent", entities);
                             player.x = 20 * TILE_WIDTH;
                             player.y = 13 * TILE_HEIGHT;
                             CurrLevel = LEVEL1;
                             break;
-                        case 2:
+                        case EXIT2:
                             loadLevel("level2.txt", lvl);
                             loadEntities("2.ent", entities);
                             player.x = 0 * TILE_WIDTH;
                             player.y = 13 * TILE_HEIGHT;
                             CurrLevel = LEVEL2;
+                            break;
+                        case NPC1:
+                            pstate.talking = 1;
                             break;
                         default:
                             break;
@@ -123,12 +132,16 @@ int checkEvents(SDL_Event eve)
             }
             break;
         case SDLK_a:
-            pstate.movingLeft = 1;
-            pstate.movingRight = 0;
+            if (pstate.talking != 1) {
+                pstate.movingLeft = 1;
+                pstate.movingRight = 0;
+            }
             break;
         case SDLK_d:
-            pstate.movingRight = 1;
-            pstate.movingLeft = 0;
+            if (pstate.talking != 1) {
+                pstate.movingRight = 1;
+                pstate.movingLeft = 0;
+            }
             break;
         case SDLK_RETURN:
             return 0;
@@ -200,6 +213,7 @@ int main(int argc, char* args[])
     pstate.movingRight = 0;
     pstate.falling = 0;
     pstate.jumping = 0;
+    pstate.talking = 0;
 
 
     // Game Loop
@@ -249,11 +263,13 @@ int main(int argc, char* args[])
         }
 
         // Draw
-        //SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 255, 0, 255));
         blitImage(bg, screen, 0, 0);
         drawLevel(lvl);
         drawEntities();
         drawPlayer(player.x, player.y);
+        if (pstate.talking)
+            drawText("Kawanishi N1KJ Shiden/Violet Lightning",
+                    10, 100, black);
 
 
         // debug text

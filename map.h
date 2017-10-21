@@ -22,7 +22,10 @@ typedef enum
     EXIT14,
     EXIT15,
     ITEM1,
-    ITEM2
+    ITEM2,
+    NPC1,
+    NPC2,
+    NPC3
 } entityType;
 
 struct entity

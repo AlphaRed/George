@@ -21,6 +21,7 @@ struct states
     int jumping;
     int falling;
     int onGround;
+    int talking;
 } pstate;
 
 #endif
