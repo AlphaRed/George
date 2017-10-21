@@ -11,11 +11,10 @@
 
 int initSDL()
 {
-    int returnflag = 0;
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
        printf("SDL failed to initialize: %s\n", SDL_GetError());
-       returnflag = 1;
+       return 1;
     }
     else
     {
@@ -25,7 +24,7 @@ int initSDL()
         if(window == NULL)
         {
             printf("Window failed to be created: %s\n", SDL_GetError());
-            returnflag = 1;
+            return 1;
         }
         else
         {
@@ -35,16 +34,16 @@ int initSDL()
             if(IMG_Init(IMG_INIT_PNG) < 0)
             {
                 printf("SDL_Image library failed to initialize: %s", IMG_GetError());
-                returnflag = 1;
+                return 2;
             }
             if(TTF_Init()==-1)
             {
                 printf("SDL_TTF library failed to initialize: %s", TTF_GetError());
-                returnflag = 1;
+                return 3;
             }
         }
     }
-    return returnflag;
+    return 0;
 }
 
 void cleanup()
