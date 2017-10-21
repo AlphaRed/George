@@ -34,17 +34,21 @@ int loadLevel(char* filename, int array[21][21])
     int x, y;
 
     FILE* f = fopen(filename, "r");
-    if(f != NULL)
+
+    // file can't open
+    if (f == NULL)
+        return 1;
+
+    for(y = 0; y < 21; y++)
     {
-        for(y = 0; y < 21; y++)
+        for(x = 0; x < 21; x++)
         {
-            for(x = 0; x < 21; x++)
-            {
-                fscanf(f, "%d", &array[y][x]);
-            }
+            if (fscanf(f, "%d", &array[y][x]) == EOF)
+                return 1;
         }
-        fclose(f);
     }
+    fclose(f);
+
     return 0;
 }
 
