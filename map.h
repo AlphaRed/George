@@ -3,7 +3,7 @@
 
 #define MAX_ENTITIES    20
 
-#define MAP_WIDTH       21
+#define MAP_WIDTH       20
 #define MAP_HEIGHT      15
 
 typedef enum

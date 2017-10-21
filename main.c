@@ -204,8 +204,8 @@ int main(int argc, char* args[])
     loadEntities("1.ent", entities);
 
 
-    player.x = 5;
-    player.y = 5;
+    player.x = 0;
+    player.y = 0;
     player.dx = 0;
     player.dy = 0;
     for(int i = 0; i < MAX_ITEMS; i++) // empty the inventory!
@@ -254,13 +254,13 @@ int main(int argc, char* args[])
         // Outer bounds
         if(player.x < 0)
             player.x = 0;
-        if(player.x > 640)
-            player.x = 640;
+        if(player.x > (SCREEN_WIDTH-TILE_WIDTH))
+            player.x = (SCREEN_WIDTH-TILE_WIDTH);
         if(player.y < 0)
             player.y = 0;
-        if(player.y > 448)
+        if(player.y > (SCREEN_HEIGHT-TILE_HEIGHT))
         {
-            player.y = 448;
+            player.y = (SCREEN_HEIGHT-TILE_HEIGHT);
             pstate.falling = 0;
         }
 

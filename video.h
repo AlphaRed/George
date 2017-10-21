@@ -12,7 +12,7 @@
 
 #define FPS_LIMIT   60
 
-#define SCREEN_WIDTH    672
+#define SCREEN_WIDTH    640
 #define SCREEN_HEIGHT   480
 
 #define MAX_TILES   100
