@@ -37,13 +37,13 @@ void blitTile(SDL_Surface* image, SDL_Rect tileRect, SDL_Surface* dest, int x, i
 }
 
 
-void drawLevel(int array[21][21])
+void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH])
 {
     int x, y;
 
-    for(y = 0; y < 15; y++)
+    for(y = 0; y < MAP_HEIGHT; y++)
     {
-        for(x = 0; x < 21; x++)
+        for(x = 0; x < MAP_WIDTH; x++)
         {
             blitTile(palette, tile[array[y][x]], screen, x * 32, y * 32);
         }

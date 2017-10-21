@@ -27,9 +27,9 @@ void gravity(int *x, int *y)
     *x += 0;
     *y += GRAVITY;
 
-    for(int i = 0; i < 15; i++)
+    for(int i = 0; i < MAP_HEIGHT; i++)
     {
-        for(int j = 0; j < 21; j++)
+        for(int j = 0; j < MAP_WIDTH; j++)
         {
             if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
             {
@@ -55,9 +55,9 @@ void applyVelocity(int *x, int *y, int dx, int dy)
     *x += dx;
     *y += dy;
 
-    for(int i = 0; i < 15; i++)
+    for(int i = 0; i < MAP_HEIGHT; i++)
     {
-        for(int j = 0; j < 21; j++)
+        for(int j = 0; j < MAP_HEIGHT; j++)
         {
             if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
             {

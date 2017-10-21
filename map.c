@@ -29,7 +29,7 @@ int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
     return 0;
 }
 
-int loadLevel(char* filename, int array[21][21])
+int loadLevel(char* filename, int array[MAP_HEIGHT][MAP_WIDTH])
 {
     int x, y;
 
@@ -39,9 +39,9 @@ int loadLevel(char* filename, int array[21][21])
     if (f == NULL)
         return 1;
 
-    for(y = 0; y < 21; y++)
+    for(y = 0; y < MAP_HEIGHT; y++)
     {
-        for(x = 0; x < 21; x++)
+        for(x = 0; x < MAP_WIDTH; x++)
         {
             if (fscanf(f, "%d", &array[y][x]) == EOF)
                 return 1;

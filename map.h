@@ -3,6 +3,9 @@
 
 #define MAX_ENTITIES    20
 
+#define MAP_WIDTH       21
+#define MAP_HEIGHT      15
+
 typedef enum
 {
     ZIPPO,
@@ -35,7 +38,7 @@ struct entity
     entityType type;
 } entities[MAX_ENTITIES];
 
-int lvl[21][21];
+int lvl[MAP_HEIGHT][MAP_WIDTH];
 
 enum
 {
@@ -50,6 +53,6 @@ enum
 } CurrLevel;
 
 int loadEntities(char* filename, struct entity entities[MAX_ENTITIES]);
-int loadLevel(char* filename, int array[21][21]);
+int loadLevel(char* filename, int array[MAP_HEIGHT][MAP_WIDTH]);
 
 #endif
