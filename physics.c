@@ -61,25 +61,38 @@ void applyVelocity(int *x, int *y, int dx, int dy)
         {
             if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
             {
-                if(lvl[i][j] == 1 || lvl[i][j] == 2 || lvl[i][j] == 3)
+                switch (lvl[i][j])
                 {
-                    if(*y > i * TILE_HEIGHT) // coming from below, works better if check this first
-                    {
-                        *y = (i + 1) * TILE_HEIGHT;
-                    }
-                    else if(*x < j * TILE_WIDTH) // coming from the left
-                    {
-                        *x = (j - 1) * TILE_WIDTH;
-                    }
-                    else if(*x > j * TILE_WIDTH) // coming from the right
-                    {
-                        *x = (j + 1) * TILE_WIDTH;
-                    }
-                    else if(*y < i * TILE_HEIGHT) // coming from top
-                    {
-                        *y = (i - 1) * TILE_HEIGHT;
-                        pstate.falling = 0;
-                    }
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 31:
+                    case 32:
+                    case 33:
+                        if(*y > i * TILE_HEIGHT) // coming from below, works better if check this first
+                        {
+                            *y = (i + 1) * TILE_HEIGHT;
+                        }
+                        else if(*x < j * TILE_WIDTH) // coming from the left
+                        {
+                            *x = (j - 1) * TILE_WIDTH;
+                        }
+                        else if(*x > j * TILE_WIDTH) // coming from the right
+                        {
+                            *x = (j + 1) * TILE_WIDTH;
+                        }
+                        else if(*y < i * TILE_HEIGHT) // coming from top
+                        {
+                            *y = (i - 1) * TILE_HEIGHT;
+                            pstate.falling = 0;
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
             }
         }
