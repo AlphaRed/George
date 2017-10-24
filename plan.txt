@@ -41,6 +41,14 @@ generator parts:
     flexible piston         accordian
     pump/piston             bike pump
 
+parts that will be in inventory:
+0   oxygen tank
+1   snorkel
+2   brochure
+3   windmill
+4   bedspring/mattress
+5   accordian
+
 places:
 0   mansion
 1   generator room

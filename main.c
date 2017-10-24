@@ -98,15 +98,15 @@ int checkEvents(SDL_Event eve)
                     switch (entities[i].type)
                     {
                         case EXIT1:
-                            loadLevel("level1.txt", lvl);
-                            loadEntities("1.ent", entities);
+                            loadLevel(FILE_LVL1, lvl);
+                            loadEntities(FILE_ENT1, entities);
                             player.x = 20 * TILE_WIDTH;
                             player.y = 13 * TILE_HEIGHT;
                             CurrLevel = LEVEL1;
                             break;
                         case EXIT2:
-                            loadLevel("level2.txt", lvl);
-                            loadEntities("2.ent", entities);
+                            loadLevel(FILE_LVL2, lvl);
+                            loadEntities(FILE_ENT2, entities);
                             player.x = 0 * TILE_WIDTH;
                             player.y = 13 * TILE_HEIGHT;
                             CurrLevel = LEVEL2;
@@ -199,9 +199,9 @@ int main(int argc, char* args[])
     palette = loadImage(FILE_TILES, screen);
     bg = loadImage("bg.png", screen);
     items = loadImage("items.png", screen);
-    loadLevel("level1.txt", lvl);
+    loadLevel(FILE_LVL1, lvl);
     CurrLevel = LEVEL1;
-    loadEntities("1.ent", entities);
+    loadEntities(FILE_ENT1, entities);
 
 
     player.x = 0;
