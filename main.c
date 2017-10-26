@@ -179,8 +179,10 @@ int main(int argc, char* args[])
     unsigned int ticksLastFrame = 0;
     SDL_Event eve;
 
+    // debug strings
     char playercoords[15];
     char playerstate[30];
+    char playerinv[20];
 
     if(initSDL() > 0)
         printf("Failed to initialize\n");
@@ -191,14 +193,29 @@ int main(int argc, char* args[])
     {
         tile[i].w = TILE_WIDTH;
         tile[i].h = TILE_HEIGHT;
-        tile[i].x = (i % 10) * TILE_WIDTH; // should work, but don't have enough tiles to test
+        tile[i].x = (i % 10) * TILE_WIDTH;
         tile[i].y = (i / 10) * TILE_HEIGHT;
+    }
+    for (int i=0; i < MAX_ITEMS; i++)
+    {
+        item[i].w = TILE_WIDTH;
+        item[i].h = TILE_HEIGHT;
+        item[i].x = (i % 10) * TILE_WIDTH;
+        item[i].y = (i / 10) * TILE_HEIGHT;
+    }
+    for (int i=0; i < MAX_CHARS; i++)
+    {
+        character[i].w = TILE_WIDTH;
+        character[i].h = TILE_HEIGHT;
+        character[i].x = (i % 10) * TILE_WIDTH;
+        character[i].y = (i / 10) * TILE_HEIGHT;
     }
 
     font = TTF_OpenFont(FILE_FONT, FONT_SIZE);
     palette = loadImage(FILE_TILES, screen);
-    bg = loadImage("bg.png", screen);
-    items = loadImage("items.png", screen);
+    bg = loadImage(FILE_BG, screen);
+    items = loadImage(FILE_ITEMS, screen);
+    chars = loadImage(FILE_CHARS, screen);
     loadLevel(FILE_LVL1, lvl);
     CurrLevel = LEVEL1;
     loadEntities(FILE_ENT1, entities);
@@ -271,7 +288,7 @@ int main(int argc, char* args[])
         drawPlayer(player.x, player.y);
         if (pstate.talking)
             drawText("Kawanishi N1KJ Shiden/Violet Lightning",
-                    10, 100, black);
+                    SCREEN_WIDTH/4, SCREEN_HEIGHT/2, black);
 
 
         // debug text
@@ -281,6 +298,14 @@ int main(int argc, char* args[])
                 pstate.movingLeft, pstate.movingRight,
                 pstate.jumping, pstate.falling, pstate.onGround);
         drawText(playerstate, 0, 20, black);
+        sprintf(playerinv, "inv: %d%d%d%d%d%d",
+                player.inventory[0],
+                player.inventory[1],
+                player.inventory[2],
+                player.inventory[3],
+                player.inventory[4],
+                player.inventory[5]);
+        drawText(playerinv, 150, 0, black);
 
         // Update
         while (SDL_GetTicks() < (1000/FPS_LIMIT + ticksLastFrame))

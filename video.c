@@ -56,18 +56,18 @@ void drawEntities()
     {
         switch(entities[i].type)
         {
-            case ITEM1:
+            case ITEM0:
                 if (player.inventory[0] == 0)
-                    blitImage(items, screen,
+                    blitTile(items, item[0], screen,
                             entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
                 break;
-            case ITEM2:
+            case ITEM1:
                 if (player.inventory[1] == 0)
-                    blitImage(items, screen,
+                    blitTile(items, item[1], screen,
                             entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
                 break;
-            case NPC1:
-                blitImage(items, screen,
+            case NPC0:
+                blitTile(chars, character[1], screen,
                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
 
             default:
@@ -78,7 +78,7 @@ void drawEntities()
 
 void drawPlayer(int x, int y)
 {
-    blitTile(palette, tile[6], screen, x, y);
+    blitTile(chars, character[0], screen, x, y);
 }
 
 void drawText(char *text, int x, int y, SDL_Color fg)

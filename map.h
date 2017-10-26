@@ -30,11 +30,11 @@ typedef enum
     EXIT13,
     EXIT14,
     EXIT15,
+    ITEM0,
     ITEM1,
-    ITEM2,
+    NPC0,
     NPC1,
-    NPC2,
-    NPC3
+    NPC2
 } entityType;
 
 struct entity

@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 
-#define MAX_ITEMS   4
+#define MAX_ITEMS   6
 
 struct protagonist
 {

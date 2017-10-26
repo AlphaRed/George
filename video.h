@@ -8,6 +8,9 @@
 
 
 #define FILE_TILES  "tiles.png"
+#define FILE_ITEMS  "items.png"
+#define FILE_CHARS  "chars.png"
+#define FILE_BG     "bg.png"
 #define FILE_FONT   "FSEX300.ttf"
 
 #define FPS_LIMIT   60
@@ -19,6 +22,8 @@
 #define TILE_HEIGHT 32
 #define TILE_WIDTH  32
 
+#define MAX_CHARS   MAX_TILES
+
 #define FONT_SIZE   16
 
 SDL_Window* window;
@@ -26,11 +31,14 @@ SDL_Surface* screen;
 SDL_Surface* palette;
 SDL_Surface* bg;
 SDL_Surface* items;
+SDL_Surface* chars;
 
 TTF_Font* font;
 SDL_Color black;
 
 SDL_Rect tile[MAX_TILES];
+SDL_Rect item[MAX_ITEMS];
+SDL_Rect character[MAX_TILES];
 
 SDL_Surface* loadImage(char* filename, SDL_Surface* dest);
 
