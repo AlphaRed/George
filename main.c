@@ -8,6 +8,7 @@
 #include "player.h"
 #include "video.h"
 
+#define DEBUG
 
 int initSDL()
 {
@@ -180,9 +181,11 @@ int main(int argc, char* args[])
     SDL_Event eve;
 
     // debug strings
+#ifdef DEBUG
     char playercoords[15];
     char playerstate[30];
     char playerinv[20];
+#endif
 
     if(initSDL() > 0)
         printf("Failed to initialize\n");
@@ -293,6 +296,7 @@ int main(int argc, char* args[])
 
 
         // debug text
+#ifdef DEBUG
         sprintf(playercoords, "X: %d, Y: %d", player.x, player.y);
         drawText(playercoords, 0, 0, black);
         sprintf(playerstate, "states: %d,%d,%d,%d,%d",
@@ -307,6 +311,7 @@ int main(int argc, char* args[])
                 player.inventory[4],
                 player.inventory[5]);
         drawText(playerinv, 150, 0, black);
+#endif
 
         // Update
         while (SDL_GetTicks() < (1000/FPS_LIMIT + ticksLastFrame))
