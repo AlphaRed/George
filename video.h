@@ -49,5 +49,6 @@ void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH]);
 void drawEntities();
 void drawPlayer(int x, int y);
 void drawText(char *text, int x, int y, SDL_Color fg);
+void drawInventory(int x, int y, int xinterval);
 
 #endif

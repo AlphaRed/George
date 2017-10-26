@@ -94,3 +94,14 @@ void drawText(char *text, int x, int y, SDL_Color fg)
     SDL_BlitSurface(textSurface, NULL, screen, &dest);
 }
 
+void drawInventory(int x, int y, int xinterval)
+{
+    for (int i = 0; i < MAX_ITEMS; i++)
+    {
+        if (player.inventory[i] == 1)
+        {
+            blitTile(items, item[i], screen, x, y);
+            x += xinterval;
+        }
+    }
+}

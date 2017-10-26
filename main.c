@@ -111,7 +111,7 @@ int checkEvents(SDL_Event eve)
                             player.y = 13 * TILE_HEIGHT;
                             CurrLevel = LEVEL2;
                             break;
-                        case NPC1:
+                        case NPC0:
                             pstate.talking = 1;
                             pstate.movingLeft = 0;
                             pstate.movingRight = 0;
@@ -289,6 +289,7 @@ int main(int argc, char* args[])
         if (pstate.talking)
             drawText("Kawanishi N1KJ Shiden/Violet Lightning",
                     SCREEN_WIDTH/4, SCREEN_HEIGHT/2, black);
+        drawInventory(200, 8, 64);
 
 
         // debug text
