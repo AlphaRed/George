@@ -33,13 +33,26 @@ void gravity(int *x, int *y)
         {
             if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
             {
-                if(lvl[i][j] == 1 || lvl[i][j] == 2 || lvl[i][j] == 3)
+                switch(lvl[i][j])
                 {
-                    if(*y < i * TILE_HEIGHT) // coming from top
-                    {
-                        *y = (i - 1) * TILE_HEIGHT;
-                        pstate.falling = 0;
-                    }
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 31:
+                    case 32:
+                    case 33:
+                        if(*y < i * TILE_HEIGHT) // coming from top
+                        {
+                            *y = (i - 1) * TILE_HEIGHT;
+                            pstate.falling = 0;
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
             }
         }
@@ -57,7 +70,7 @@ void applyVelocity(int *x, int *y, int dx, int dy)
 
     for(int i = 0; i < MAP_HEIGHT; i++)
     {
-        for(int j = 0; j < MAP_HEIGHT; j++)
+        for(int j = 0; j < MAP_WIDTH; j++)
         {
             if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
             {
