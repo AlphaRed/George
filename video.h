@@ -11,7 +11,7 @@
 #define FILE_ITEMS  "items.png"
 #define FILE_CHARS  "chars.png"
 #define FILE_BG     "bg.png"
-#define FILE_FONT   "FSEX300.ttf"
+#define FILE_FONT   "dpcomic.ttf"
 
 #define FPS_LIMIT   60
 
