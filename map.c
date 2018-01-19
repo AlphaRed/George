@@ -10,7 +10,10 @@ int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
 
     // file can't open
     if (f == NULL)
+    {
+        printf("Couldn't open %s.", filename);
         return 1;
+    }
 
     while((i < MAX_ENTITIES) &&
          (fscanf(f, "%d,%d;%d", &entities[i].x, &entities[i].y, (int*)&entities[i].type) != EOF))
@@ -38,7 +41,10 @@ int loadLevel(char* filename, int array[MAP_HEIGHT][MAP_WIDTH])
 
     // file can't open
     if (f == NULL)
+    {
+        printf("Couldn't open %s.", filename);
         return 1;
+    }
 
     for(y = 0; y < MAP_HEIGHT; y++)
     {

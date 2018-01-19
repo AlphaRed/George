@@ -13,7 +13,11 @@ SDL_Surface* loadImage(char* filename, SDL_Surface* dest)
     SDL_Surface* optimized = NULL;
     SDL_Surface* loaded = IMG_Load(filename);
     if(!loaded)
-        printf("Image failed to load: %s", IMG_GetError());
+    {
+        printf("%s", IMG_GetError());
+        return NULL;
+    }
+
     optimized = SDL_ConvertSurface(loaded, dest->format, 0);
     SDL_FreeSurface(loaded);
     return optimized;

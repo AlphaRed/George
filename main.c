@@ -214,14 +214,30 @@ int main(int argc, char* args[])
         character[i].y = (i / 10) * TILE_HEIGHT;
     }
 
+    // Load some resources and files
     font = TTF_OpenFont(FILE_FONT, FONT_SIZE);
+    if (font == NULL)
+    {
+        printf("Failed to load font: %s.\n", FILE_FONT);
+        return 1;
+    }
     palette = loadImage(FILE_TILES, screen);
+    if (palette == NULL)
+        return 1;
     bg = loadImage(FILE_BG, screen);
+    if (bg == NULL)
+        return 1;
     items = loadImage(FILE_ITEMS, screen);
+    if (items == NULL)
+        return 1;
     chars = loadImage(FILE_CHARS, screen);
-    loadLevel(FILE_LVL1, lvl);
+    if (chars == NULL)
+        return 1;
+    if (loadLevel(FILE_LVL1, lvl) > 0)
+        return 1;
     CurrLevel = LEVEL1;
-    loadEntities(FILE_ENT1, entities);
+    if (loadEntities(FILE_ENT1, entities) > 0)
+        return 1;
 
 
     player.x = 0;
