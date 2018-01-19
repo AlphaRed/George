@@ -188,7 +188,7 @@ int main(int argc, char* args[])
 #endif
 
     if(initSDL() > 0)
-        printf("Failed to initialize\n");
+        fprintf(stderr, "Failed to initialize\n");
 
 
     // setup tile source rectangles
@@ -218,7 +218,7 @@ int main(int argc, char* args[])
     font = TTF_OpenFont(FILE_FONT, FONT_SIZE);
     if (font == NULL)
     {
-        printf("Failed to load font: %s.\n", FILE_FONT);
+        fprintf(stderr, "Failed to load font: %s.\n", FILE_FONT);
         return 1;
     }
     palette = loadImage(FILE_TILES, screen);

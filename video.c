@@ -14,7 +14,7 @@ SDL_Surface* loadImage(char* filename, SDL_Surface* dest)
     SDL_Surface* loaded = IMG_Load(filename);
     if(!loaded)
     {
-        printf("%s", IMG_GetError());
+        fprintf(stderr, "%s", IMG_GetError());
         return NULL;
     }
 
