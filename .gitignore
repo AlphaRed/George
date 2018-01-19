@@ -3,6 +3,7 @@
 *.exe
 
 # Codeblocks
+/bin/Release/*
 *.cbp
 *.depend
 *.layout
