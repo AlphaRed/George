@@ -7,6 +7,7 @@
 #include "video.h"
 
 SDL_Color black={0,0,0};
+SDL_Color white={255,255,255};
 
 SDL_Surface* loadImage(char* filename, SDL_Surface* dest)
 {
@@ -109,4 +110,22 @@ void drawInventory(int x, int y, int xinterval)
             x += xinterval;
         }
     }
+}
+
+void textBox(char *text)
+{
+    Uint32 color = SDL_MapRGB(screen->format, 70, 70, 70);
+    SDL_Surface* textSurface;
+    SDL_Rect dest;
+    dest.x = 50;
+    dest.w = SCREEN_WIDTH - 100; // screen width minus a bit
+    dest.h = (FONT_SIZE * 3) + 4; // fit three lines of text in the box and a little bit
+    dest.y = SCREEN_HEIGHT - dest.h - (FONT_SIZE * 1);
+
+    textSurface = TTF_RenderText_Solid(font, text, white);
+
+    SDL_FillRect(screen, &dest, color);
+    dest.x += 2; // text margin
+    dest.y += 2; //
+    SDL_BlitSurface(textSurface, NULL, screen, &dest);
 }

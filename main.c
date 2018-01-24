@@ -306,8 +306,7 @@ int main(int argc, char* args[])
         drawEntities();
         drawPlayer(player.x, player.y);
         if (pstate.talking)
-            drawText("Kawanishi N1KJ Shiden/Violet Lightning",
-                    SCREEN_WIDTH/4, SCREEN_HEIGHT/2, black);
+            textBox("Kawanishi N1KJ Shiden/Violet Lightning");
         drawInventory(200, 8, 64);
 
 
