@@ -27,21 +27,18 @@ int initSDL()
             printf("Window failed to be created: %s\n", SDL_GetError());
             return 1;
         }
-        else
-        {
-            screen = SDL_GetWindowSurface(window);
+        screen = SDL_GetWindowSurface(window);
 
-            // Initialize libraries
-            if(IMG_Init(IMG_INIT_PNG) < 0)
-            {
-                printf("SDL_Image library failed to initialize: %s", IMG_GetError());
-                return 2;
-            }
-            if(TTF_Init()==-1)
-            {
-                printf("SDL_TTF library failed to initialize: %s", TTF_GetError());
-                return 3;
-            }
+        // Initialize libraries
+        if(IMG_Init(IMG_INIT_PNG) < 0)
+        {
+            printf("SDL_Image library failed to initialize: %s", IMG_GetError());
+            return 2;
+        }
+        if(TTF_Init()==-1)
+        {
+            printf("SDL_TTF library failed to initialize: %s", TTF_GetError());
+            return 3;
         }
     }
     return 0;
