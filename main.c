@@ -69,7 +69,7 @@ int checkEvents(SDL_Event eve)
             if ((pstate.falling != 1) && (pstate.talking != 1))
                 pstate.jumping = 1;
             break;
-        case SDLK_s:
+        case SDLK_SPACE:
             // exit talking
             if (pstate.talking == 1) {
                 pstate.talking = 0;
@@ -143,6 +143,7 @@ int checkEvents(SDL_Event eve)
                 pstate.movingLeft = 0;
             }
             break;
+        case SDLK_ESCAPE:
         case SDLK_RETURN:
             return 0;
             break;
