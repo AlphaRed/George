@@ -65,9 +65,18 @@ int checkEvents(SDL_Event eve)
         switch(eve.key.keysym.sym)
         {
         case SDLK_w:
+            if (nograv) // nograv mode move up
+            {
+                pstate.movingUp = 1;
+                break;
+            }
             // can't jump when falling and talking
             if ((pstate.falling != 1) && (pstate.talking != 1))
                 pstate.jumping = 1;
+            break;
+        case SDLK_s:
+            // nograv downwards
+            if (nograv) pstate.movingDown = 1;
             break;
         case SDLK_SPACE:
             // exit talking
@@ -143,6 +152,12 @@ int checkEvents(SDL_Event eve)
                 pstate.movingLeft = 0;
             }
             break;
+#ifdef DEBUG
+        case SDLK_g: // nograv toggle
+            if (nograv) nograv = 0;
+            else nograv = 1;
+            break;
+#endif // DEBUG
         case SDLK_ESCAPE:
         case SDLK_RETURN:
             return 0;
@@ -156,8 +171,16 @@ int checkEvents(SDL_Event eve)
         switch(eve.key.keysym.sym)
         {
         case SDLK_w:
+            if (nograv)
+            {
+                pstate.movingUp = 0;
+                break;
+            }
             pstate.jumping = 0;
             pstate.falling = 1;
+            break;
+        case SDLK_s:
+            if (nograv) pstate.movingDown = 0;
             break;
         case SDLK_a:
             pstate.movingLeft = 0;
@@ -181,7 +204,7 @@ int main(int argc, char* args[])
     // debug strings
 #ifdef DEBUG
     char playercoords[15];
-    char playerstate[30];
+    char playerstate[40];
     char playerinv[20];
 #endif
 
@@ -260,12 +283,17 @@ int main(int argc, char* args[])
         quit = checkEvents(eve);
 
         // Physics
-        gravity(&player.x, &player.y);
+        if (nograv == 0)
+            gravity(&player.x, &player.y);
 
         if (pstate.movingLeft && player.dx > -MOVE_SPEED_LIMIT)
             player.dx -= PLAYER_MOVE_ACCEL;
         if (pstate.movingRight && player.dx < MOVE_SPEED_LIMIT)
             player.dx += PLAYER_MOVE_ACCEL;
+        if (pstate.movingUp && player.dy > -MOVE_SPEED_LIMIT)
+            player.dy -= PLAYER_MOVE_ACCEL;
+        if (pstate.movingDown && player.dy < MOVE_SPEED_LIMIT)
+            player.dy += PLAYER_MOVE_ACCEL;
         if (pstate.jumping)
         {
             player.dy = -PLAYER_JUMP_VEL;
@@ -312,8 +340,8 @@ int main(int argc, char* args[])
 #ifdef DEBUG
         sprintf(playercoords, "X: %d, Y: %d", player.x, player.y);
         drawText(playercoords, 0, 0, black);
-        sprintf(playerstate, "states: %d,%d,%d,%d,%d",
-                pstate.movingLeft, pstate.movingRight,
+        sprintf(playerstate, "states: %d,%d,%d,%d,%d,%d,%d",
+                pstate.movingLeft, pstate.movingRight, pstate.movingUp, pstate.movingDown,
                 pstate.jumping, pstate.falling, pstate.onGround);
         drawText(playerstate, 0, 20, black);
         sprintf(playerinv, "inv: %d%d%d%d%d%d",

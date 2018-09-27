@@ -18,6 +18,8 @@ struct states
 {
     int movingLeft;
     int movingRight;
+    int movingUp;
+    int movingDown;
     int jumping;
     int falling;
     int onGround;
