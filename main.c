@@ -19,7 +19,7 @@ int initSDL()
     }
     else
     {
-        window = SDL_CreateWindow("Biggun", SDL_WINDOWPOS_UNDEFINED,
+        window = SDL_CreateWindow("George", SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
                 SDL_WINDOW_SHOWN);
         if(window == NULL)

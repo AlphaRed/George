@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <math.h>
 
 #include "map.h"
 #include "physics.h"
@@ -66,6 +67,15 @@ void applyVelocity(int *x, int *y, int dx, int dy)
     //if ((*dx > 0) && (*dx > TERMINAL_VELOCITY)) *dx = TERMINAL_VELOCITY;
     //if ((*dy > 0) && (*dy > TERMINAL_VELOCITY)) *dy = TERMINAL_VELOCITY;
 
+    //int amtTop, amtRight, amtBottom, amtLeft;
+    int amt[4]; // 0 top, clockwise to 3 left
+    int lowest;
+    int side; // side that collided
+
+    int xn, yn; // old coordinates
+    xn = *x;
+    yn = *y;
+
     *x += dx;
     *y += dy;
 
@@ -86,23 +96,81 @@ void applyVelocity(int *x, int *y, int dx, int dy)
                     case 31:
                     case 32:
                     case 33:
-                        if(*y > i * TILE_HEIGHT) // coming from below, works better if check this first
+                        amt[0] = abs(i*TILE_HEIGHT - (*y+TILE_HEIGHT)); // top
+                        amt[1] = abs((j+1)*TILE_WIDTH - *x); // right
+                        amt[2] = abs((i+1)*TILE_HEIGHT - *y); // bottom
+                        amt[3] = abs(j*TILE_WIDTH - (*x+TILE_WIDTH)); //left
+
+                        lowest = amt[0];
+                        for (int k = 0; k < 4; k++)
                         {
-                            *y = (i + 1) * TILE_HEIGHT;
+                            if (amt[k] < lowest)
+                            {
+                                lowest = amt[k];
+                                side = k;
+                            }
                         }
-                        else if(*x < j * TILE_WIDTH) // coming from the left
+
+                        switch (side)
                         {
-                            *x = (j - 1) * TILE_WIDTH;
+                            case 0: // coming from top
+                                *y = (i - 1) * TILE_HEIGHT;
+                                pstate.falling = 0;
+                                break;
+                            case 1: // coming from the right
+                                *x = (j + 1) * TILE_WIDTH;
+                                break;
+                            case 2: // coming from below
+                                *y = (i + 1) * TILE_HEIGHT;
+                                break;
+                            case 3: // coming from the left
+                                *x = (j - 1) * TILE_WIDTH;
+                                break;
+                            default:
+                                break;
                         }
-                        else if(*x > j * TILE_WIDTH) // coming from the right
+                        /*
+                        if (1)
                         {
-                            *x = (j + 1) * TILE_WIDTH;
+                            if(*x < j * TILE_WIDTH) // coming from the left
+                            {
+                                *x = (j - 1) * TILE_WIDTH;
+                            }
+                            else if(*x > j * TILE_WIDTH) // coming from the right
+                            {
+                                *x = (j + 1) * TILE_WIDTH;
+                            }
+                            else if(*y < i * TILE_HEIGHT) // coming from top
+                            {
+                                *y = (i - 1) * TILE_HEIGHT;
+                                pstate.falling = 0;
+                            }
+                            else if(*y > i * TILE_HEIGHT) // coming from below
+                            {
+                                *y = (i + 1) * TILE_HEIGHT;
+                            }
                         }
-                        else if(*y < i * TILE_HEIGHT) // coming from top
+                        else
                         {
-                            *y = (i - 1) * TILE_HEIGHT;
-                            pstate.falling = 0;
-                        }
+                            if(*y < i * TILE_HEIGHT) // coming from top
+                            {
+                                *y = (i - 1) * TILE_HEIGHT;
+                                pstate.falling = 0;
+                            }
+                            else if(*y > i * TILE_HEIGHT) // coming from below
+                            {
+                                *y = (i + 1) * TILE_HEIGHT;
+                            }
+                            else if(*x < j * TILE_WIDTH) // coming from the left
+                            {
+                                *x = (j - 1) * TILE_WIDTH;
+                            }
+                            else if(*x > j * TILE_WIDTH) // coming from the right
+                            {
+                                *x = (j + 1) * TILE_WIDTH;
+                            }
+
+                        }*/
                         break;
 
                     default:
