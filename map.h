@@ -7,7 +7,7 @@
 #define FILE_ENT1   "1.ent"
 #define FILE_ENT2   "2.ent"
 
-#define MAX_ENTITIES    20
+#define MAX_ENTITIES    25
 
 #define MAP_WIDTH       20
 #define MAP_HEIGHT      15

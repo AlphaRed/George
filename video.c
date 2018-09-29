@@ -75,6 +75,11 @@ void drawEntities()
             case NPC0:
                 blitTile(chars, character[10], screen,
                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
+                break;
+            case NPC1:
+                blitTile(chars, character[11], screen,
+                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
+                break;
 
             default:
                 break;
@@ -114,7 +119,7 @@ void drawInventory(int x, int y, int xinterval)
 
 void textBox(char *text)
 {
-    Uint32 color = SDL_MapRGB(screen->format, 70, 70, 70);
+    Uint32 color = SDL_MapRGB(screen->format, 0, 0, 0);
     SDL_Surface* textSurface;
     SDL_Rect dest;
     dest.x = 50;

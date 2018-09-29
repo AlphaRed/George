@@ -71,7 +71,7 @@ int checkEvents(SDL_Event eve)
                 break;
             }
             // can't jump when falling and talking
-            if ((pstate.falling != 1) && (pstate.talking != 1))
+            if ((pstate.falling != 1) && (pstate.talking == 0))
                 pstate.jumping = 1;
             break;
         case SDLK_s:
@@ -80,7 +80,7 @@ int checkEvents(SDL_Event eve)
             break;
         case SDLK_SPACE:
             // exit talking
-            if (pstate.talking == 1) {
+            if (pstate.talking > 0) {
                 pstate.talking = 0;
                 break;
             }
@@ -124,6 +124,12 @@ int checkEvents(SDL_Event eve)
                             pstate.movingRight = 0;
                             pstate.jumping = 0;
                             break;
+                        case NPC1:
+                            pstate.talking = 2;
+                            pstate.movingLeft = 0;
+                            pstate.movingRight = 0;
+                            pstate.jumping = 0;
+                            break;
                         default:
                             break;
                     }
@@ -141,13 +147,13 @@ int checkEvents(SDL_Event eve)
             }
             break;
         case SDLK_a:
-            if (pstate.talking != 1) {
+            if (pstate.talking == 0) {
                 pstate.movingLeft = 1;
                 pstate.movingRight = 0;
             }
             break;
         case SDLK_d:
-            if (pstate.talking != 1) {
+            if (pstate.talking == 0) {
                 pstate.movingRight = 1;
                 pstate.movingLeft = 0;
             }
@@ -341,8 +347,19 @@ int main(int argc, char* args[])
         drawLevel(lvl);
         drawEntities();
         drawPlayer(player.x, player.y);
-        if (pstate.talking)
+        switch (pstate.talking)
+        {
+        case 0:
+            break;
+        case 1:
             textBox("Kawanishi N1KJ Shiden/Violet Lightning");
+            break;
+        case 2:
+            textBox("The N1K2-J Shiden-Kai offered a formidable, if demanding aircraft, in limited quantities.");
+            break;
+        default:
+            break;
+        }
         drawInventory(200, 8, 64);
 
 
