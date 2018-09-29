@@ -205,7 +205,7 @@ int main(int argc, char* args[])
 {
     int quit = 1;
     unsigned int ticksLastFrame = 0;
-    int frame = 0;
+    int playerframecounter = 0;
     SDL_Event eve;
 
     // debug strings
@@ -337,8 +337,8 @@ int main(int argc, char* args[])
         // Animation
         if ((pstate.falling == 0) && (pstate.jumping == 0) &&
             (pstate.movingLeft || pstate.movingRight))
-            frame++;
-        else frame = 0;
+            playerframecounter++;
+        else playerframecounter = 0;
         if (pstate.jumping) player.frame = 2;
         if (pstate.falling) player.frame = 3;
 
@@ -365,7 +365,7 @@ int main(int argc, char* args[])
 
         // debug text
 #ifdef DEBUG
-        sprintf(playercoords, "F:%.2d X: %.3d, Y: %.3d", frame, player.x, player.y);
+        sprintf(playercoords, "F:%.2d X: %.3d, Y: %.3d", playerframecounter, player.x, player.y);
         drawText(playercoords, 0, 0, black);
         sprintf(playerstate, "states: %d,%d,%d,%d,%d,%d,%d",
                 pstate.movingLeft, pstate.movingRight, pstate.movingUp, pstate.movingDown,
@@ -386,8 +386,8 @@ int main(int argc, char* args[])
             SDL_Delay(1);
         SDL_UpdateWindowSurface(window);
         ticksLastFrame = SDL_GetTicks();
-        if (frame > 20) frame = 0;
-        if (frame >= 10) player.frame = 1;
+        if (playerframecounter > 20) playerframecounter = 0;
+        if (playerframecounter >= 10) player.frame = 1;
         else player.frame = 0;
     }
 
