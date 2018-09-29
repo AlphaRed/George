@@ -199,6 +199,7 @@ int main(int argc, char* args[])
 {
     int quit = 1;
     unsigned int ticksLastFrame = 0;
+    int frame = 0;
     SDL_Event eve;
 
     // debug strings
@@ -267,6 +268,7 @@ int main(int argc, char* args[])
     player.dy = 0;
     for(int i = 0; i < MAX_ITEMS; i++) // empty the inventory!
         player.inventory[i] = 0;
+    player.frame = 0;
 
     pstate.movingLeft = 0;
     pstate.movingRight = 0;
@@ -326,6 +328,11 @@ int main(int argc, char* args[])
             pstate.falling = 0;
         }
 
+        // Animation
+        if ((pstate.falling == 0) && (pstate.jumping == 0) && (pstate.movingLeft || pstate.movingRight))
+            frame++;
+        else frame = 0;
+
         // Draw
         blitImage(bg, screen, 0, 0);
         drawLevel(lvl);
@@ -338,11 +345,11 @@ int main(int argc, char* args[])
 
         // debug text
 #ifdef DEBUG
-        sprintf(playercoords, "X: %d, Y: %d", player.x, player.y);
+        sprintf(playercoords, "F:%.2d X: %.3d, Y: %.3d", frame, player.x, player.y);
         drawText(playercoords, 0, 0, black);
         sprintf(playerstate, "states: %d,%d,%d,%d,%d,%d,%d",
                 pstate.movingLeft, pstate.movingRight, pstate.movingUp, pstate.movingDown,
-                pstate.jumping, pstate.falling, pstate.onGround);
+                pstate.jumping, pstate.falling, pstate.talking);
         drawText(playerstate, 0, 20, black);
         sprintf(playerinv, "inv: %d%d%d%d%d%d",
                 player.inventory[0],
@@ -359,6 +366,9 @@ int main(int argc, char* args[])
             SDL_Delay(1);
         SDL_UpdateWindowSurface(window);
         ticksLastFrame = SDL_GetTicks();
+        if (frame > 20) frame = 0;
+        if (frame >= 10) player.frame = 1;
+        else player.frame = 0;
     }
 
 

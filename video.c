@@ -84,7 +84,7 @@ void drawEntities()
 
 void drawPlayer(int x, int y)
 {
-    blitTile(chars, character[0], screen, x, y);
+    blitTile(chars, character[player.frame], screen, x, y);
 }
 
 void drawText(char *text, int x, int y, SDL_Color fg)

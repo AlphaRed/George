@@ -12,6 +12,7 @@ struct protagonist
     int dx;
     int dy;
     int inventory[MAX_ITEMS]; // 0 -> no item, 1 -> have item, 2 -> used item
+    int frame;
 } player;
 
 struct states
@@ -22,7 +23,6 @@ struct states
     int movingDown;
     int jumping;
     int falling;
-    int onGround;
     int talking;
 } pstate;
 

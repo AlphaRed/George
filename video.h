@@ -35,6 +35,7 @@ SDL_Surface* chars;
 
 TTF_Font* font;
 SDL_Color black;
+SDL_Color white;
 
 SDL_Rect tile[MAX_TILES];
 SDL_Rect item[MAX_ITEMS];
