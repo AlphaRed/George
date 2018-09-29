@@ -73,7 +73,7 @@ void drawEntities()
                             entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
                 break;
             case NPC0:
-                blitTile(chars, character[1], screen,
+                blitTile(chars, character[10], screen,
                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
 
             default:

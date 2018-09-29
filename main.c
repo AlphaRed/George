@@ -329,9 +329,12 @@ int main(int argc, char* args[])
         }
 
         // Animation
-        if ((pstate.falling == 0) && (pstate.jumping == 0) && (pstate.movingLeft || pstate.movingRight))
+        if ((pstate.falling == 0) && (pstate.jumping == 0) &&
+            (pstate.movingLeft || pstate.movingRight))
             frame++;
         else frame = 0;
+        if (pstate.jumping) player.frame = 2;
+        if (pstate.falling) player.frame = 3;
 
         // Draw
         blitImage(bg, screen, 0, 0);
