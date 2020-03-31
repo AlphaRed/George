@@ -41,6 +41,8 @@ SDL_Rect tile[MAX_TILES];
 SDL_Rect item[MAX_ITEMS];
 SDL_Rect character[MAX_TILES];
 
+int entityanimframe;
+
 SDL_Surface* loadImage(char* filename, SDL_Surface* dest);
 
 void blitImage(SDL_Surface* image, SDL_Surface* dest, int x, int y);

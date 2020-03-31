@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "map.h"
 #include "physics.h"
@@ -206,6 +207,7 @@ int main(int argc, char* args[])
     int quit = 1;
     unsigned int ticksLastFrame = 0;
     int playerframecounter = 0;
+    int entityframecounter = 0;
     SDL_Event eve;
 
     // debug strings
@@ -281,6 +283,8 @@ int main(int argc, char* args[])
     pstate.falling = 0;
     pstate.jumping = 0;
     pstate.talking = 0;
+
+    nograv = 0;
 
 
     // Game Loop
@@ -367,9 +371,21 @@ int main(int argc, char* args[])
 #ifdef DEBUG
         sprintf(playercoords, "F:%.2d X: %.3d, Y: %.3d", playerframecounter, player.x, player.y);
         drawText(playercoords, 0, 0, black);
-        sprintf(playerstate, "states: %d,%d,%d,%d,%d,%d,%d",
-                pstate.movingLeft, pstate.movingRight, pstate.movingUp, pstate.movingDown,
-                pstate.jumping, pstate.falling, pstate.talking);
+        sprintf(playerstate, " ");
+        if (pstate.movingLeft)
+            strcat(playerstate, "left ");
+        if (pstate.movingRight)
+            strcat(playerstate, "right ");
+        if (pstate.movingDown)
+            strcat(playerstate, "down ");
+        if (pstate.movingUp)
+            strcat(playerstate, "up ");
+        if (pstate.jumping)
+            strcat(playerstate, "jumping ");
+        if (pstate.falling)
+            strcat(playerstate, "falling ");
+        if (pstate.talking)
+            strcat(playerstate, "talking ");
         drawText(playerstate, 0, 20, black);
         sprintf(playerinv, "inv: %d%d%d%d%d%d",
                 player.inventory[0],
@@ -386,6 +402,15 @@ int main(int argc, char* args[])
             SDL_Delay(1);
         SDL_UpdateWindowSurface(window);
         ticksLastFrame = SDL_GetTicks();
+        // frames
+        entityframecounter++;
+        if (entityframecounter >= 100)
+        {
+            entityframecounter = 0;
+            for (int i=0; i < MAX_ENTITIES; i++)
+                entityanimframe = 0;
+        }
+        if (entityframecounter == 50) entityanimframe = 1;
         if (playerframecounter > 20) playerframecounter = 0;
         if (playerframecounter >= 10) player.frame = 1;
         else player.frame = 0;

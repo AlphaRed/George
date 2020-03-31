@@ -6,7 +6,6 @@
 #include "player.h"
 #include "video.h"
 
-nograv = 0;
 
 int checkCollision(int x, int y, int x1, int y1)
 {

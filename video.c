@@ -73,11 +73,11 @@ void drawEntities()
                             entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
                 break;
             case NPC0:
-                blitTile(chars, character[10], screen,
+                blitTile(chars, character[10+entityanimframe], screen,
                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
                 break;
             case NPC1:
-                blitTile(chars, character[11], screen,
+                blitTile(chars, character[12+entityanimframe], screen,
                          entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
                 break;
 
