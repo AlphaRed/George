@@ -1,9 +1,11 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <string.h>
 
+#include "audio.h"
 #include "map.h"
 #include "physics.h"
 #include "player.h"
@@ -13,7 +15,7 @@
 
 int initSDL()
 {
-    if(SDL_Init(SDL_INIT_VIDEO) < 0)
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
     {
        printf("SDL failed to initialize: %s\n", SDL_GetError());
        return 1;
@@ -41,12 +43,19 @@ int initSDL()
         printf("SDL_TTF library failed to initialize: %s", TTF_GetError());
         return 3;
     }
+    // Initialize sound
+    if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+    {
+        printf("SDL_mixer failed to open audio: %s", Mix_GetError());
+        return 1;
+    }
     return 0;
 }
 
 void cleanup()
 {
     SDL_DestroyWindow(window);
+    Mix_CloseAudio();
     TTF_CloseFont(font);
     TTF_Quit();
     IMG_Quit();
@@ -72,7 +81,10 @@ int checkEvents(SDL_Event eve)
             }
             // can't jump when falling and talking
             if ((pstate.falling != 1) && (pstate.talking == 0))
+            {
                 pstate.jumping = 1;
+                Mix_PlayChannel(-1, sndjump,0);
+            }
             break;
         case SDLK_s:
             // nograv downwards
@@ -137,13 +149,19 @@ int checkEvents(SDL_Event eve)
             }
             if(CurrLevel == LEVEL1) // check current level first
             {
-                if(ptx == 6 && pty == 13)
+                if(ptx == 6 && pty == 13 && (player.inventory[0] == 0))
+                {
+                    Mix_PlayChannel(-1, snditemget,0);
                     player.inventory[0] = 1; // grab the item
+                }
             }
             else if(CurrLevel == LEVEL2)
             {
-                if(ptx == 8 && pty == 13)
+                if(ptx == 8 && pty == 13 && (player.inventory[1] == 0))
+                {
                     player.inventory[1] = 1;
+                    Mix_PlayChannel(-1, snditemget,0);
+                }
             }
             break;
         case SDLK_a:
@@ -219,7 +237,6 @@ int main(int argc, char* args[])
     if(initSDL() > 0)
         fprintf(stderr, "Failed to initialize\n");
 
-
     // setup tile source rectangles
     for (int i=0; i < MAX_TILES; i++)
     {
@@ -268,6 +285,15 @@ int main(int argc, char* args[])
     if (loadEntities(FILE_ENT1, entities) > 0)
         return 1;
 
+    // Load sounds
+    sndjump = Mix_LoadWAV(SOUND_JUMP);
+    snditemget = Mix_LoadWAV(SOUND_ITEMGET);
+    if (!snditemget && !sndjump)
+    {
+        printf("Sound files fail to load.%s", SDL_GetError());
+        return 1;
+    }
+    Mix_Volume(-1, MIX_MAX_VOLUME/2);
 
     player.x = 0;
     player.y = 0;
