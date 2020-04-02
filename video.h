@@ -27,11 +27,12 @@
 #define FONT_SIZE   16
 
 SDL_Window* window;
+SDL_Renderer* renderer;
 SDL_Surface* screen;
-SDL_Surface* palette;
-SDL_Surface* bg;
-SDL_Surface* items;
-SDL_Surface* chars;
+SDL_Texture* palette;
+SDL_Texture* bg;
+SDL_Texture* items;
+SDL_Texture* chars;
 
 TTF_Font* font;
 SDL_Color black;
@@ -43,10 +44,7 @@ SDL_Rect character[MAX_TILES];
 
 int entityanimframe;
 
-SDL_Surface* loadImage(char* filename, SDL_Surface* dest);
-
-void blitImage(SDL_Surface* image, SDL_Surface* dest, int x, int y);
-void blitTile(SDL_Surface* image, SDL_Rect tileRect, SDL_Surface* dest, int x, int y);
+void blitTile(SDL_Texture* image, SDL_Rect tileRect, int x, int y);
 
 void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH]);
 void drawEntities();

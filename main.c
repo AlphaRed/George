@@ -18,29 +18,28 @@ int initSDL()
        printf("SDL failed to initialize: %s\n", SDL_GetError());
        return 1;
     }
-    else
-    {
-        window = SDL_CreateWindow("George", SDL_WINDOWPOS_UNDEFINED,
-                SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
-                SDL_WINDOW_SHOWN);
-        if(window == NULL)
-        {
-            printf("Window failed to be created: %s\n", SDL_GetError());
-            return 1;
-        }
-        screen = SDL_GetWindowSurface(window);
 
-        // Initialize libraries
-        if(IMG_Init(IMG_INIT_PNG) < 0)
-        {
-            printf("SDL_Image library failed to initialize: %s", IMG_GetError());
-            return 2;
-        }
-        if(TTF_Init()==-1)
-        {
-            printf("SDL_TTF library failed to initialize: %s", TTF_GetError());
-            return 3;
-        }
+    window = SDL_CreateWindow("George", SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
+            SDL_WINDOW_SHOWN);
+    if(window == NULL)
+    {
+        printf("Window failed to be created: %s\n", SDL_GetError());
+        return 1;
+    }
+    screen = SDL_GetWindowSurface(window);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    // Initialize libraries
+    if(IMG_Init(IMG_INIT_PNG) < 0)
+    {
+        printf("SDL_Image library failed to initialize: %s", IMG_GetError());
+        return 2;
+    }
+    if(TTF_Init()==-1)
+    {
+        printf("SDL_TTF library failed to initialize: %s", TTF_GetError());
+        return 3;
     }
     return 0;
 }
@@ -251,16 +250,16 @@ int main(int argc, char* args[])
         fprintf(stderr, "Failed to load font: %s.\n", FILE_FONT);
         return 1;
     }
-    palette = loadImage(FILE_TILES, screen);
+    palette = IMG_LoadTexture(renderer, FILE_TILES);
     if (palette == NULL)
         return 1;
-    bg = loadImage(FILE_BG, screen);
+    bg = IMG_LoadTexture(renderer, FILE_BG);
     if (bg == NULL)
         return 1;
-    items = loadImage(FILE_ITEMS, screen);
+    items = IMG_LoadTexture(renderer, FILE_ITEMS);
     if (items == NULL)
         return 1;
-    chars = loadImage(FILE_CHARS, screen);
+    chars = IMG_LoadTexture(renderer, FILE_CHARS);
     if (chars == NULL)
         return 1;
     if (loadLevel(FILE_LVL1, lvl) > 0)
@@ -347,7 +346,7 @@ int main(int argc, char* args[])
         if (pstate.falling) player.frame = 3;
 
         // Draw
-        blitImage(bg, screen, 0, 0);
+        SDL_RenderCopy(renderer, bg, NULL, NULL);
         drawLevel(lvl);
         drawEntities();
         drawPlayer(player.x, player.y);
@@ -400,7 +399,8 @@ int main(int argc, char* args[])
         // Update
         while (SDL_GetTicks() < (1000/FPS_LIMIT + ticksLastFrame))
             SDL_Delay(1);
-        SDL_UpdateWindowSurface(window);
+        //SDL_UpdateWindowSurface(window);
+        SDL_RenderPresent(renderer);
         ticksLastFrame = SDL_GetTicks();
         // frames
         entityframecounter++;
