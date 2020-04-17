@@ -6,7 +6,7 @@
 
 #include "map.h"
 
-
+// Files
 #define FILE_TILES  "tiles.png"
 #define FILE_ITEMS  "items.png"
 #define FILE_CHARS  "chars.png"
@@ -15,16 +15,16 @@
 
 #define FPS_LIMIT   60
 
-#define SCREEN_WIDTH    640
-#define SCREEN_HEIGHT   480
-
-#define MAX_TILES   100
-#define TILE_HEIGHT 32
-#define TILE_WIDTH  32
-
-#define MAX_CHARS   MAX_TILES
-
+// Dimensions
+#define TILE_HEIGHT     16
+#define TILE_WIDTH      TILE_HEIGHT
+#define SCREEN_WIDTH    20 * TILE_WIDTH
+#define SCREEN_HEIGHT   15 * TILE_WIDTH
 #define FONT_SIZE   16
+
+// Limits
+#define MAX_TILES       100
+#define MAX_CHARS   MAX_TILES
 
 SDL_Window* window;
 SDL_Renderer* renderer;

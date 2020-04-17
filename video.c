@@ -30,7 +30,7 @@ void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH])
     {
         for(x = 0; x < MAP_WIDTH; x++)
         {
-            blitTile(palette, tile[array[y][x]], x * 32, y * 32);
+            blitTile(palette, tile[array[y][x]], x * TILE_WIDTH, y * TILE_HEIGHT);
         }
     }
 }

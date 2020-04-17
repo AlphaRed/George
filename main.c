@@ -119,7 +119,7 @@ int checkEvents(SDL_Event eve)
                         case EXIT1:
                             loadLevel(FILE_LVL1, lvl);
                             loadEntities(FILE_ENT1, entities);
-                            player.x = 20 * TILE_WIDTH;
+                            player.x = 19 * TILE_WIDTH;
                             player.y = 13 * TILE_HEIGHT;
                             CurrLevel = LEVEL1;
                             break;
@@ -395,7 +395,7 @@ int main(int argc, char* args[])
         // debug text
 #ifdef DEBUG
         sprintf(playercoords, "F:%.2d X: %.3d, Y: %.3d", playerframecounter, player.x, player.y);
-        drawText(playercoords, 0, 0, black);
+        drawText(playercoords, 0, 0, white);
         sprintf(playerstate, " ");
         if (pstate.movingLeft)
             strcat(playerstate, "left ");
@@ -411,7 +411,7 @@ int main(int argc, char* args[])
             strcat(playerstate, "falling ");
         if (pstate.talking)
             strcat(playerstate, "talking ");
-        drawText(playerstate, 0, 20, black);
+        drawText(playerstate, 0, 20, white);
         sprintf(playerinv, "inv: %d%d%d%d%d%d",
                 player.inventory[0],
                 player.inventory[1],
@@ -419,7 +419,7 @@ int main(int argc, char* args[])
                 player.inventory[3],
                 player.inventory[4],
                 player.inventory[5]);
-        drawText(playerinv, 150, 0, black);
+        drawText(playerinv, 150, 0, white);
 #endif
 
         // Update
