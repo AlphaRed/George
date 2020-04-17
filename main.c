@@ -393,7 +393,7 @@ int main(int argc, char* args[])
         default:
             break;
         }
-        drawInventory(200, 8, 64);
+        drawInventory(SCREEN_WIDTH/8, SCREEN_HEIGHT/8, 2*TILE_WIDTH);
 
 
         // debug text
