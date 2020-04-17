@@ -44,7 +44,7 @@ SDL_Rect character[MAX_TILES];
 
 int entityanimframe;
 
-void blitTile(SDL_Texture* image, SDL_Rect tileRect, int x, int y);
+void blitTile(SDL_Texture* image, SDL_Rect tileRect, int x, int y, int flip);
 
 void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH]);
 void drawEntities();

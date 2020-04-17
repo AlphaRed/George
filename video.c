@@ -10,7 +10,7 @@ SDL_Color black={0,0,0};
 SDL_Color white={255,255,255};
 
 
-void blitTile(SDL_Texture* texture, SDL_Rect tileRect, int x, int y)
+void blitTile(SDL_Texture* texture, SDL_Rect tileRect, int x, int y, int flip)
 {
     SDL_Rect destRect;
     destRect.x = x;
@@ -18,7 +18,7 @@ void blitTile(SDL_Texture* texture, SDL_Rect tileRect, int x, int y)
     destRect.w = TILE_WIDTH;
     destRect.h = TILE_HEIGHT;
 
-    SDL_RenderCopy(renderer, texture, &tileRect, &destRect);
+    SDL_RenderCopyEx(renderer, texture, &tileRect, &destRect, 0, 0, flip);
 }
 
 
@@ -30,7 +30,7 @@ void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH])
     {
         for(x = 0; x < MAP_WIDTH; x++)
         {
-            blitTile(palette, tile[array[y][x]], x * TILE_WIDTH, y * TILE_HEIGHT);
+            blitTile(palette, tile[array[y][x]], x * TILE_WIDTH, y * TILE_HEIGHT, SDL_FLIP_NONE);
         }
     }
 }
@@ -44,20 +44,20 @@ void drawEntities()
             case ITEM0:
                 if (player.inventory[0] == 0)
                     blitTile(items, item[0],
-                            entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
+                            entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
             case ITEM1:
                 if (player.inventory[1] == 0)
                     blitTile(items, item[1],
-                            entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
+                            entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
             case NPC0:
                 blitTile(chars, character[10+entityanimframe],
-                        entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
+                        entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
             case NPC1:
                 blitTile(chars, character[12+entityanimframe],
-                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT);
+                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
 
             default:
@@ -68,7 +68,12 @@ void drawEntities()
 
 void drawPlayer(int x, int y)
 {
-    blitTile(chars, character[player.frame], x, y);
+    int flip = SDL_FLIP_NONE;
+
+    if (pstate.facingLeft)
+        flip = SDL_FLIP_HORIZONTAL;
+
+    blitTile(chars, character[player.frame], x, y, flip);
 }
 
 void drawText(char *text, int x, int y, SDL_Color fg)
@@ -96,7 +101,7 @@ void drawInventory(int x, int y, int xinterval)
     {
         if (player.inventory[i] == 1)
         {
-            blitTile(items, item[i], x, y);
+            blitTile(items, item[i], x, y, SDL_FLIP_NONE);
             x += xinterval;
         }
     }

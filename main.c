@@ -168,12 +168,16 @@ int checkEvents(SDL_Event eve)
             if (pstate.talking == 0) {
                 pstate.movingLeft = 1;
                 pstate.movingRight = 0;
+                pstate.facingLeft = 1;
+                pstate.facingRight = 0;
             }
             break;
         case SDLK_d:
             if (pstate.talking == 0) {
                 pstate.movingRight = 1;
                 pstate.movingLeft = 0;
+                pstate.facingRight = 1;
+                pstate.facingLeft = 0;
             }
             break;
 #ifdef DEBUG
