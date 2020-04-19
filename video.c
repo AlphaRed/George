@@ -14,10 +14,10 @@ SDL_Color white={255,255,255};
 void blitTile(SDL_Texture* texture, SDL_Rect tileRect, int x, int y, int flip)
 {
     SDL_Rect destRect;
-    destRect.x = x;
-    destRect.y = y;
-    destRect.w = TILE_WIDTH;
-    destRect.h = TILE_HEIGHT;
+    destRect.x = x*(SCREEN_SCALE);
+    destRect.y = y*(SCREEN_SCALE);
+    destRect.w = TILE_WIDTH * SCREEN_SCALE;
+    destRect.h = TILE_HEIGHT * SCREEN_SCALE;
 
     SDL_RenderCopyEx(renderer, texture, &tileRect, &destRect, 0, 0, flip);
 }

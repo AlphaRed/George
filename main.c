@@ -368,8 +368,8 @@ int main(int argc, char* args[])
         // Outer bounds
         if (player.x < 0)
             player.x = 0;
-        if (player.x > (SCREEN_WIDTH/TILE_WIDTH)-1)
-            player.x = (SCREEN_WIDTH/TILE_WIDTH)-1;
+        if (player.x > MAP_WIDTH-1)
+            player.x = MAP_WIDTH-1;
         if(player.y < 0)
             player.y = 0;
         if(player.y > (MAP_HEIGHT)+1)
