@@ -24,7 +24,7 @@
 #define FONT_SIZE   16
 
 // Limits
-#define MAX_TILES       100
+#define MAX_TILES       256
 #define MAX_CHARS   MAX_TILES
 
 SDL_Window* window;
