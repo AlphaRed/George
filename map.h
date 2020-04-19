@@ -14,7 +14,7 @@
 
 typedef enum
 {
-    ZIPPO,
+    ZIPPO,      // nothing
     EXIT1,
     EXIT2,
     EXIT3,
@@ -30,11 +30,19 @@ typedef enum
     EXIT13,
     EXIT14,
     EXIT15,
-    ITEM0,
-    ITEM1,
-    NPC0,
-    NPC1,
-    NPC2
+    ITEM0,      // O2 tank
+    ITEM1,      // snorkel
+    ITEM2,      // brochure
+    ITEM3,      // windmill
+    ITEM4,      // bedspring/mattress
+    ITEM5,      // accordian
+    NPC0,       // scientist
+    NPC1,       // welder
+    NPC2,       // glider pilot
+    NPC3,       // hairdresser
+    NPC4,       // diver
+    NPC5,       // windmill operator
+    NPC6,       // street vendor
 } entityType;
 
 struct entity
