@@ -4,6 +4,7 @@
 #include <SDL_mixer.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #include "audio.h"
 #include "map.h"
@@ -98,14 +99,8 @@ int checkEvents(SDL_Event eve)
             }
 
             // find tile player is mostly on
-            if ((player.x % TILE_WIDTH) > (TILE_WIDTH/2))
-                ptx = (player.x / TILE_WIDTH) + 1;
-            else
-                ptx = (player.x / TILE_WIDTH);
-            if ((player.y % TILE_WIDTH) > (TILE_WIDTH/2))
-                pty = (player.y / TILE_WIDTH) + 1;
-            else
-                pty = (player.y / TILE_WIDTH);
+            ptx = round(player.x);
+            pty = round(player.y);
             // check if entity resides there
             for (int i = 0; i < MAX_ENTITIES; i++)
             {
@@ -119,15 +114,15 @@ int checkEvents(SDL_Event eve)
                         case EXIT1:
                             loadLevel(FILE_LVL1, lvl);
                             loadEntities(FILE_ENT1, entities);
-                            player.x = 19 * TILE_WIDTH;
-                            player.y = 13 * TILE_HEIGHT;
+                            player.x = 19;
+                            player.y = 13;
                             CurrLevel = LEVEL1;
                             break;
                         case EXIT2:
                             loadLevel(FILE_LVL2, lvl);
                             loadEntities(FILE_ENT2, entities);
-                            player.x = 0 * TILE_WIDTH;
-                            player.y = 13 * TILE_HEIGHT;
+                            player.x = 0;
+                            player.y = 13;
                             CurrLevel = LEVEL2;
                             break;
                         case NPC0:
@@ -299,8 +294,8 @@ int main(int argc, char* args[])
     }
     Mix_Volume(-1, MIX_MAX_VOLUME/2);
 
-    player.x = 0;
-    player.y = 0;
+    player.x = 0.0;
+    player.y = 0.0;
     player.dx = 0;
     player.dy = 0;
     for(int i = 0; i < MAX_ITEMS; i++) // empty the inventory!
@@ -349,21 +344,37 @@ int main(int argc, char* args[])
         applyVelocity(&player.x, &player.y, player.dx, player.dy);
 
         // slow down player
-        if (player.dx > 0) player.dx -= PLAYER_FRICTION_X;
-        if (player.dx < 0) player.dx += PLAYER_FRICTION_X;
-        if (player.dy > 0) player.dy -= PLAYER_FRICTION_Y;
-        if (player.dy < 0) player.dy += PLAYER_FRICTION_Y;
+        if (player.dx > 0)
+        {
+            player.dx -= PLAYER_FRICTION_X;
+            if (player.dx < 0) player.dx = 0;
+        }
+        if (player.dx < 0)
+        {
+            player.dx += PLAYER_FRICTION_X;
+            if (player.dx > 0) player.dx = 0;
+        }
+        if (player.dy > 0)
+        {
+            player.dy -= PLAYER_FRICTION_Y;
+            if (player.dy < 0) player.dy = 0;
+        }
+        if (player.dy < 0)
+        {
+            player.dy += PLAYER_FRICTION_Y;
+            if (player.dy > 0) player.dy = 0;
+        }
 
         // Outer bounds
-        if(player.x < 0)
+        if (player.x < 0)
             player.x = 0;
-        if(player.x > (SCREEN_WIDTH-TILE_WIDTH))
-            player.x = (SCREEN_WIDTH-TILE_WIDTH);
+        if (player.x > (SCREEN_WIDTH/TILE_WIDTH)-1)
+            player.x = (SCREEN_WIDTH/TILE_WIDTH)-1;
         if(player.y < 0)
             player.y = 0;
-        if(player.y > (SCREEN_HEIGHT-TILE_HEIGHT))
+        if(player.y > (MAP_HEIGHT)+1)
         {
-            player.y = (SCREEN_HEIGHT-TILE_HEIGHT);
+            //player.y = (MAP_HEIGHT)-1;
             pstate.falling = 0;
         }
 
@@ -398,7 +409,7 @@ int main(int argc, char* args[])
 
         // debug text
 #ifdef DEBUG
-        sprintf(playercoords, "F:%.2d X: %.3d, Y: %.3d", playerframecounter, player.x, player.y);
+        sprintf(playercoords, "F:%.2d X: %.3f, Y: %.3f", playerframecounter, player.x, player.y);
         drawText(playercoords, 0, 0, white);
         sprintf(playerstate, " ");
         if (pstate.movingLeft)

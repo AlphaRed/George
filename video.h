@@ -18,8 +18,8 @@
 // Dimensions
 #define TILE_HEIGHT     16
 #define TILE_WIDTH      TILE_HEIGHT
-#define SCREEN_WIDTH    20 * TILE_WIDTH
-#define SCREEN_HEIGHT   15 * TILE_WIDTH
+#define SCREEN_WIDTH    MAP_WIDTH * TILE_WIDTH
+#define SCREEN_HEIGHT   MAP_HEIGHT * TILE_HEIGHT
 #define FONT_SIZE   16
 
 // Limits
@@ -48,7 +48,7 @@ void blitTile(SDL_Texture* image, SDL_Rect tileRect, int x, int y, int flip);
 
 void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH]);
 void drawEntities();
-void drawPlayer(int x, int y);
+void drawPlayer(float x, float y);
 void drawText(char *text, int x, int y, SDL_Color fg);
 void drawInventory(int x, int y, int xinterval);
 void textBox(char *text);

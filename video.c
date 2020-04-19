@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "map.h"
 #include "player.h"
@@ -66,14 +67,16 @@ void drawEntities()
     }
 }
 
-void drawPlayer(int x, int y)
+void drawPlayer(float x, float y)
 {
+    int rx = round(x * TILE_WIDTH);
+    int ry = round(y * TILE_HEIGHT);
     int flip = SDL_FLIP_NONE;
 
     if (pstate.facingLeft)
         flip = SDL_FLIP_HORIZONTAL;
 
-    blitTile(chars, character[player.frame], x, y, flip);
+    blitTile(chars, character[player.frame], rx, ry, flip);
 }
 
 void drawText(char *text, int x, int y, SDL_Color fg)

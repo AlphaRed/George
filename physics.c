@@ -7,32 +7,38 @@
 #include "video.h"
 
 
-int checkCollision(int x, int y, int x1, int y1)
+int checkCollision(float x, float y, int x1, int y1)
 {
+    int rx = round(x * TILE_WIDTH);
+    int ry = round(y * TILE_HEIGHT);
+
     SDL_Rect A, B;
-    A.x = x;
-    A.y = y;
+    A.x = rx;
+    A.y = ry;
     A.h = TILE_HEIGHT;
     A.w = TILE_WIDTH;
 
-    B.x = x1;
-    B.y = y1;
+    B.x = x1 * TILE_WIDTH;
+    B.y = y1 * TILE_WIDTH;
     B.h = TILE_HEIGHT;
     B.w = TILE_WIDTH;
 
     return SDL_HasIntersection(&A, &B);
 }
 
-void gravity(int *x, int *y)
+void gravity(float *x, float *y)
 {
     *x += 0;
     *y += GRAVITY;
+
+    int rx = round(*x * TILE_WIDTH);
+    int ry = round(*y * TILE_HEIGHT);
 
     for(int i = 0; i < MAP_HEIGHT; i++)
     {
         for(int j = 0; j < MAP_WIDTH; j++)
         {
-            if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
+            if(checkCollision(*x, *y, j, i))
             {
                 switch(lvl[i][j])
                 {
@@ -45,9 +51,9 @@ void gravity(int *x, int *y)
                     case 31:
                     case 32:
                     case 33:
-                        if(*y < i * TILE_HEIGHT) // coming from top
+                        if(*y < i) // coming from top
                         {
-                            *y = (i - 1) * TILE_HEIGHT;
+                            *y = (i - 1);
                             pstate.falling = 0;
                         }
                         break;
@@ -60,29 +66,27 @@ void gravity(int *x, int *y)
     }
 }
 
-void applyVelocity(int *x, int *y, int dx, int dy)
+void applyVelocity(float *x, float *y, float dx, float dy)
 {
     // limit to terminal velocity
     //if ((*dx > 0) && (*dx > TERMINAL_VELOCITY)) *dx = TERMINAL_VELOCITY;
     //if ((*dy > 0) && (*dy > TERMINAL_VELOCITY)) *dy = TERMINAL_VELOCITY;
 
-    //int amtTop, amtRight, amtBottom, amtLeft;
     int amt[4]; // 0 top, clockwise to 3 left
     int lowest;
-    int side; // side that collided
-
-    int xn, yn; // old coordinates
-    xn = *x;
-    yn = *y;
+    int side = -1; // side that collided
 
     *x += dx;
     *y += dy;
+
+    int rx = round(*x * TILE_WIDTH);
+    int ry = round(*y * TILE_HEIGHT);
 
     for(int i = 0; i < MAP_HEIGHT; i++)
     {
         for(int j = 0; j < MAP_WIDTH; j++)
         {
-            if(checkCollision(*x, *y, j * TILE_WIDTH, i * TILE_HEIGHT))
+            if(checkCollision(*x, *y, j, i))
             {
                 switch (lvl[i][j])
                 {
@@ -95,11 +99,13 @@ void applyVelocity(int *x, int *y, int dx, int dy)
                     case 31:
                     case 32:
                     case 33:
-                        amt[0] = abs(i*TILE_HEIGHT - (*y+TILE_HEIGHT)); // top
-                        amt[1] = abs((j+1)*TILE_WIDTH - *x); // right
-                        amt[2] = abs((i+1)*TILE_HEIGHT - *y); // bottom
-                        amt[3] = abs(j*TILE_WIDTH - (*x+TILE_WIDTH)); //left
+                        // find amount needed to move out of tile
+                        amt[0] = abs(i - (ry+1)); // top
+                        amt[1] = abs((j+1) - rx); // right
+                        amt[2] = abs((i+1) - ry); // bottom
+                        amt[3] = abs(j - (rx+1)); //left
 
+                        // find lowest difference
                         lowest = amt[0];
                         for (int k = 0; k < 4; k++)
                         {
@@ -110,24 +116,17 @@ void applyVelocity(int *x, int *y, int dx, int dy)
                             }
                         }
 
-                        switch (side)
-                        {
-                            case 0: // coming from top
-                                *y = (i - 1) * TILE_HEIGHT;
-                                pstate.falling = 0;
-                                break;
-                            case 1: // coming from the right
-                                *x = (j + 1) * TILE_WIDTH;
-                                break;
-                            case 2: // coming from below
-                                *y = (i + 1) * TILE_HEIGHT;
-                                break;
-                            case 3: // coming from the left
-                                *x = (j - 1) * TILE_WIDTH;
-                                break;
-                            default:
-                                break;
-                        }
+                        // handle collisions
+                        if (dx > 0) // player moving right
+                            *x = (j - 1);
+                        else if (dx < 0) // player moving left
+                            *x = (j + 1);
+
+                        else if (dy > 0) // player moving down
+                            *y = (i - 1);
+                        else if (dy < 0) // player moving up
+                            *y = (i + 1);
+
                         /*
                         if (1)
                         {

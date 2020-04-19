@@ -2,19 +2,19 @@
 #define PHYSICS_H
 
 // Physics
-#define GRAVITY             9
-#define MOVE_SPEED_LIMIT    4  // player movement limit
-#define TERMINAL_VELOCITY   25
-#define PLAYER_MOVE_ACCEL   2
-#define PLAYER_JUMP_VEL     15
-#define PLAYER_JUMP_LIMIT   10
-#define PLAYER_FRICTION_X   1
-#define PLAYER_FRICTION_Y   1
+#define GRAVITY             0.28
+#define MOVE_SPEED_LIMIT    0.3  // player movement limit
+#define TERMINAL_VELOCITY   01
+#define PLAYER_MOVE_ACCEL   0.04
+#define PLAYER_JUMP_VEL     0.6
+#define PLAYER_JUMP_LIMIT   1
+#define PLAYER_FRICTION_X   0.025
+#define PLAYER_FRICTION_Y   0.015
 
 int nograv;
 
-int checkCollision(int x, int y, int x1, int y1);
-void gravity(int *x, int *y);
-void applyVelocity(int *x, int *y, int dx, int dy);
+int checkCollision(float x, float y, int x1, int y1);
+void gravity(float *x, float *y);
+void applyVelocity(float *x, float *y, float dx, float dy);
 
 #endif
