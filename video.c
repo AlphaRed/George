@@ -178,13 +178,12 @@ void textBox(char *text, char *text2)
     textSurface2 = TTF_RenderText_Solid(font, text2, white);
     SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
 
-    dest.x += 2; // text margin
-    dest.y += 2; //
+    dest.x += 4; // text margin
+    dest.y += 4; //
     dest.w = textSurface->w;
     dest.h = textSurface->h;
     SDL_RenderCopy(renderer, textTexture, NULL, &dest);
-    dest.x += 2; // text margin
-    dest.y += 2 + FONT_SIZE; //
+    dest.y += 2 + FONT_SIZE; // for second line
     dest.w = textSurface2->w;
     dest.h = textSurface2->h;
     SDL_RenderCopy(renderer, textTexture2, NULL, &dest);
