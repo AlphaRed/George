@@ -162,13 +162,21 @@ void textBox(char *text, char *text2)
     dest.h = (FONT_SIZE * 2) + 4*SCREEN_SCALE; // fit three lines of text in the box and a little bit
     dest.y = SCREEN_HEIGHT - dest.h - (FONT_SIZE * 1);
 
+    // Make the border
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderFillRect(renderer, &dest);
+    // Make the box
+    dest.x += 2;
+    dest.y += 2;
+    dest.w -= 4;
+    dest.h -= 4;
+    SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
+    SDL_RenderFillRect(renderer, &dest);
+
     textSurface = TTF_RenderText_Solid(font, text, white);
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
     textSurface2 = TTF_RenderText_Solid(font, text2, white);
     SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
-
-    SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
-    SDL_RenderFillRect(renderer, &dest);
 
     dest.x += 2; // text margin
     dest.y += 2; //
