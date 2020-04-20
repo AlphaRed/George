@@ -152,6 +152,28 @@ void drawInventory(int x, int y, int xinterval)
     }
 }
 
+void fillRect(SDL_Rect rect, SDL_Color color, int border)
+{
+    SDL_Color borderColor = {255, 255, 255, 255}; // Borders are always white for now
+    if(border > 0)
+    {
+        SDL_SetRenderDrawColor(renderer, borderColor.r, borderColor.g, borderColor.b, borderColor.a);
+        SDL_RenderFillRect(renderer, &rect);
+
+        rect.x += border;
+        rect.y += border;
+        rect.w -= border * 2;
+        rect.h -= border * 2;
+        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+        SDL_RenderFillRect(renderer, &rect);
+    }
+    else
+    {
+        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+        SDL_RenderFillRect(renderer, &rect);
+    }
+}
+
 void textBox(char *text, char *text2)
 {
     SDL_Surface *textSurface;
@@ -162,16 +184,9 @@ void textBox(char *text, char *text2)
     dest.h = (FONT_SIZE * 2) + 4*SCREEN_SCALE; // fit three lines of text in the box and a little bit
     dest.y = SCREEN_HEIGHT - dest.h - (FONT_SIZE * 1);
 
-    // Make the border
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(renderer, &dest);
     // Make the box
-    dest.x += 2;
-    dest.y += 2;
-    dest.w -= 4;
-    dest.h -= 4;
-    SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
-    SDL_RenderFillRect(renderer, &dest);
+    SDL_Color c = {30, 30, 30, 255};
+    fillRect(dest, c, 2);
 
     textSurface = TTF_RenderText_Solid(font, text, white);
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
