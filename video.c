@@ -193,8 +193,8 @@ void textBox(char *text, char *text2)
     textSurface2 = TTF_RenderText_Solid(font, text2, white);
     SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
 
-    dest.x += 4; // text margin
-    dest.y += 4; //
+    dest.x += 6; // text margin
+    dest.y += 6; //
     dest.w = textSurface->w;
     dest.h = textSurface->h;
     SDL_RenderCopy(renderer, textTexture, NULL, &dest);
