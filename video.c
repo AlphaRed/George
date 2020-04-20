@@ -14,10 +14,10 @@ SDL_Color white={255,255,255};
 void blitTile(SDL_Texture* texture, SDL_Rect tileRect, int x, int y, int flip)
 {
     SDL_Rect destRect;
-    destRect.x = x*(SCREEN_SCALE);
-    destRect.y = y*(SCREEN_SCALE);
-    destRect.w = TILE_WIDTH * SCREEN_SCALE;
-    destRect.h = TILE_HEIGHT * SCREEN_SCALE;
+    destRect.x = SCREEN_SCALE * x;
+    destRect.y = SCREEN_SCALE * y;
+    destRect.w = SCREEN_SCALE * TILE_WIDTH;
+    destRect.h = SCREEN_SCALE * TILE_HEIGHT;
 
     SDL_RenderCopyEx(renderer, texture, &tileRect, &destRect, 0, 0, flip);
 }
@@ -127,10 +127,10 @@ void drawText(char *text, int x, int y, SDL_Color fg)
     SDL_Surface* textSurface;
     int textw, texth;
     SDL_Rect dest;
-    dest.x = x;
-    dest.y = y;
-    dest.w = SCREEN_WIDTH;  // can't be bigger than the screen width
-    dest.h = SCREEN_HEIGHT; // same as above but with height
+    dest.x = SCREEN_SCALE * x;
+    dest.y = SCREEN_SCALE * y;
+    dest.w = SCREEN_SCALE * SCREEN_WIDTH;  // can't be bigger than the screen width
+    dest.h = SCREEN_SCALE * SCREEN_HEIGHT; // same as above but with height
 
     textSurface = TTF_RenderText_Solid(font, text, fg);
     dest.w = textSurface->w;
@@ -153,20 +153,23 @@ void drawInventory(int x, int y, int xinterval)
     }
 }
 
-void textBox(char *text)
+void textBox(char *text, char *text2)
 {
-    Uint32 color = SDL_MapRGB(screen->format, 0, 0, 0);
-    SDL_Surface* textSurface;
+    Uint32 color = SDL_MapRGB(screen->format, 255, 0, 0);
+    SDL_Surface *textSurface;
+    SDL_Surface *textSurface2;
     SDL_Rect dest;
-    dest.x = 50;
-    dest.w = SCREEN_WIDTH - 100; // screen width minus a bit
-    dest.h = (FONT_SIZE * 3) + 4; // fit three lines of text in the box and a little bit
+    dest.x = 0;
+    dest.w = SCREEN_WIDTH;
+    dest.h = (FONT_SIZE * 2) + 4*SCREEN_SCALE; // fit three lines of text in the box and a little bit
     dest.y = SCREEN_HEIGHT - dest.h - (FONT_SIZE * 1);
 
     textSurface = TTF_RenderText_Solid(font, text, white);
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    textSurface2 = TTF_RenderText_Solid(font, text2, white);
+    SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
 
-    SDL_FillRect(screen, &dest, color);
+    SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
     SDL_RenderFillRect(renderer, &dest);
 
     dest.x += 2; // text margin
@@ -174,6 +177,12 @@ void textBox(char *text)
     dest.w = textSurface->w;
     dest.h = textSurface->h;
     SDL_RenderCopy(renderer, textTexture, NULL, &dest);
+    dest.x += 2; // text margin
+    dest.y += 2 + FONT_SIZE; //
+    dest.w = textSurface2->w;
+    dest.h = textSurface2->h;
+    SDL_RenderCopy(renderer, textTexture2, NULL, &dest);
 
     SDL_FreeSurface(textSurface);
+    SDL_FreeSurface(textSurface2);
 }

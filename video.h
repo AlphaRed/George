@@ -18,10 +18,10 @@
 // Dimensions
 #define TILE_HEIGHT     16
 #define TILE_WIDTH      TILE_HEIGHT
-#define SCREEN_SCALE    2
+#define SCREEN_SCALE    3
 #define SCREEN_WIDTH    MAP_WIDTH * TILE_WIDTH * SCREEN_SCALE
 #define SCREEN_HEIGHT   MAP_HEIGHT * TILE_HEIGHT * SCREEN_SCALE
-#define FONT_SIZE   16
+#define FONT_SIZE   16*SCREEN_SCALE
 
 // Limits
 #define MAX_TILES       256
@@ -52,6 +52,6 @@ void drawEntities();
 void drawPlayer(float x, float y);
 void drawText(char *text, int x, int y, SDL_Color fg);
 void drawInventory(int x, int y, int xinterval);
-void textBox(char *text);
+void textBox(char *text, char *text2);
 
 #endif

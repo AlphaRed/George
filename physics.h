@@ -4,8 +4,8 @@
 // Physics
 #define GRAVITY             0.28
 #define MOVE_SPEED_LIMIT    0.3  // player movement limit
-#define TERMINAL_VELOCITY   01
-#define PLAYER_MOVE_ACCEL   0.04
+#define TERMINAL_VELOCITY   1
+#define PLAYER_MOVE_ACCEL   0.03
 #define PLAYER_JUMP_VEL     0.6
 #define PLAYER_JUMP_LIMIT   1
 #define PLAYER_FRICTION_X   0.025

@@ -125,14 +125,26 @@ int checkEvents(SDL_Event eve)
                             player.y = 13;
                             CurrLevel = LEVEL2;
                             break;
-                        case NPC0:
-                            pstate.talking = 1;
-                            pstate.movingLeft = 0;
-                            pstate.movingRight = 0;
-                            pstate.jumping = 0;
+                        case ITEM0:
+                        case ITEM1:
+                        case ITEM2:
+                        case ITEM3:
+                        case ITEM4:
+                        case ITEM5:
+                            if (player.inventory[entities[i].type - 16] == 0) // 16 is just offset to items in the enum
+                            {
+                                Mix_PlayChannel(-1, snditemget,0);
+                                player.inventory[entities[i].type - 16] = 1;
+                            }
                             break;
+                        case NPC0:
                         case NPC1:
-                            pstate.talking = 2;
+                        case NPC2:
+                        case NPC3:
+                        case NPC4:
+                        case NPC5:
+                        case NPC6:
+                            pstate.talking = entities[i].type - 21; // 21 is the offset to npcs in the enum
                             pstate.movingLeft = 0;
                             pstate.movingRight = 0;
                             pstate.jumping = 0;
@@ -140,22 +152,6 @@ int checkEvents(SDL_Event eve)
                         default:
                             break;
                     }
-                }
-            }
-            if(CurrLevel == LEVEL1) // check current level first
-            {
-                if(ptx == 6 && pty == 13 && (player.inventory[0] == 0))
-                {
-                    Mix_PlayChannel(-1, snditemget,0);
-                    player.inventory[0] = 1; // grab the item
-                }
-            }
-            else if(CurrLevel == LEVEL2)
-            {
-                if(ptx == 8 && pty == 13 && (player.inventory[1] == 0))
-                {
-                    player.inventory[1] = 1;
-                    Mix_PlayChannel(-1, snditemget,0);
                 }
             }
             break;
@@ -396,15 +392,20 @@ int main(int argc, char* args[])
         case 0:
             break;
         case 1:
-            textBox("Kawanishi N1KJ Shiden/Violet Lightning");
+            textBox("Igor, you must help me.", "Please find parts to fix the machine!");
             break;
         case 2:
-            textBox("The N1K2-J Shiden-Kai offered a formidable, if demanding aircraft, in limited quantities.");
+            textBox("Howdy! I'm a welder.", "Need something fixed?");
             break;
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+            textBox("pew", " ");
         default:
             break;
         }
-        drawInventory(SCREEN_WIDTH/8, SCREEN_HEIGHT/8, 2*TILE_WIDTH);
+        drawInventory(TILE_WIDTH, 0, TILE_WIDTH);
 
 
         // debug text
