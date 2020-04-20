@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "map.h"
 #include "physics.h"
@@ -30,9 +31,6 @@ void gravity(float *x, float *y)
 {
     *x += 0;
     *y += GRAVITY;
-
-    int rx = round(*x * TILE_WIDTH);
-    int ry = round(*y * TILE_HEIGHT);
 
     for(int i = 0; i < MAP_HEIGHT; i++)
     {
