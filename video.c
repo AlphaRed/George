@@ -125,7 +125,6 @@ void drawPlayer(float x, float y)
 void drawText(char *text, int x, int y, SDL_Color fg)
 {
     SDL_Surface* textSurface;
-    int textw, texth;
     SDL_Rect dest;
     dest.x = SCREEN_SCALE * x;
     dest.y = SCREEN_SCALE * y;
@@ -155,7 +154,6 @@ void drawInventory(int x, int y, int xinterval)
 
 void textBox(char *text, char *text2)
 {
-    Uint32 color = SDL_MapRGB(screen->format, 255, 0, 0);
     SDL_Surface *textSurface;
     SDL_Surface *textSurface2;
     SDL_Rect dest;
