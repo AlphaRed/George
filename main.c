@@ -176,6 +176,12 @@ int checkEvents(SDL_Event eve)
             if (nograv) nograv = 0;
             else nograv = 1;
             break;
+        case SDLK_r: // reset position to origin
+            player.x = 0;
+            player.y = 0;
+            player.dx = 0;
+            player.dy = 0;
+            break;
 #endif // DEBUG
         case SDLK_ESCAPE:
         case SDLK_RETURN:
