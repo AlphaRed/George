@@ -257,15 +257,15 @@ int main(int argc, char* args[])
     {
         item[i].w = TILE_WIDTH;
         item[i].h = TILE_HEIGHT;
-        item[i].x = (i % 10) * TILE_WIDTH;
-        item[i].y = (i / 10) * TILE_HEIGHT;
+        item[i].x = (i % 16) * TILE_WIDTH;
+        item[i].y = (i / 16) * TILE_HEIGHT;
     }
     for (int i=0; i < MAX_CHARS; i++)
     {
         character[i].w = TILE_WIDTH;
         character[i].h = TILE_HEIGHT;
-        character[i].x = (i % 10) * TILE_WIDTH;
-        character[i].y = (i / 10) * TILE_HEIGHT;
+        character[i].x = (i % 16) * TILE_WIDTH;
+        character[i].y = (i / 16) * TILE_HEIGHT;
     }
 
     // Load some resources and files
@@ -405,7 +405,7 @@ int main(int argc, char* args[])
         case 0:
             break;
         case 1:
-            textBox("Igor, you must help me.", "Please find parts to fix the machine!");
+            textBox("Igor, you must help me!", "Please find parts to fix the machine.");
             break;
         case 2:
             textBox("Howdy! I'm a welder.", "Need something fixed?");
@@ -414,7 +414,9 @@ int main(int argc, char* args[])
         case 4:
         case 5:
         case 6:
+        case 7:
             textBox("pew", " ");
+            break;
         default:
             break;
         }

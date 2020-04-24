@@ -76,31 +76,31 @@ void drawEntities()
 
             // NPCs
             case NPC0:
-                blitTile(chars, character[10+entityanimframe],
+                blitTile(chars, character[16+entityanimframe],
                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
             case NPC1:
-                blitTile(chars, character[12+entityanimframe],
-                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
-                break;
-            case NPC2:
-                blitTile(chars, character[14+entityanimframe],
-                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
-                break;
-            case NPC3:
-                blitTile(chars, character[16+entityanimframe],
-                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
-                break;
-            case NPC4:
                 blitTile(chars, character[18+entityanimframe],
                          entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case NPC5:
+            case NPC2:
                 blitTile(chars, character[20+entityanimframe],
                          entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case NPC6:
+            case NPC3:
                 blitTile(chars, character[22+entityanimframe],
+                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
+                break;
+            case NPC4:
+                blitTile(chars, character[24+entityanimframe],
+                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
+                break;
+            case NPC5:
+                blitTile(chars, character[26+entityanimframe],
+                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
+                break;
+            case NPC6:
+                blitTile(chars, character[28+entityanimframe],
                          entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
 
