@@ -13,6 +13,9 @@
 #include "video.h"
 
 #define DEBUG
+#ifdef DEBUG
+int debuginfo;
+#endif
 
 int initSDL()
 {
@@ -182,6 +185,9 @@ int checkEvents(SDL_Event eve)
             player.dx = 0;
             player.dy = 0;
             break;
+        case SDLK_BACKQUOTE: // toggle debug info
+            debuginfo = !debuginfo;
+            break;
 #endif // DEBUG
         case SDLK_ESCAPE:
         case SDLK_RETURN:
@@ -230,6 +236,7 @@ int main(int argc, char* args[])
 
     // debug strings
 #ifdef DEBUG
+    debuginfo = 0;
     char playercoords[15];
     char playerstate[40];
     char playerinv[20];
@@ -416,32 +423,35 @@ int main(int argc, char* args[])
 
         // debug text
 #ifdef DEBUG
-        sprintf(playercoords, "F:%.2d X: %.3f, Y: %.3f", playerframecounter, player.x, player.y);
-        drawText(playercoords, 0, 0, white);
-        sprintf(playerstate, " ");
-        if (pstate.movingLeft)
-            strcat(playerstate, "left ");
-        if (pstate.movingRight)
-            strcat(playerstate, "right ");
-        if (pstate.movingDown)
-            strcat(playerstate, "down ");
-        if (pstate.movingUp)
-            strcat(playerstate, "up ");
-        if (pstate.jumping)
-            strcat(playerstate, "jumping ");
-        if (pstate.falling)
-            strcat(playerstate, "falling ");
-        if (pstate.talking)
-            strcat(playerstate, "talking ");
-        drawText(playerstate, 0, 20, white);
-        sprintf(playerinv, "inv: %d%d%d%d%d%d",
-                player.inventory[0],
-                player.inventory[1],
-                player.inventory[2],
-                player.inventory[3],
-                player.inventory[4],
-                player.inventory[5]);
-        drawText(playerinv, 150, 0, white);
+        if (debuginfo)
+        {
+            sprintf(playercoords, "F:%.2d X: %.3f, Y: %.3f", playerframecounter, player.x, player.y);
+            drawText(playercoords, 0, 0, white);
+            sprintf(playerstate, " ");
+            if (pstate.movingLeft)
+                strcat(playerstate, "left ");
+            if (pstate.movingRight)
+                strcat(playerstate, "right ");
+            if (pstate.movingDown)
+                strcat(playerstate, "down ");
+            if (pstate.movingUp)
+                strcat(playerstate, "up ");
+            if (pstate.jumping)
+                strcat(playerstate, "jumping ");
+            if (pstate.falling)
+                strcat(playerstate, "falling ");
+            if (pstate.talking)
+                strcat(playerstate, "talking ");
+            drawText(playerstate, 0, 20, white);
+            sprintf(playerinv, "inv: %d%d%d%d%d%d",
+                    player.inventory[0],
+                    player.inventory[1],
+                    player.inventory[2],
+                    player.inventory[3],
+                    player.inventory[4],
+                    player.inventory[5]);
+            drawText(playerinv, 150, 0, white);
+        }
 #endif
 
         // Update

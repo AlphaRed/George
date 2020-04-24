@@ -6,8 +6,8 @@
 #define MOVE_SPEED_LIMIT    0.3  // player movement limit
 #define TERMINAL_VELOCITY   1
 #define PLAYER_MOVE_ACCEL   0.03
-#define PLAYER_JUMP_VEL     0.6
-#define PLAYER_JUMP_LIMIT   1
+#define PLAYER_JUMP_VEL     0.45
+#define PLAYER_JUMP_LIMIT   15
 #define PLAYER_FRICTION_X   0.025
 #define PLAYER_FRICTION_Y   0.015
 
