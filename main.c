@@ -243,8 +243,8 @@ int main(int argc, char* args[])
     {
         tile[i].w = TILE_WIDTH;
         tile[i].h = TILE_HEIGHT;
-        tile[i].x = (i % 10) * TILE_WIDTH;
-        tile[i].y = (i / 10) * TILE_HEIGHT;
+        tile[i].x = (i % 16) * TILE_WIDTH;
+        tile[i].y = (i / 16) * TILE_HEIGHT;
     }
     for (int i=0; i < MAX_ITEMS; i++)
     {
