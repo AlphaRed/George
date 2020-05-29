@@ -118,7 +118,7 @@ int checkEvents(SDL_Event eve)
                             loadLevel(FILE_LVL1, lvl);
                             loadEntities(FILE_ENT1, entities);
                             player.x = 19;
-                            player.y = 13;
+                            player.y = 12;
                             CurrLevel = LEVEL1;
                             break;
                         case EXIT2:
@@ -402,20 +402,28 @@ int main(int argc, char* args[])
         drawPlayer(player.x, player.y);
         switch (pstate.talking)
         {
-        case 0:
+        case 0: // no one
             break;
-        case 1:
-            textBox("Igor, you must help me!", "Please find parts to fix the machine.");
+        case 1: // scientist
+            textBox("We need to fix the generator to provide power.", "Igor, fetch me parts to fix it!");
             break;
-        case 2:
-            textBox("Howdy! I'm a welder.", "Need something fixed?");
+        case 2: // welder
+            textBox("We fix cars here, not generators...", " ");
             break;
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-            textBox("pew", " ");
+        case 3: // pilot
+            textBox("Dang it. This darn glider can't even fly right...", " ");
+            break;
+        case 4: // hairdresser
+            textBox("You can't have our fan but I can give you a haircut!", "What will it be then?");
+            break;
+        case 5: // diver
+            textBox("I'd really like to go for a swim,", "but I haven't got an oxygen tank.");
+            break;
+        case 6: // windmill operator
+            textBox("This windmill doesn't generate nearly ", "enough electricity...");
+            break;
+        case 7: // street vendor
+            textBox("Whadda ya want kid? ", "How about a juicy mango?");
             break;
         default:
             break;

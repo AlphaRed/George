@@ -56,14 +56,15 @@ int lvl[MAP_HEIGHT][MAP_WIDTH];
 
 enum
 {
-    LEVEL1,
-    LEVEL2,
-    LEVEL3,
-    LEVEL4,
-    LEVEL5,
-    LEVEL6,
-    LEVEL7,
-    LEVEL8
+    LEVEL1,     // mansion
+    LEVEL2,     // generator room
+    LEVEL3,     // street
+    LEVEL4,     // windmill - beside geysers
+    LEVEL5,     // car repair shop
+    LEVEL6,     // hair dressers
+    LEVEL7,     // cliff
+    LEVEL8,     // pond
+    LEVEL9      // dump
 } CurrLevel;
 
 int loadEntities(char* filename, struct entity entities[MAX_ENTITIES]);
