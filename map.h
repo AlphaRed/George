@@ -3,9 +3,23 @@
 
 #define FILE_LVL1   "1.lvl"
 #define FILE_LVL2   "2.lvl"
+#define FILE_LVL3   "3.lvl"
+#define FILE_LVL4   "4.lvl"
+#define FILE_LVL5   "5.lvl"
+#define FILE_LVL6   "6.lvl"
+#define FILE_LVL7   "7.lvl"
+#define FILE_LVL8   "8.lvl"
+#define FILE_LVL9   "9.lvl"
 
 #define FILE_ENT1   "1.ent"
 #define FILE_ENT2   "2.ent"
+#define FILE_ENT3   "3.ent"
+#define FILE_ENT4   "4.ent"
+#define FILE_ENT5   "5.ent"
+#define FILE_ENT6   "6.ent"
+#define FILE_ENT7   "7.ent"
+#define FILE_ENT8   "8.ent"
+#define FILE_ENT9   "9.ent"
 
 #define MAX_ENTITIES    25
 
@@ -30,6 +44,7 @@ typedef enum
     EXIT13,
     EXIT14,
     EXIT15,
+    EXIT16,
     ITEM0,      // O2 tank
     ITEM1,      // snorkel
     ITEM2,      // brochure

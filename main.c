@@ -114,19 +114,117 @@ int checkEvents(SDL_Event eve)
                             i, entities[i].type);
                     switch (entities[i].type)
                     {
-                        case EXIT1:
+                        case EXIT1: // To outside castle from machine room
+                            loadLevel(FILE_LVL1, lvl);
+                            loadEntities(FILE_ENT1, entities);
+                            player.x = 12;
+                            player.y = 10;
+                            CurrLevel = LEVEL1;
+                            break;
+                        case EXIT2: // To machine room from outside castle
+                            loadLevel(FILE_LVL2, lvl);
+                            loadEntities(FILE_ENT2, entities);
+                            player.x = 0;
+                            player.y = 13;
+                            CurrLevel = LEVEL2;
+                            break;
+                        case EXIT3: // To street from outside castle
+                            loadLevel(FILE_LVL3, lvl);
+                            loadEntities(FILE_ENT3, entities);
+                            player.x = 0;
+                            player.y = 13;
+                            CurrLevel = LEVEL3;
+                            break;
+                        case EXIT4: // To outside castle from street
                             loadLevel(FILE_LVL1, lvl);
                             loadEntities(FILE_ENT1, entities);
                             player.x = 19;
                             player.y = 12;
                             CurrLevel = LEVEL1;
                             break;
-                        case EXIT2:
-                            loadLevel(FILE_LVL2, lvl);
-                            loadEntities(FILE_ENT2, entities);
+                        case EXIT5: // To windmill from street
+                            loadLevel(FILE_LVL4, lvl);
+                            loadEntities(FILE_ENT4, entities);
                             player.x = 0;
                             player.y = 13;
-                            CurrLevel = LEVEL2;
+                            CurrLevel = LEVEL4;
+                            break;
+                        case EXIT6: // To street from windmill
+                            loadLevel(FILE_LVL3, lvl);
+                            loadEntities(FILE_ENT3, entities);
+                            player.x = 19;
+                            player.y = 13;
+                            CurrLevel = LEVEL3;
+                            break;
+                        case EXIT7: // To repair shop from street
+                            loadLevel(FILE_LVL5, lvl);
+                            loadEntities(FILE_ENT5, entities);
+                            player.x = 0;
+                            player.y = 13;
+                            CurrLevel = LEVEL5;
+                            break;
+                        case EXIT8: // To street from repair shop
+                            loadLevel(FILE_LVL3, lvl);
+                            loadEntities(FILE_ENT3, entities);
+                            player.x = 5;
+                            player.y = 13;
+                            CurrLevel = LEVEL3;
+                            break;
+                        case EXIT9: // To hairdressers from street
+                            loadLevel(FILE_LVL6, lvl);
+                            loadEntities(FILE_ENT6, entities);
+                            player.x = 0;
+                            player.y = 13;
+                            CurrLevel = LEVEL6;
+                            break;
+                        case EXIT10:    // To street from hairdressers
+                            loadLevel(FILE_LVL3, lvl);
+                            loadEntities(FILE_ENT3, entities);
+                            player.x = 14;
+                            player.y = 13;
+                            CurrLevel = LEVEL3;
+                            break;
+                        case EXIT11:    // To cliff from windmill
+                            loadLevel(FILE_LVL7, lvl);
+                            loadEntities(FILE_ENT7, entities);
+                            player.x = 0;
+                            player.y = 13;
+                            CurrLevel = LEVEL7;
+                            break;
+                        case EXIT12:    // To windmill from cliff
+                            loadLevel(FILE_LVL4, lvl);
+                            loadEntities(FILE_ENT4, entities);
+                            player.x = 19;
+                            player.y = 13;
+                            CurrLevel = LEVEL4;
+                            break;
+                        case EXIT13:    // To pond from cliff
+                            loadLevel(FILE_LVL8, lvl);
+                            loadEntities(FILE_ENT8, entities);
+                            player.x = 0;
+                            player.y = 13;
+                            CurrLevel = LEVEL8;
+                            break;
+                        case EXIT14:    // To cliff from pond
+                            loadLevel(FILE_LVL7, lvl);
+                            loadEntities(FILE_ENT7, entities);
+                            player.x = 19;
+                            player.y = 13;
+                            CurrLevel = LEVEL7;
+                            break;
+                        case EXIT15:    // To dump from pond
+                            loadLevel(FILE_LVL9, lvl);
+                            loadEntities(FILE_ENT9, entities);
+                            player.x = 0;
+                            player.y = 13;
+                            CurrLevel = LEVEL9;
+                            break;
+                        case EXIT16:    // To pond from dump
+                            loadLevel(FILE_LVL8, lvl);
+                            loadEntities(FILE_ENT8, entities);
+                            player.x = 19;
+                            player.y = 13;
+                            CurrLevel = LEVEL8;
                             break;
                         case ITEM0:
                         case ITEM1:
@@ -134,10 +232,10 @@ int checkEvents(SDL_Event eve)
                         case ITEM3:
                         case ITEM4:
                         case ITEM5:
-                            if (player.inventory[entities[i].type - 16] == 0) // 16 is just offset to items in the enum
+                            if (player.inventory[entities[i].type - 17] == 0) // 16 is just offset to items in the enum
                             {
                                 Mix_PlayChannel(-1, snditemget,0);
-                                player.inventory[entities[i].type - 16] = 1;
+                                player.inventory[entities[i].type - 17] = 1;
                             }
                             break;
                         case NPC0:
@@ -147,7 +245,7 @@ int checkEvents(SDL_Event eve)
                         case NPC4:
                         case NPC5:
                         case NPC6:
-                            pstate.talking = entities[i].type - 21; // 21 is the offset to npcs in the enum
+                            pstate.talking = entities[i].type - 22; // 21 is the offset to npcs in the enum
                             pstate.movingLeft = 0;
                             pstate.movingRight = 0;
                             pstate.jumping = 0;
