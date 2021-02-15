@@ -32,6 +32,8 @@ void gravity(float *x, float *y)
     *x += 0;
     *y += GRAVITY;
 
+    pstate.falling = 1; // falling unless on ground
+
     for(int i = 0; i < MAP_HEIGHT; i++)
     {
         for(int j = 0; j < MAP_WIDTH; j++)

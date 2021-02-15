@@ -533,7 +533,7 @@ int main(int argc, char* args[])
 #ifdef DEBUG
         if (debuginfo)
         {
-            sprintf(playercoords, "F:%.2d X: %.3f, Y: %.3f", playerframecounter, player.x, player.y);
+            sprintf(playercoords, "F:%.2d X: %.3f, Y: %.3f  dx:%.3f  dy:%.3f", playerframecounter, player.x, player.y, player.dx, player.dy);
             drawText(playercoords, 0, 0, white);
             sprintf(playerstate, " ");
             if (pstate.movingLeft)
@@ -558,7 +558,7 @@ int main(int argc, char* args[])
                     player.inventory[3],
                     player.inventory[4],
                     player.inventory[5]);
-            drawText(playerinv, 150, 0, white);
+            drawText(playerinv, 150, 20, white);
         }
 #endif
 
