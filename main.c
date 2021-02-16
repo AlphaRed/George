@@ -448,7 +448,7 @@ int main(int argc, char* args[])
             }
         }
 
-        applyVelocity(&player.x, &player.y, player.dx, player.dy);
+        applyVelocity(&player.x, &player.y, &player.dx, &player.dy);
 
         // slow down player
         if (player.dx > 0)

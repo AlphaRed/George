@@ -15,6 +15,6 @@ int nograv;
 
 int checkCollision(float x, float y, int x1, int y1);
 void gravity(float *x, float *y);
-void applyVelocity(float *x, float *y, float dx, float dy);
+void applyVelocity(float *x, float *y, float *dx, float *dy);
 
 #endif

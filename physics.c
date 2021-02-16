@@ -66,7 +66,7 @@ void gravity(float *x, float *y)
     }
 }
 
-void applyVelocity(float *x, float *y, float dx, float dy)
+void applyVelocity(float *x, float *y, float *dx, float *dy)
 {
     // limit to terminal velocity
     //if ((*dx > 0) && (*dx > TERMINAL_VELOCITY)) *dx = TERMINAL_VELOCITY;
@@ -76,8 +76,8 @@ void applyVelocity(float *x, float *y, float dx, float dy)
     int lowest;
     int side = -1; // side that collided
 
-    *x += dx;
-    *y += dy;
+    *x += *dx;
+    *y += *dy;
 
     int rx = round(*x * TILE_WIDTH);
     int ry = round(*y * TILE_HEIGHT);
@@ -117,15 +117,27 @@ void applyVelocity(float *x, float *y, float dx, float dy)
                         }
 
                         // handle collisions
-                        if (dx > 0) // player moving right
+                        if (*dx > 0) // player moving right
+                        {
                             *x = (j - 1);
-                        else if (dx < 0) // player moving left
+                            *dx = 0;
+                        }
+                        else if (*dx < 0) // player moving left
+                        {
                             *x = (j + 1);
+                            *dx = 0;
+                        }
 
-                        else if (dy > 0) // player moving down
+                        else if (*dy > 0) // player moving down
+                        {
                             *y = (i - 1);
-                        else if (dy < 0) // player moving up
+                            *dy = 0;
+                        }
+                        else if (*dy < 0) // player moving up
+                        {
                             *y = (i + 1);
+                            *dy = 0;
+                        }
 
                         /*
                         if (1)
