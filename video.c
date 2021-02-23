@@ -206,3 +206,14 @@ void textBox(char *text, char *text2)
     SDL_FreeSurface(textSurface);
     SDL_FreeSurface(textSurface2);
 }
+
+void setupTile(SDL_Rect t[], int num)
+{
+    for (int i=0; i < num; i++)
+    {
+        t[i].w = TILE_WIDTH;
+        t[i].h = TILE_HEIGHT;
+        t[i].x = (i % 16) * TILE_WIDTH;
+        t[i].y = (i / 16) * TILE_HEIGHT;
+    }
+}

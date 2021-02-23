@@ -46,7 +46,6 @@ SDL_Rect character[MAX_TILES];
 int entityanimframe;
 
 void blitTile(SDL_Texture* image, SDL_Rect tileRect, int x, int y, int flip);
-
 void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH]);
 void drawEntities();
 void drawPlayer(float x, float y);
@@ -54,5 +53,6 @@ void drawText(char *text, int x, int y, SDL_Color fg);
 void drawInventory(int x, int y, int xinterval);
 void fillRect(SDL_Rect rect, SDL_Color color, int border);
 void textBox(char *text, char *text2);
+void setupTile(SDL_Rect t[], int num);
 
 #endif

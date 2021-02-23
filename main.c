@@ -17,6 +17,11 @@
 int debuginfo;
 #endif
 
+typedef enum{
+    MENU,
+    GAME
+} gameState;
+
 int initSDL()
 {
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
@@ -344,27 +349,9 @@ int main(int argc, char* args[])
         fprintf(stderr, "Failed to initialize\n");
 
     // setup tile source rectangles
-    for (int i=0; i < MAX_TILES; i++)
-    {
-        tile[i].w = TILE_WIDTH;
-        tile[i].h = TILE_HEIGHT;
-        tile[i].x = (i % 16) * TILE_WIDTH;
-        tile[i].y = (i / 16) * TILE_HEIGHT;
-    }
-    for (int i=0; i < MAX_ITEMS; i++)
-    {
-        item[i].w = TILE_WIDTH;
-        item[i].h = TILE_HEIGHT;
-        item[i].x = (i % 16) * TILE_WIDTH;
-        item[i].y = (i / 16) * TILE_HEIGHT;
-    }
-    for (int i=0; i < MAX_CHARS; i++)
-    {
-        character[i].w = TILE_WIDTH;
-        character[i].h = TILE_HEIGHT;
-        character[i].x = (i % 16) * TILE_WIDTH;
-        character[i].y = (i / 16) * TILE_HEIGHT;
-    }
+    setupTile(tile, MAX_TILES);
+    setupTile(item, MAX_ITEMS);
+    setupTile(character, MAX_CHARS);
 
     // Load some resources and files
     font = TTF_OpenFont(FILE_FONT, FONT_SIZE);
@@ -417,6 +404,7 @@ int main(int argc, char* args[])
 
     nograv = 0;
 
+    gameState game = MENU;
 
     // Game Loop
     while(quit)
