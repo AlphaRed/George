@@ -54,5 +54,6 @@ void drawInventory(int x, int y, int xinterval);
 void fillRect(SDL_Rect rect, SDL_Color color, int border);
 void textBox(char *text, char *text2);
 void setupTile(SDL_Rect t[], int num);
+void drawTextBox(int n);
 
 #endif

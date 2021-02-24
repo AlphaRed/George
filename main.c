@@ -19,8 +19,10 @@ int debuginfo;
 
 typedef enum{
     MENU,
-    GAME
+    LEVEL
 } gameState;
+
+gameState game;
 
 int initSDL()
 {
@@ -71,7 +73,7 @@ void cleanup()
     SDL_Quit();
 }
 
-
+// Move event functions to new file, no need to clog up main.c
 int checkEvents(SDL_Event eve)
 {
     int ptx, pty;   // tile the player is mostly on coordinates for use command
@@ -329,6 +331,30 @@ int checkEvents(SDL_Event eve)
     return 1;
 }
 
+int checkMenu(SDL_Event eve)
+{
+    int x, y;
+
+    if(eve.type == SDL_QUIT)
+        return 0;
+    else if(eve.type == SDL_MOUSEBUTTONDOWN)
+    {
+        SDL_GetMouseState(&x, &y);
+        printf("X: %d  Y: %d\n", &x, &y);
+
+        if(x >= 20 && x <= 940) //for testing 960 across
+        {
+            if(y >= 20 && y <= 700) // testing 720 down
+            {
+                game = LEVEL; // testing
+                return 1;
+            }
+        }
+
+    }
+    return 1;
+}
+
 int main(int argc, char* args[])
 {
     int quit = 1;
@@ -378,6 +404,10 @@ int main(int argc, char* args[])
     if (loadEntities(FILE_ENT1, entities) > 0)
         return 1;
 
+    SDL_Texture* mainMenu = IMG_LoadTexture(renderer, "menu.png");
+    if(mainMenu == NULL)
+        return 1;
+
     // Load sounds
     sndjump = Mix_LoadWAV(SOUND_JUMP);
     snditemget = Mix_LoadWAV(SOUND_ITEMGET);
@@ -404,16 +434,24 @@ int main(int argc, char* args[])
 
     nograv = 0;
 
-    gameState game = MENU;
+    game = MENU;
 
     // Game Loop
     while(quit)
     {
         // Events
         SDL_PollEvent(&eve);
-        quit = checkEvents(eve);
+        if(game == LEVEL)
+        {
+            quit = checkEvents(eve);
+        }
+        else if(game == MENU)
+        {
+            quit = checkMenu(eve);
+        }
 
         // Physics
+        // should move this to the physics c file
         if (nograv == 0)
             gravity(&player.x, &player.y);
 
@@ -482,39 +520,20 @@ int main(int argc, char* args[])
         if (pstate.falling) player.frame = 3;
 
         // Draw
-        SDL_RenderCopy(renderer, bg, NULL, NULL);
-        drawLevel(lvl);
-        drawEntities();
-        drawPlayer(player.x, player.y);
-        switch (pstate.talking)
+        if(game == LEVEL)
         {
-        case 0: // no one
-            break;
-        case 1: // scientist
-            textBox("We need to fix the generator to provide power.", "Igor, fetch me parts to fix it!");
-            break;
-        case 2: // welder
-            textBox("We fix cars here, not generators...", " ");
-            break;
-        case 3: // pilot
-            textBox("Dang it. This darn glider can't even fly right...", " ");
-            break;
-        case 4: // hairdresser
-            textBox("You can't have our fan but I can give you a haircut!", "What will it be then?");
-            break;
-        case 5: // diver
-            textBox("I'd really like to go for a swim,", "but I haven't got an oxygen tank.");
-            break;
-        case 6: // windmill operator
-            textBox("This windmill doesn't generate nearly ", "enough electricity...");
-            break;
-        case 7: // street vendor
-            textBox("Whadda ya want kid? ", "How about a juicy mango?");
-            break;
-        default:
-            break;
+            SDL_RenderCopy(renderer, bg, NULL, NULL);
+            drawLevel(lvl);
+            drawEntities();
+            drawPlayer(player.x, player.y);
+            drawTextBox(pstate.talking);
+            drawInventory(TILE_WIDTH, 0, TILE_WIDTH);
         }
-        drawInventory(TILE_WIDTH, 0, TILE_WIDTH);
+        else if(game == MENU)
+        {
+            SDL_RenderCopy(renderer, mainMenu, NULL, NULL);
+        }
+
 
 
         // debug text
