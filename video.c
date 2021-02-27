@@ -7,8 +7,23 @@
 #include "player.h"
 #include "video.h"
 
+SDL_Window* window;
+SDL_Renderer* renderer;
+SDL_Surface* screen;
+SDL_Texture* palette;
+SDL_Texture* bg;
+SDL_Texture* items;
+SDL_Texture* chars;
+
+TTF_Font* font;
 SDL_Color black={0,0,0};
 SDL_Color white={255,255,255};
+
+SDL_Rect tile[MAX_TILES];
+SDL_Rect item[MAX_ITEMS];
+SDL_Rect character[MAX_TILES];
+
+int entityanimframe = 0;
 
 
 void blitTile(SDL_Texture* texture, SDL_Rect tileRect, int x, int y, int flip)

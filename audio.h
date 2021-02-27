@@ -4,7 +4,7 @@
 #define SOUND_JUMP      "jump.wav"
 #define SOUND_ITEMGET   "item.wav"
 
-Mix_Chunk* sndjump;
-Mix_Chunk* snditemget;
+extern Mix_Chunk* sndjump;
+extern Mix_Chunk* snditemget;
 
 #endif // AUDIO_H

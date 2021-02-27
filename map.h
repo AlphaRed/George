@@ -60,16 +60,16 @@ typedef enum
     NPC6,       // street vendor
 } entityType;
 
-struct entity
+extern struct entity
 {
     int x;
     int y;
     entityType type;
 } entities[MAX_ENTITIES];
 
-int lvl[MAP_HEIGHT][MAP_WIDTH];
+extern int lvl[MAP_HEIGHT][MAP_WIDTH];
 
-enum
+typedef enum
 {
     LEVEL1,     // mansion
     LEVEL2,     // generator room
@@ -80,7 +80,8 @@ enum
     LEVEL7,     // cliff
     LEVEL8,     // pond
     LEVEL9      // dump
-} CurrLevel;
+} Level;
+extern Level CurrLevel;
 
 int loadEntities(char* filename, struct entity entities[MAX_ENTITIES]);
 int loadLevel(char* filename, int array[MAP_HEIGHT][MAP_WIDTH]);

@@ -24,6 +24,12 @@ typedef enum{
 
 gameState game;
 
+struct protagonist player;
+struct states pstate;
+
+Mix_Chunk* sndjump;
+Mix_Chunk* snditemget;
+
 int initSDL()
 {
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
@@ -85,7 +91,7 @@ int checkEvents(SDL_Event eve)
         switch(eve.key.keysym.sym)
         {
         case SDLK_w:
-            if (nograv) // nograv mode move up
+            if (pstate.nograv) // nograv mode move up
             {
                 pstate.movingUp = 1;
                 break;
@@ -99,7 +105,7 @@ int checkEvents(SDL_Event eve)
             break;
         case SDLK_s:
             // nograv downwards
-            if (nograv) pstate.movingDown = 1;
+            if (pstate.nograv) pstate.movingDown = 1;
             break;
         case SDLK_SPACE:
             // exit talking
@@ -281,8 +287,8 @@ int checkEvents(SDL_Event eve)
             break;
 #ifdef DEBUG
         case SDLK_g: // nograv toggle
-            if (nograv) nograv = 0;
-            else nograv = 1;
+            if (pstate.nograv) pstate.nograv = 0;
+            else pstate.nograv = 1;
             break;
         case SDLK_r: // reset position to origin
             player.x = 0;
@@ -307,7 +313,7 @@ int checkEvents(SDL_Event eve)
         switch(eve.key.keysym.sym)
         {
         case SDLK_w:
-            if (nograv)
+            if (pstate.nograv)
             {
                 pstate.movingUp = 0;
                 break;
@@ -316,7 +322,7 @@ int checkEvents(SDL_Event eve)
             pstate.falling = 1;
             break;
         case SDLK_s:
-            if (nograv) pstate.movingDown = 0;
+            if (pstate.nograv) pstate.movingDown = 0;
             break;
         case SDLK_a:
             pstate.movingLeft = 0;
@@ -340,7 +346,7 @@ int checkMenu(SDL_Event eve)
     else if(eve.type == SDL_MOUSEBUTTONDOWN)
     {
         SDL_GetMouseState(&x, &y);
-        printf("X: %d  Y: %d\n", &x, &y);
+        printf("X: %d  Y: %d\n", x, y);
 
         if(x >= 20 && x <= 940) //for testing 960 across
         {
@@ -432,7 +438,7 @@ int main(int argc, char* args[])
     pstate.jumping = 0;
     pstate.talking = 0;
 
-    nograv = 0;
+    pstate.nograv = 0;
 
     game = MENU;
 
@@ -452,7 +458,7 @@ int main(int argc, char* args[])
 
         // Physics
         // should move this to the physics c file
-        if (nograv == 0)
+        if (pstate.nograv == 0)
             gravity(&player.x, &player.y);
 
         if (pstate.movingLeft && player.dx > -MOVE_SPEED_LIMIT)

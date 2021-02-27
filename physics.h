@@ -11,7 +11,6 @@
 #define PLAYER_FRICTION_X   0.025
 #define PLAYER_FRICTION_Y   0.015
 
-int nograv;
 
 int checkCollision(float x, float y, int x1, int y1);
 void gravity(float *x, float *y);

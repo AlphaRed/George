@@ -4,7 +4,7 @@
 
 #define MAX_ITEMS   6
 
-struct protagonist
+extern struct protagonist
 {
     float x;
     float y;
@@ -14,7 +14,7 @@ struct protagonist
     int frame;
 } player;
 
-struct states
+extern struct states
 {
     int movingLeft;
     int movingRight;
@@ -25,6 +25,7 @@ struct states
     int talking;
     int facingLeft;
     int facingRight;
+    int nograv;
 } pstate;
 
 #endif

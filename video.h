@@ -27,23 +27,23 @@
 #define MAX_TILES       256
 #define MAX_CHARS   MAX_TILES
 
-SDL_Window* window;
-SDL_Renderer* renderer;
-SDL_Surface* screen;
-SDL_Texture* palette;
-SDL_Texture* bg;
-SDL_Texture* items;
-SDL_Texture* chars;
+extern SDL_Window* window;
+extern SDL_Renderer* renderer;
+extern SDL_Surface* screen;
+extern SDL_Texture* palette;
+extern SDL_Texture* bg;
+extern SDL_Texture* items;
+extern SDL_Texture* chars;
 
-TTF_Font* font;
-SDL_Color black;
-SDL_Color white;
+extern TTF_Font* font;
+extern SDL_Color black;
+extern SDL_Color white;
 
-SDL_Rect tile[MAX_TILES];
-SDL_Rect item[MAX_ITEMS];
-SDL_Rect character[MAX_TILES];
+extern SDL_Rect tile[MAX_TILES];
+extern SDL_Rect item[MAX_ITEMS];
+extern SDL_Rect character[MAX_TILES];
 
-int entityanimframe;
+extern int entityanimframe;
 
 void blitTile(SDL_Texture* image, SDL_Rect tileRect, int x, int y, int flip);
 void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH]);
