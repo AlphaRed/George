@@ -86,6 +86,7 @@ int checkEvents(SDL_Event eve)
 
     if(eve.type == SDL_QUIT)
         return 0;
+
     else if((eve.type == SDL_KEYDOWN) && (eve.key.repeat == 0))
     {
         switch(eve.key.keysym.sym)
@@ -302,7 +303,7 @@ int checkEvents(SDL_Event eve)
 #endif // DEBUG
         case SDLK_ESCAPE:
         case SDLK_RETURN:
-            return 0;
+            game = MENU;
             break;
         default:
             break;
@@ -343,17 +344,27 @@ int checkMenu(SDL_Event eve)
 
     if(eve.type == SDL_QUIT)
         return 0;
+
     else if(eve.type == SDL_MOUSEBUTTONDOWN)
     {
         SDL_GetMouseState(&x, &y);
         printf("X: %d  Y: %d\n", x, y);
 
-        if(x >= 20 && x <= 940) //for testing 960 across
+        if(x >= (3 * TILE_WIDTH * SCREEN_SCALE) && x <= (6 * TILE_WIDTH * SCREEN_SCALE))
         {
-            if(y >= 20 && y <= 700) // testing 720 down
+            if(y >= (4 * TILE_HEIGHT * SCREEN_SCALE) && y <= (5 * TILE_HEIGHT * SCREEN_SCALE))
             {
-                game = LEVEL; // testing
+                game = LEVEL;
                 return 1;
+            }
+        }
+        if(x >= (3 * TILE_WIDTH * SCREEN_SCALE) && x <= (5 * TILE_WIDTH * SCREEN_SCALE))
+        {
+            if(y >= (6 * TILE_HEIGHT * SCREEN_SCALE) && y <= (7 * TILE_HEIGHT * SCREEN_SCALE))
+            {
+                // Quit game
+                //game = LEVEL;
+                return 0;
             }
         }
 
