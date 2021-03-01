@@ -305,6 +305,9 @@ int checkEvents(SDL_Event eve)
         case SDLK_ESCAPE:
         case SDLK_RETURN:
             game = MENU;
+#ifdef DEBUG
+            debuginfo = 0;
+#endif // DEBUG
             break;
         default:
             break;

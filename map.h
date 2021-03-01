@@ -61,6 +61,13 @@ typedef enum
     NPC7        // trash monster
 } entityType;
 
+#define ITEM_O2             ITEM0
+#define ITEM_SNORKEL        ITEM1
+#define ITEM_BROCHURE       ITEM2
+#define ITEM_WINDMILL       ITEM3
+#define ITEM_MATTRESS       ITEM4
+#define ITEM_ACCORDION      ITEM5
+
 #define NPC_SCIENTIST       NPC0
 #define NPC_WELDER          NPC1
 #define NPC_PILOT           NPC2
@@ -92,6 +99,16 @@ typedef enum
     LEVEL9      // dump
 } Level;
 extern Level CurrLevel;
+
+#define LEVEL_MANSION           LEVEL1
+#define LEVEL_GENERATOR         LEVEL2
+#define LEVEL_STREET            LEVEL3
+#define LEVEL_WINDMILL          LEVEL4
+#define LEVEL_CARREPAIR         LEVEL5
+#define LEVEL_HAIRDRESSERS      LEVEL6
+#define LEVEL_CLIFF             LEVEL7
+#define LEVEL_POND              LEVEL8
+#define LEVEL_DUMP              LEVEL9
 
 int loadEntities(char* filename, struct entity entities[MAX_ENTITIES]);
 int loadLevel(char* filename, int array[MAP_HEIGHT][MAP_WIDTH]);

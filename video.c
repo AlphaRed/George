@@ -58,32 +58,32 @@ void drawEntities()
         switch(entities[i].type)
         {
             // Items
-            case ITEM0:
+            case ITEM_O2:
                 if (player.inventory[0] == 0)
                     blitTile(items, item[0],
                             entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case ITEM1:
+            case ITEM_SNORKEL:
                 if (player.inventory[1] == 0)
                     blitTile(items, item[1],
                             entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case ITEM2:
+            case ITEM_BROCHURE:
                 if (player.inventory[2] == 0)
                     blitTile(items, item[2],
                              entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case ITEM3:
+            case ITEM_WINDMILL:
                 if (player.inventory[3] == 0)
                     blitTile(items, item[3],
                              entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case ITEM4:
+            case ITEM_MATTRESS:
                 if (player.inventory[4] == 0)
                     blitTile(items, item[4],
                              entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case ITEM5:
+            case ITEM_ACCORDION:
                 if (player.inventory[5] == 0)
                     blitTile(items, item[5],
                              entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
