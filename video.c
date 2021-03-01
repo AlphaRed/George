@@ -90,32 +90,36 @@ void drawEntities()
                 break;
 
             // NPCs
-            case NPC0:
+            case NPC_SCIENTIST:
                 blitTile(chars, character[16+entityanimframe],
                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case NPC1:
+            case NPC_WELDER:
                 blitTile(chars, character[18+entityanimframe],
                          entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case NPC2:
+            case NPC_PILOT:
                 blitTile(chars, character[20+entityanimframe],
                          entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case NPC3:
+            case NPC_HAIRDRESSER:
                 blitTile(chars, character[22+entityanimframe],
                          entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case NPC4:
+            case NPC_DIVER:
                 blitTile(chars, character[24+entityanimframe],
                          entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case NPC5:
+            case NPC_WINDMILLOP:
                 blitTile(chars, character[26+entityanimframe],
                          entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
-            case NPC6:
+            case NPC_VENDOR:
                 blitTile(chars, character[28+entityanimframe],
+                         entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
+                break;
+            case NPC_TRASHMONSTER:
+                blitTile(chars, character[30+entityanimframe],
                          entities[i].x*TILE_WIDTH, entities[i].y*TILE_HEIGHT, SDL_FLIP_NONE);
                 break;
 
@@ -259,6 +263,9 @@ void drawTextBox(int n)
             break;
         case 7: // street vendor
             textBox("Whadda ya want kid? ", "How about a juicy mango?");
+            break;
+        case 8: // trash monster
+            textBox("GABARAE GAR GAERG", "!TRASH YUM YUM!");
             break;
         default:
             break;

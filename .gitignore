@@ -8,6 +8,9 @@
 *.depend
 *.layout
 
+# vscode
+.vscode
+
 # linux dev
 *.swp
 george

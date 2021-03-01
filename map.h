@@ -58,7 +58,17 @@ typedef enum
     NPC4,       // diver
     NPC5,       // windmill operator
     NPC6,       // street vendor
+    NPC7        // trash monster
 } entityType;
+
+#define NPC_SCIENTIST       NPC0
+#define NPC_WELDER          NPC1
+#define NPC_PILOT           NPC2
+#define NPC_HAIRDRESSER     NPC3
+#define NPC_DIVER           NPC4
+#define NPC_WINDMILLOP      NPC5
+#define NPC_VENDOR          NPC6
+#define NPC_TRASHMONSTER    NPC7
 
 extern struct entity
 {

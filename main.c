@@ -259,6 +259,7 @@ int checkEvents(SDL_Event eve)
                         case NPC4:
                         case NPC5:
                         case NPC6:
+                        case NPC7:
                             pstate.talking = entities[i].type - 22; // 21 is the offset to npcs in the enum
                             pstate.movingLeft = 0;
                             pstate.movingRight = 0;
