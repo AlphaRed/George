@@ -203,6 +203,13 @@ void textBox(char *text, char *text2)
     dest.h = (FONT_SIZE * 2) + 4*SCREEN_SCALE; // fit three lines of text in the box and a little bit
     dest.y = SCREEN_HEIGHT - dest.h - (FONT_SIZE * 1);
 
+    // check for empty strings as they cause issues
+    if (text[0] == '\0' || text2[0] == '\0')
+    {
+        fprintf(stderr, "textBox(): Empty or NULL string.\n");
+        return;
+    }
+
     // Make the box
     SDL_Color c = {30, 30, 30, 255};
     fillRect(dest, c, 2);
@@ -241,32 +248,63 @@ void drawTextBox(int n)
 {
     switch (n)
     {
-        case 0: // no one
+        // No one
+        case 0:
             break;
-        case 1: // scientist
-            textBox("We need to fix the generator to provide power.", "Igor, fetch me parts to fix it!");
+
+        // Scientist
+        case 1:
+            if (player.quest[0] == 2)
+                textBox("Alright, this snorkel will do for the machine!", "I'll add it what we have already.");
+            else
+                textBox("We need to fix the generator to provide power.", "Igor, fetch me parts to fix it!");
             break;
-        case 2: // welder
-            textBox("We fix cars here, not generators...", " ");
+
+        // Welder
+        case 2:
+            if (player.quest[0] >= 1)
+                textBox("Get outta my sight.","I already gave you that free oxygen tank!");
+            else
+                textBox("We fix cars here, not generators...", "But I do have an extra oxygen tank you can have.");
             break;
-        case 3: // pilot
+
+        // Pilot
+        case 3:
             textBox("Dang it. This darn glider can't even fly right...", " ");
             break;
-        case 4: // hairdresser
+
+        // Hairdresser
+        case 4:
             textBox("You can't have our fan but I can give you a haircut!", "What will it be then?");
             break;
-        case 5: // diver
-            textBox("I'd really like to go for a swim,", "but I haven't got an oxygen tank.");
+
+        // Diver
+        case 5:
+            if (player.quest[0] == 0)
+                textBox("I'd really like to go for a swim,", "but I haven't got an oxygen tank.");
+            else if (player.quest[0] == 1)
+                textBox("Thanks for the oxygen tank!","Here's a snorkel if you want to join me!");
+            else if (player.quest[0] == 2)
+                textBox("Thanks again for the oxygen tank!"," ");
+            else
+                pstate.talking == 0;
             break;
-        case 6: // windmill operator
+
+        // Windmill Operator
+        case 6:
             textBox("This windmill doesn't generate nearly ", "enough electricity...");
             break;
-        case 7: // street vendor
+
+        // Street Vendor
+        case 7:
             textBox("Whadda ya want kid? ", "How about a juicy mango?");
             break;
-        case 8: // trash monster
+
+        // Trash Monster
+        case 8:
             textBox("GABARAE GAR GAERG", "!TRASH YUM YUM!");
             break;
+
         default:
             break;
         }

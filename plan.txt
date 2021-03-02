@@ -60,13 +60,14 @@ places:
 7   pond
 8   dump
 
+quest 0
 car-repair shop must have a piston or something atleast
-help car-repair welder somehow?
 get oxygen tank from car-repair welder
 give oxygen tanks to diver
 diver near pond
 diver gives snorkel
 
+quest 1
 spinning fan in hairdressers
 ask for fan, he only wants to cut your hair
 get haircut @ hairdressers
@@ -74,6 +75,7 @@ get geothermal brochure from hairdressers
 convince windmill operator to change to geothermal plant
 windmill operator gives windmill
 
+quest 2
 dump probably has something right?
 can't get into dump
 paraglider gives you a ride on his glider that he thinks is broken
@@ -81,6 +83,7 @@ get into dump by paragliding
 mattress from dump
 old mattress has an old bedspring
 
+quest 3
 street vendor selling mangos
 find monsters/beings in dump scavenging for food
 direct monsters/beings to street vendor

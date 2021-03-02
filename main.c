@@ -111,6 +111,23 @@ int checkEvents(SDL_Event eve)
         case SDLK_SPACE:
             // exit talking
             if (pstate.talking > 0) {
+                // 'finished talking with' events
+                // Scientist: give snorkel
+                if (pstate.talking == 1 && player.quest[0] == 2)
+                {
+                    player.inventory[1] = 2;
+                    player.quest[0]++;
+                    Mix_PlayChannel(-1,snditemget,0);
+                }
+                // Diver: O2 tank use, get snorkel event
+                if (pstate.talking == 5 && player.quest[0] == 1)
+                {
+                    player.inventory[0] = 2;   // used o2 tank
+                    player.inventory[1] = 1;   // get snorkel
+                    player.quest[0]++;
+                    Mix_PlayChannel(-1,snditemget,0);
+                }
+
                 pstate.talking = 0;
                 break;
             }
@@ -246,11 +263,14 @@ int checkEvents(SDL_Event eve)
                         case ITEM3:
                         case ITEM4:
                         case ITEM5:
-                            if (player.inventory[entities[i].type - 17] == 0) // 16 is just offset to items in the enum
+                            if (player.inventory[entities[i].type - 17] == 0) // 16 is offset to items in enum
                             {
                                 Mix_PlayChannel(-1, snditemget,0);
                                 player.inventory[entities[i].type - 17] = 1;
                             }
+
+                            // got oxygen tank, quest 0 advance
+                            if (player.inventory[0] && i == 1 && player.quest[0] == 0) player.quest[0]++;
                             break;
                         case NPC0:
                         case NPC1:
@@ -260,7 +280,7 @@ int checkEvents(SDL_Event eve)
                         case NPC5:
                         case NPC6:
                         case NPC7:
-                            pstate.talking = entities[i].type - 22; // 21 is the offset to npcs in the enum
+                            pstate.talking = entities[i].type - 22; // 21 is offset to NPCs in enum
                             pstate.movingLeft = 0;
                             pstate.movingRight = 0;
                             pstate.jumping = 0;
@@ -446,6 +466,10 @@ int main(int argc, char* args[])
     for(int i = 0; i < MAX_ITEMS; i++) // empty the inventory!
         player.inventory[i] = 0;
     player.frame = 0;
+    player.quest[0] = 0;    // for snorkel
+    player.quest[1] = 0;    // for windmill
+    player.quest[2] = 0;    // for mattress
+    player.quest[3] = 0;    // for accordion
 
     pstate.movingLeft = 0;
     pstate.movingRight = 0;
