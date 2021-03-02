@@ -270,7 +270,8 @@ int checkEvents(SDL_Event eve)
                             }
 
                             // got oxygen tank, quest 0 advance
-                            if (player.inventory[0] && i == 1 && player.quest[0] == 0) player.quest[0]++;
+                            if (player.inventory[0] && entities[i].type == 17 && player.quest[0] == 0)
+                                player.quest[0]++;
                             break;
                         case NPC0:
                         case NPC1:

@@ -50,7 +50,7 @@ typedef enum
     ITEM2,      // brochure
     ITEM3,      // windmill
     ITEM4,      // bedspring/mattress
-    ITEM5,      // accordian
+    ITEM5,      // accordion
     NPC0,       // scientist
     NPC1,       // welder
     NPC2,       // glider pilot
