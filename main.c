@@ -156,14 +156,14 @@ int checkEvents(SDL_Event eve)
                             loadLevel(FILE_LVL2, lvl);
                             loadEntities(FILE_ENT2, entities);
                             player.x = 0;
-                            player.y = 13;
+                            player.y = 12;
                             CurrLevel = LEVEL2;
                             break;
                         case EXIT3: // To street from outside castle
                             loadLevel(FILE_LVL3, lvl);
                             loadEntities(FILE_ENT3, entities);
                             player.x = 0;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL3;
                             break;
                         case EXIT4: // To outside castle from street
@@ -177,42 +177,42 @@ int checkEvents(SDL_Event eve)
                             loadLevel(FILE_LVL4, lvl);
                             loadEntities(FILE_ENT4, entities);
                             player.x = 0;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL4;
                             break;
                         case EXIT6: // To street from windmill
                             loadLevel(FILE_LVL3, lvl);
                             loadEntities(FILE_ENT3, entities);
                             player.x = 19;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL3;
                             break;
                         case EXIT7: // To repair shop from street
                             loadLevel(FILE_LVL5, lvl);
                             loadEntities(FILE_ENT5, entities);
                             player.x = 0;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL5;
                             break;
                         case EXIT8: // To street from repair shop
                             loadLevel(FILE_LVL3, lvl);
                             loadEntities(FILE_ENT3, entities);
                             player.x = 5;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL3;
                             break;
                         case EXIT9: // To hairdressers from street
                             loadLevel(FILE_LVL6, lvl);
                             loadEntities(FILE_ENT6, entities);
                             player.x = 0;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL6;
                             break;
                         case EXIT10:    // To street from hairdressers
                             loadLevel(FILE_LVL3, lvl);
                             loadEntities(FILE_ENT3, entities);
                             player.x = 14;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL3;
                             break;
                         case EXIT11:    // To cliff from windmill
@@ -226,7 +226,7 @@ int checkEvents(SDL_Event eve)
                             loadLevel(FILE_LVL4, lvl);
                             loadEntities(FILE_ENT4, entities);
                             player.x = 19;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL4;
                             break;
                         case EXIT13:    // To pond from cliff
@@ -373,7 +373,6 @@ int checkMenu(SDL_Event eve)
     else if(eve.type == SDL_MOUSEBUTTONDOWN)
     {
         SDL_GetMouseState(&x, &y);
-        printf("X: %d  Y: %d\n", x, y);
 
         if(x >= (3 * TILE_WIDTH * SCREEN_SCALE) && x <= (6 * TILE_WIDTH * SCREEN_SCALE))
         {
@@ -388,7 +387,6 @@ int checkMenu(SDL_Event eve)
             if(y >= (6 * TILE_HEIGHT * SCREEN_SCALE) && y <= (7 * TILE_HEIGHT * SCREEN_SCALE))
             {
                 // Quit game
-                //game = LEVEL;
                 return 0;
             }
         }
