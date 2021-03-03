@@ -365,26 +365,34 @@ int checkEvents(SDL_Event eve)
 
 int checkMenu(SDL_Event eve)
 {
-    int x, y;
+    int mouseX, mouseY;
 
     if(eve.type == SDL_QUIT)
         return 0;
-
+//    else if((eve.type == SDL_KEYDOWN) && (eve.key.repeat == 0))
+//    {
+//        switch(eve.key.keysym.sym)
+//        {
+//            case SDLK_UP:
+//                cursorY = 50;
+//                break;
+//        }
+//    }
     else if(eve.type == SDL_MOUSEBUTTONDOWN)
     {
-        SDL_GetMouseState(&x, &y);
+        SDL_GetMouseState(&mouseX, &mouseY);
 
-        if(x >= (3 * TILE_WIDTH * SCREEN_SCALE) && x <= (6 * TILE_WIDTH * SCREEN_SCALE))
+        if(mouseX >= (3 * TILE_WIDTH * SCREEN_SCALE) && mouseX <= (6 * TILE_WIDTH * SCREEN_SCALE))
         {
-            if(y >= (4 * TILE_HEIGHT * SCREEN_SCALE) && y <= (5 * TILE_HEIGHT * SCREEN_SCALE))
+            if(mouseY >= (4 * TILE_HEIGHT * SCREEN_SCALE) && mouseY <= (5 * TILE_HEIGHT * SCREEN_SCALE))
             {
                 game = LEVEL;
                 return 1;
             }
         }
-        if(x >= (3 * TILE_WIDTH * SCREEN_SCALE) && x <= (5 * TILE_WIDTH * SCREEN_SCALE))
+        if(mouseX >= (3 * TILE_WIDTH * SCREEN_SCALE) && mouseX <= (5 * TILE_WIDTH * SCREEN_SCALE))
         {
-            if(y >= (6 * TILE_HEIGHT * SCREEN_SCALE) && y <= (7 * TILE_HEIGHT * SCREEN_SCALE))
+            if(mouseY >= (6 * TILE_HEIGHT * SCREEN_SCALE) && mouseY <= (7 * TILE_HEIGHT * SCREEN_SCALE))
             {
                 // Quit game
                 return 0;
@@ -429,8 +437,11 @@ int main(int argc, char* args[])
     palette = IMG_LoadTexture(renderer, FILE_TILES);
     if (palette == NULL)
         return 1;
-    bg = IMG_LoadTexture(renderer, FILE_BG);
-    if (bg == NULL)
+    bgOutdoor = IMG_LoadTexture(renderer, FILE_BG_OUTDOOR);
+    if (bgOutdoor == NULL)
+        return 1;
+    bgIndoor = IMG_LoadTexture(renderer, FILE_BG_INDOOR);
+    if(bgIndoor == NULL)
         return 1;
     items = IMG_LoadTexture(renderer, FILE_ITEMS);
     if (items == NULL)
@@ -446,6 +457,9 @@ int main(int argc, char* args[])
 
     SDL_Texture* mainMenu = IMG_LoadTexture(renderer, "menu.png");
     if(mainMenu == NULL)
+        return 1;
+    cursor = IMG_LoadTexture(renderer, "cursor.png");
+    if(cursor == NULL)
         return 1;
 
     // Load sounds
@@ -566,7 +580,7 @@ int main(int argc, char* args[])
         // Draw
         if(game == LEVEL)
         {
-            SDL_RenderCopy(renderer, bg, NULL, NULL);
+            drawBG(CurrLevel);
             drawLevel(lvl);
             drawEntities();
             drawPlayer(player.x, player.y);
@@ -576,6 +590,7 @@ int main(int argc, char* args[])
         else if(game == MENU)
         {
             SDL_RenderCopy(renderer, mainMenu, NULL, NULL);
+            //drawCursor(cursorX, cursorY);
         }
 
 

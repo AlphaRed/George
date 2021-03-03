@@ -10,7 +10,8 @@
 #define FILE_TILES  "tiles.png"
 #define FILE_ITEMS  "items.png"
 #define FILE_CHARS  "chars.png"
-#define FILE_BG     "bg.png"
+#define FILE_BG_OUTDOOR     "bg.png"
+#define FILE_BG_INDOOR  "bg1.png"
 #define FILE_FONT   "dpcomic.ttf"
 
 #define FPS_LIMIT   60
@@ -31,9 +32,11 @@ extern SDL_Window* window;
 extern SDL_Renderer* renderer;
 extern SDL_Surface* screen;
 extern SDL_Texture* palette;
-extern SDL_Texture* bg;
+extern SDL_Texture* bgOutdoor;
+extern SDL_Texture* bgIndoor;
 extern SDL_Texture* items;
 extern SDL_Texture* chars;
+extern SDL_Texture* cursor;
 
 extern TTF_Font* font;
 extern SDL_Color black;
@@ -46,6 +49,7 @@ extern SDL_Rect character[MAX_TILES];
 extern int entityanimframe;
 
 void blitTile(SDL_Texture* image, SDL_Rect tileRect, int x, int y, int flip);
+void drawBG(Level l);
 void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH]);
 void drawEntities();
 void drawPlayer(float x, float y);
@@ -55,5 +59,6 @@ void fillRect(SDL_Rect rect, SDL_Color color, int border);
 void textBox(char *text, char *text2);
 void setupTile(SDL_Rect t[], int num);
 void drawTextBox(int n);
+void drawCursor(int x, int y);
 
 #endif

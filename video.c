@@ -11,9 +11,11 @@ SDL_Window* window;
 SDL_Renderer* renderer;
 SDL_Surface* screen;
 SDL_Texture* palette;
-SDL_Texture* bg;
+SDL_Texture* bgOutdoor;
+SDL_Texture* bgIndoor;
 SDL_Texture* items;
 SDL_Texture* chars;
+SDL_Texture* cursor;
 
 TTF_Font* font;
 SDL_Color black={0,0,0};
@@ -24,6 +26,7 @@ SDL_Rect item[MAX_ITEMS];
 SDL_Rect character[MAX_TILES];
 
 int entityanimframe = 0;
+int cursorY = 100;
 
 
 void blitTile(SDL_Texture* texture, SDL_Rect tileRect, int x, int y, int flip)
@@ -37,6 +40,21 @@ void blitTile(SDL_Texture* texture, SDL_Rect tileRect, int x, int y, int flip)
     SDL_RenderCopyEx(renderer, texture, &tileRect, &destRect, 0, 0, flip);
 }
 
+void drawBG(Level l)
+{
+    switch(l)
+    {
+        case LEVEL2:
+        case LEVEL5:
+        case LEVEL6:
+            SDL_RenderCopy(renderer, bgIndoor, NULL, NULL);
+            break;
+        default:
+            SDL_RenderCopy(renderer, bgOutdoor, NULL, NULL);
+            break;
+    }
+
+}
 
 void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH])
 {
@@ -308,4 +326,15 @@ void drawTextBox(int n)
         default:
             break;
         }
+}
+
+void drawCursor(int x, int y)
+{
+    SDL_Rect r;
+    r.w = TILE_WIDTH;
+    r.h = TILE_HEIGHT;
+    r.x = x;
+    r.y = y;
+    //SDL_RenderCopy(renderer, cursor, NULL, NULL);
+    blitTile(cursor, r, 0, 0, 0);
 }
