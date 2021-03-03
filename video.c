@@ -273,7 +273,7 @@ void drawTextBox(int n)
         // Scientist
         case 1:
             if (player.quest[0] == 2)
-                textBox("Alright, this snorkel will do for the machine!", "I'll add it what we have already.");
+                textBox("Alright, this snorkel will do for the machine!", "I'll add it with what we have already.");
             else
                 textBox("We need to fix the generator to provide power.", "Igor, fetch me parts to fix it!");
             break;
