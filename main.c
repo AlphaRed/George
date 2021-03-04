@@ -585,7 +585,8 @@ int main(int argc, char* args[])
             drawEntities();
             drawPlayer(player.x, player.y);
             drawTextBox(pstate.talking);
-            drawInventory(TILE_WIDTH, 0, TILE_WIDTH);
+            drawInventory(TILE_WIDTH, 25, TILE_WIDTH);
+            drawLvlName(CurrLevel);
         }
         else if(game == MENU)
         {

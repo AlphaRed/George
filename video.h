@@ -57,8 +57,10 @@ void drawText(char *text, int x, int y, SDL_Color fg);
 void drawInventory(int x, int y, int xinterval);
 void fillRect(SDL_Rect rect, SDL_Color color, int border);
 void textBox(char *text, char *text2);
+void titleBar(char *text, int width);
 void setupTile(SDL_Rect t[], int num);
 void drawTextBox(int n);
+void drawLvlName(int n);
 void drawCursor(int x, int y);
 
 #endif

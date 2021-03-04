@@ -251,6 +251,38 @@ void textBox(char *text, char *text2)
     SDL_FreeSurface(textSurface2);
 }
 
+void titleBar(char *text, int width)
+{
+    SDL_Surface *textSurface;
+    SDL_Rect dest;
+    dest.x = 10;
+    dest.w = width;
+    dest.h = FONT_SIZE + 2*SCREEN_SCALE;
+    dest.y = 10;
+
+    // check for empty strings as they cause issues
+    if (text[0] == '\0')
+    {
+        fprintf(stderr, "textBox(): Empty or NULL string.\n");
+        return;
+    }
+
+    // Make the box
+    SDL_Color c = {30, 30, 30, 255};
+    fillRect(dest, c, 2);
+
+    textSurface = TTF_RenderText_Solid(font, text, white);
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+
+    dest.x += 8; // text margin
+    dest.y += 6; //
+    dest.w = textSurface->w;
+    dest.h = textSurface->h;
+    SDL_RenderCopy(renderer, textTexture, NULL, &dest);
+
+    SDL_FreeSurface(textSurface);
+}
+
 void setupTile(SDL_Rect t[], int num)
 {
     for (int i=0; i < num; i++)
@@ -326,6 +358,43 @@ void drawTextBox(int n)
         default:
             break;
         }
+}
+
+void drawLvlName(int n)
+{
+    switch(n) // tweak the widths
+    {
+        case 0:
+            titleBar("Outside castle", 260);
+            break;
+        case 1:
+            titleBar("Generator room", 310);
+            break;
+        case 2:
+            titleBar("Town street", 240);
+            break;
+        case 3:
+            titleBar("Windmill", 160);
+            break;
+        case 4:
+            titleBar("Mechanic's shop", 300);
+            break;
+        case 5:
+            titleBar("Barbershop", 220);
+            break;
+        case 6:
+            titleBar("Cliff", 260);
+            break;
+        case 7:
+            titleBar("Pond", 260);
+            break;
+        case 8:
+            titleBar("Dump", 260);
+            break;
+        default:
+            titleBar("Somewhere out there", 410);
+            break;
+    }
 }
 
 void drawCursor(int x, int y)
