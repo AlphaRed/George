@@ -126,6 +126,13 @@ int checkEvents(SDL_Event eve)
                     player.quest[1]++;
                     Mix_PlayChannel(-1, snditemget, 0);
                 }
+                // Scientist: give accordion
+                if (pstate.talking == 1 && player.quest[3] == 3)
+                {
+                    player.inventory[5] = 2;   // used accordion
+                    player.quest[3]++;
+                    Mix_PlayChannel(-1, snditemget, 0);
+                }
                 // Diver: O2 tank use, get snorkel event
                 if (pstate.talking == 5 && player.quest[0] == 1)
                 {
@@ -142,6 +149,20 @@ int checkEvents(SDL_Event eve)
                     player.quest[1]++;
                     Mix_PlayChannel(-1, snditemget, 0);
                 }
+                // Street Vendor: tells about mangos
+                if (pstate.talking == 7 && player.quest[3] == 0)
+                    player.quest[3]++;
+                // Street Vendor: gives accordion as thanks
+                if (pstate.talking == 7 && player.quest[3] == 2)
+                {
+                    player.inventory[5] = 1;    // get accordion
+                    player.quest[3]++;
+                    Mix_PlayChannel(-1, snditemget, 1);
+                }
+                // Monster: will buy mangos
+                if (pstate.talking == 8 && player.quest[3] == 1)
+                    player.quest[3]++;
+
                 pstate.talking = 0;
                 break;
             }

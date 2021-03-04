@@ -308,6 +308,8 @@ void drawTextBox(int n)
                 textBox("Alright, this snorkel will do for the machine!", "I'll add it with what we have already.");
             else if (player.quest[1] == 2)
                 textBox("Alright, this windmill blade will do for the machine!", "I'll  add it with what we have already.");
+            else if (player.quest[3] == 3)
+                textBox("Alright, this accordion will do for the machine!", " I'll add it with what we have already.");
             else
                 textBox("We need to fix the generator to provide power.", "Igor, fetch me parts to fix it!");
             break;
@@ -338,8 +340,7 @@ void drawTextBox(int n)
                 textBox("Thanks for the oxygen tank!","Here's a snorkel if you want to join me!");
             else if (player.quest[0] == 2)
                 textBox("Thanks again for the oxygen tank!"," ");
-            else
-                pstate.talking = 0;
+            else pstate.talking = 0;
             break;
 
         // Windmill Operator
@@ -350,18 +351,27 @@ void drawTextBox(int n)
                 textBox("Oh?... A brochure on geothermal energy?", "I guess I won't be needing this windmill!");
             else if (player.quest[1] == 2)
                 textBox("Thanks again for the brochure!", " ");
-            else
-                pstate.talking = 0;
+            else pstate.talking = 0;
             break;
 
         // Street Vendor
         case 7:
-            textBox("Whadda ya want kid? ", "How about a juicy mango?");
+            if (player.quest[3] == 0 || player.quest[3] == 1)
+                textBox("Whadda ya want kid? ", "Tell your friends about our fresh mangos!");
+            else if (player.quest[3] == 2)
+                textBox("Wow, those monsters bought me out.", "Here's something in return for the help.");
+            else if (player.quest[3] >= 3)
+                textBox("Afraid I'm all sold out because of those monsters.", "Thanks again.");
+            else pstate.talking = 0;
             break;
 
         // Trash Monster
         case 8:
-            textBox("GABARAE GAR GAERG", "!TRASH YUM YUM!");
+            if (player.quest[3] == 0 || player.quest[3] > 1)
+                textBox("GABARAE GAR GAERG", "!TRASH YUM YUM!");
+            else if (player.quest[3] == 1)
+                textBox("MANGOS? !GAERBARG! WE SHALL PURCHASE MANY", "TELL THIS VENDOR OF YOURS TO DELIVER");
+            else pstate.talking = 0;
             break;
 
         default:
