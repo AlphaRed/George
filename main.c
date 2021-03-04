@@ -117,7 +117,14 @@ int checkEvents(SDL_Event eve)
                 {
                     player.inventory[1] = 2;
                     player.quest[0]++;
-                    Mix_PlayChannel(-1,snditemget,0);
+                    Mix_PlayChannel(-1, snditemget, 0);
+                }
+                // Scientist: give windmill
+                if (pstate.talking == 1 && player.quest[1] == 2)
+                {
+                    player.inventory[3] = 2;    // used windmill
+                    player.quest[1]++;
+                    Mix_PlayChannel(-1, snditemget, 0);
                 }
                 // Diver: O2 tank use, get snorkel event
                 if (pstate.talking == 5 && player.quest[0] == 1)
@@ -125,9 +132,16 @@ int checkEvents(SDL_Event eve)
                     player.inventory[0] = 2;   // used o2 tank
                     player.inventory[1] = 1;   // get snorkel
                     player.quest[0]++;
-                    Mix_PlayChannel(-1,snditemget,0);
+                    Mix_PlayChannel(-1, snditemget, 0);
                 }
-
+                // Windmill operator: given brochure event
+                if (pstate.talking == 6 && player.quest[1] == 1)
+                {
+                    player.inventory[2] = 2; // used brochure
+                    player.inventory[3] = 1; // got windmill
+                    player.quest[1]++;
+                    Mix_PlayChannel(-1, snditemget, 0);
+                }
                 pstate.talking = 0;
                 break;
             }
@@ -272,6 +286,9 @@ int checkEvents(SDL_Event eve)
                             // got oxygen tank, quest 0 advance
                             if (player.inventory[0] && entities[i].type == 17 && player.quest[0] == 0)
                                 player.quest[0]++;
+                            // got brochure, quest 1 advance
+                            if (player.inventory[2] && entities[i].type == 19 && player.quest[1] == 0)
+                                player.quest[1]++;
                             break;
                         case NPC0:
                         case NPC1:

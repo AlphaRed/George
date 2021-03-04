@@ -306,6 +306,8 @@ void drawTextBox(int n)
         case 1:
             if (player.quest[0] == 2)
                 textBox("Alright, this snorkel will do for the machine!", "I'll add it with what we have already.");
+            else if (player.quest[1] == 2)
+                textBox("Alright, this windmill blade will do for the machine!", "I'll  add it with what we have already.");
             else
                 textBox("We need to fix the generator to provide power.", "Igor, fetch me parts to fix it!");
             break;
@@ -325,7 +327,7 @@ void drawTextBox(int n)
 
         // Hairdresser
         case 4:
-            textBox("You can't have our fan but I can give you a haircut!", "What will it be then?");
+            textBox("I am very busy right now... Why don't you", "take a seat and read a magazine?");
             break;
 
         // Diver
@@ -337,12 +339,19 @@ void drawTextBox(int n)
             else if (player.quest[0] == 2)
                 textBox("Thanks again for the oxygen tank!"," ");
             else
-                pstate.talking == 0;
+                pstate.talking = 0;
             break;
 
         // Windmill Operator
         case 6:
-            textBox("This windmill doesn't generate nearly ", "enough electricity...");
+            if (player.quest[1] == 0)
+                textBox("This windmill doesn't generate nearly ", "enough electricity...");
+            else if (player.quest[1] == 1)
+                textBox("Oh?... A brochure on geothermal energy?", "I guess I won't be needing this windmill!");
+            else if (player.quest[1] == 2)
+                textBox("Thanks again for the brochure!", " ");
+            else
+                pstate.talking = 0;
             break;
 
         // Street Vendor
