@@ -157,7 +157,7 @@ int checkEvents(SDL_Event eve)
                 {
                     player.inventory[5] = 1;    // get accordion
                     player.quest[3]++;
-                    Mix_PlayChannel(-1, snditemget, 1);
+                    Mix_PlayChannel(-1, snditemget, 0);
                 }
                 // Monster: will buy mangos
                 if (pstate.talking == 8 && player.quest[3] == 1)
