@@ -175,6 +175,7 @@ void drawText(char *text, int x, int y, SDL_Color fg)
     SDL_RenderCopy(renderer, textTexture, NULL, &dest);
 
     SDL_FreeSurface(textSurface);
+    SDL_DestroyTexture(textTexture);
 }
 
 void drawInventory(int x, int y, int xinterval)
@@ -249,6 +250,8 @@ void textBox(char *text, char *text2)
 
     SDL_FreeSurface(textSurface);
     SDL_FreeSurface(textSurface2);
+    SDL_DestroyTexture(textTexture);
+    SDL_DestroyTexture(textTexture2);
 }
 
 void titleBar(char *text, int width)
@@ -281,6 +284,7 @@ void titleBar(char *text, int width)
     SDL_RenderCopy(renderer, textTexture, NULL, &dest);
 
     SDL_FreeSurface(textSurface);
+    SDL_DestroyTexture(textTexture);
 }
 
 void setupTile(SDL_Rect t[], int num)
