@@ -51,6 +51,8 @@ void gravity(float *x, float *y)
                     case 8:
                     case 9:
                     case 10:
+                    case 56:
+                    case 57:
                         if(*y < i) // coming from top
                         {
                             *y = (i - 1);
@@ -99,6 +101,8 @@ void applyVelocity(float *x, float *y, float *dx, float *dy)
                     case 8:
                     case 9:
                     case 10:
+                    case 56:
+                    case 57:
                         // find amount needed to move out of tile
                         amt[0] = abs(i - (ry+1)); // top
                         amt[1] = abs((j+1) - rx); // right

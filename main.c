@@ -630,6 +630,24 @@ int main(int argc, char* args[])
         {
             SDL_RenderCopy(renderer, mainMenu, NULL, NULL);
             //drawCursor(cursorX, cursorY);
+
+            // Reset player
+            player.x = 0.0;
+            player.y = 0.0;
+            player.dx = 0;
+            player.dy = 0;
+            for(int i = 0; i < MAX_ITEMS; i++) // empty the inventory!
+                player.inventory[i] = 0;
+            player.frame = 0;
+            player.quest[0] = 0;    // for snorkel
+            player.quest[1] = 0;    // for windmill
+            player.quest[2] = 0;    // for mattress
+            player.quest[3] = 0;    // for accordion
+            if (loadLevel(FILE_LVL1, lvl) > 0)
+                return 1;
+            CurrLevel = LEVEL1;
+            if (loadEntities(FILE_ENT1, entities) > 0)
+                return 1;
         }
 
 
