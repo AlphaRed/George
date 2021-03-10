@@ -268,7 +268,7 @@ int checkEvents(SDL_Event eve)
                             loadLevel(FILE_LVL8, lvl);
                             loadEntities(FILE_ENT8, entities);
                             player.x = 0;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL8;
                             break;
                         case EXIT14:    // To cliff from pond
@@ -282,14 +282,14 @@ int checkEvents(SDL_Event eve)
                             loadLevel(FILE_LVL9, lvl);
                             loadEntities(FILE_ENT9, entities);
                             player.x = 0;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL9;
                             break;
                         case EXIT16:    // To pond from dump
                             loadLevel(FILE_LVL8, lvl);
                             loadEntities(FILE_ENT8, entities);
                             player.x = 19;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL8;
                             break;
                         case ITEM0:
