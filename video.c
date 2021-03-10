@@ -406,13 +406,13 @@ void drawLvlName(int n)
             titleBar("Barbershop", 220);
             break;
         case 6:
-            titleBar("Cliff", 260);
+            titleBar("Cliff", 90);
             break;
         case 7:
-            titleBar("Pond", 260);
+            titleBar("Pond", 100);
             break;
         case 8:
-            titleBar("Dump", 260);
+            titleBar("Dump", 120);
             break;
         default:
             titleBar("Somewhere out there", 410);

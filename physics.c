@@ -52,7 +52,6 @@ void gravity(float *x, float *y)
                     case 9:
                     case 10:
                     case 56:
-                    case 57:
                         if(*y < i) // coming from top
                         {
                             *y = (i - 1);
@@ -102,7 +101,6 @@ void applyVelocity(float *x, float *y, float *dx, float *dy)
                     case 9:
                     case 10:
                     case 56:
-                    case 57:
                         // find amount needed to move out of tile
                         amt[0] = abs(i - (ry+1)); // top
                         amt[1] = abs((j+1) - rx); // right
@@ -142,49 +140,6 @@ void applyVelocity(float *x, float *y, float *dx, float *dy)
                             *y = (i + 1);
                             *dy = 0;
                         }
-
-                        /*
-                        if (1)
-                        {
-                            if(*x < j * TILE_WIDTH) // coming from the left
-                            {
-                                *x = (j - 1) * TILE_WIDTH;
-                            }
-                            else if(*x > j * TILE_WIDTH) // coming from the right
-                            {
-                                *x = (j + 1) * TILE_WIDTH;
-                            }
-                            else if(*y < i * TILE_HEIGHT) // coming from top
-                            {
-                                *y = (i - 1) * TILE_HEIGHT;
-                                pstate.falling = 0;
-                            }
-                            else if(*y > i * TILE_HEIGHT) // coming from below
-                            {
-                                *y = (i + 1) * TILE_HEIGHT;
-                            }
-                        }
-                        else
-                        {
-                            if(*y < i * TILE_HEIGHT) // coming from top
-                            {
-                                *y = (i - 1) * TILE_HEIGHT;
-                                pstate.falling = 0;
-                            }
-                            else if(*y > i * TILE_HEIGHT) // coming from below
-                            {
-                                *y = (i + 1) * TILE_HEIGHT;
-                            }
-                            else if(*x < j * TILE_WIDTH) // coming from the left
-                            {
-                                *x = (j - 1) * TILE_WIDTH;
-                            }
-                            else if(*x > j * TILE_WIDTH) // coming from the right
-                            {
-                                *x = (j + 1) * TILE_WIDTH;
-                            }
-
-                        }*/
                         break;
 
                     default:

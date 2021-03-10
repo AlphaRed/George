@@ -254,7 +254,7 @@ int checkEvents(SDL_Event eve)
                             loadLevel(FILE_LVL7, lvl);
                             loadEntities(FILE_ENT7, entities);
                             player.x = 0;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL7;
                             break;
                         case EXIT12:    // To windmill from cliff
@@ -275,7 +275,7 @@ int checkEvents(SDL_Event eve)
                             loadLevel(FILE_LVL7, lvl);
                             loadEntities(FILE_ENT7, entities);
                             player.x = 19;
-                            player.y = 13;
+                            player.y = 11;
                             CurrLevel = LEVEL7;
                             break;
                         case EXIT15:    // To dump from pond
