@@ -191,7 +191,7 @@ int checkEvents(SDL_Event eve)
                             loadLevel(FILE_LVL2, lvl);
                             loadEntities(FILE_ENT2, entities);
                             player.x = 0;
-                            player.y = 12;
+                            player.y = 10;
                             CurrLevel = LEVEL2;
                             break;
                         case EXIT3: // To street from outside castle
@@ -605,6 +605,7 @@ int main(int argc, char* args[])
         {
             //player.y = (MAP_HEIGHT)-1;
             pstate.falling = 0;
+            game = MENU; // kill him
         }
 
         // Animation
