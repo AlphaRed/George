@@ -30,6 +30,8 @@ struct states pstate;
 Mix_Chunk* sndjump;
 Mix_Chunk* snditemget;
 
+Mix_Music* musmusic;
+
 int initSDL()
 {
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
@@ -367,6 +369,7 @@ int checkEvents(SDL_Event eve)
 #ifdef DEBUG
             debuginfo = 0;
 #endif // DEBUG
+            Mix_FadeOutMusic(MUSIC_FADE);
             break;
         default:
             break;
@@ -425,6 +428,8 @@ int checkMenu(SDL_Event eve)
             if(mouseY >= (4 * TILE_HEIGHT * SCREEN_SCALE) && mouseY <= (5 * TILE_HEIGHT * SCREEN_SCALE))
             {
                 game = LEVEL;
+                if (Mix_FadeInMusic(musmusic, -1, MUSIC_FADE) == -1)
+                    printf("Mix ERROR: %s", Mix_GetError());
                 return 1;
             }
         }
@@ -503,12 +508,14 @@ int main(int argc, char* args[])
     // Load sounds
     sndjump = Mix_LoadWAV(SOUND_JUMP);
     snditemget = Mix_LoadWAV(SOUND_ITEMGET);
-    if (!snditemget && !sndjump)
+    musmusic = Mix_LoadMUS(MUSIC_1);
+    if (!snditemget && !sndjump && !musmusic)
     {
-        printf("Sound files fail to load.%s", SDL_GetError());
+        printf("Sound files fail to load.%s", Mix_GetError());
         return 1;
     }
     Mix_Volume(-1, MIX_MAX_VOLUME/2);
+    Mix_VolumeMusic(MIX_MAX_VOLUME/4);
 
     player.x = 0.0;
     player.y = 0.0;
@@ -606,6 +613,8 @@ int main(int argc, char* args[])
             //player.y = (MAP_HEIGHT)-1;
             pstate.falling = 0;
             game = MENU; // kill him
+            Mix_PlayChannel(0, snditemget, 0);
+            Mix_FadeOutMusic(MUSIC_FADE);
         }
 
         // Animation
