@@ -122,21 +122,28 @@ int checkEvents(SDL_Event eve)
                     Mix_PlayChannel(-1, snditemget, 0);
                 }
                 // Scientist: give windmill
-                if (pstate.talking == 1 && player.quest[1] == 2)
+                else if (pstate.talking == 1 && player.quest[1] == 2)
                 {
                     player.inventory[3] = 2;    // used windmill
                     player.quest[1]++;
                     Mix_PlayChannel(-1, snditemget, 0);
                 }
+                // Scientist: give mattress
+                else if (pstate.talking == 1 && player.quest[2] == 1)
+                {
+                    player.inventory[4] = 2;    // used mattress
+                    player.quest[2]++;
+                    Mix_PlayChannel(-1, snditemget, 0);
+                }
                 // Scientist: give accordion
-                if (pstate.talking == 1 && player.quest[3] == 3)
+                else if (pstate.talking == 1 && player.quest[3] == 3)
                 {
                     player.inventory[5] = 2;   // used accordion
                     player.quest[3]++;
                     Mix_PlayChannel(-1, snditemget, 0);
                 }
                 // Diver: O2 tank use, get snorkel event
-                if (pstate.talking == 5 && player.quest[0] == 1)
+                else if (pstate.talking == 5 && player.quest[0] == 1)
                 {
                     player.inventory[0] = 2;   // used o2 tank
                     player.inventory[1] = 1;   // get snorkel
@@ -144,7 +151,7 @@ int checkEvents(SDL_Event eve)
                     Mix_PlayChannel(-1, snditemget, 0);
                 }
                 // Windmill operator: given brochure event
-                if (pstate.talking == 6 && player.quest[1] == 1)
+                else if (pstate.talking == 6 && player.quest[1] == 1)
                 {
                     player.inventory[2] = 2; // used brochure
                     player.inventory[3] = 1; // got windmill
@@ -152,17 +159,17 @@ int checkEvents(SDL_Event eve)
                     Mix_PlayChannel(-1, snditemget, 0);
                 }
                 // Street Vendor: tells about mangos
-                if (pstate.talking == 7 && player.quest[3] == 0)
+                else if (pstate.talking == 7 && player.quest[3] == 0)
                     player.quest[3]++;
                 // Street Vendor: gives accordion as thanks
-                if (pstate.talking == 7 && player.quest[3] == 2)
+                else if (pstate.talking == 7 && player.quest[3] == 2)
                 {
                     player.inventory[5] = 1;    // get accordion
                     player.quest[3]++;
                     Mix_PlayChannel(-1, snditemget, 0);
                 }
                 // Monster: will buy mangos
-                if (pstate.talking == 8 && player.quest[3] == 1)
+                else if (pstate.talking == 8 && player.quest[3] == 1)
                     player.quest[3]++;
 
                 pstate.talking = 0;
@@ -312,6 +319,9 @@ int checkEvents(SDL_Event eve)
                             // got brochure, quest 1 advance
                             if (player.inventory[2] && entities[i].type == 19 && player.quest[1] == 0)
                                 player.quest[1]++;
+                            // got mattress, quest 2 advance
+                            if (player.inventory[4] && entities[i].type == 21 && player.quest[2] == 0)
+                                player.quest[2]++;
                             break;
                         case NPC0:
                         case NPC1:
@@ -347,6 +357,9 @@ int checkEvents(SDL_Event eve)
                 pstate.facingRight = 1;
                 pstate.facingLeft = 0;
             }
+            break;
+        case SDLK_m:
+            Mix_VolumeMusic(0);
             break;
 #ifdef DEBUG
         case SDLK_g: // nograv toggle

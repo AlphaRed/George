@@ -312,6 +312,8 @@ void drawTextBox(int n)
                 textBox("Alright, this snorkel will do for the machine!", "I'll add it with what we have already.");
             else if (player.quest[1] == 2)
                 textBox("Alright, this windmill blade will do for the machine!", "I'll  add it with what we have already.");
+            else if (player.quest[2] == 1)
+                textBox("Alright, this old mattress has the spring I need!", "I'll add it to what we have already.");
             else if (player.quest[3] == 3)
                 textBox("Alright, this accordion will do for the machine!", " I'll add it with what we have already.");
             else
