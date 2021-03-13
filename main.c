@@ -129,7 +129,7 @@ int checkEvents(SDL_Event eve)
                     Mix_PlayChannel(-1, snditemget, 0);
                 }
                 // Scientist: give mattress
-                else if (pstate.talking == 1 && player.quest[2] == 1)
+                else if (pstate.talking == 1 && player.quest[2] == 2)
                 {
                     player.inventory[4] = 2;    // used mattress
                     player.quest[2]++;
@@ -171,6 +171,12 @@ int checkEvents(SDL_Event eve)
                 // Monster: will buy mangos
                 else if (pstate.talking == 8 && player.quest[3] == 1)
                     player.quest[3]++;
+                // After talking to pilot, he will appear in dump
+                else if (pstate.talking == 3 && player.quest[2] == 0 && CurrLevel == LEVEL7)
+                    player.quest[2]++;
+                // Talk to him in dump with the mattress
+                else if(pstate.talking == 3 && player.quest[2] == 1 && CurrLevel == LEVEL9)
+                    player.quest[2]++;
 
                 pstate.talking = 0;
                 break;
@@ -289,7 +295,10 @@ int checkEvents(SDL_Event eve)
                             break;
                         case EXIT15:    // To dump from pond
                             loadLevel(FILE_LVL9, lvl);
-                            loadEntities(FILE_ENT9, entities);
+                            if(player.quest[2] == 1)
+                                loadEntities(FILE_ENT9B, entities);
+                            else
+                                loadEntities(FILE_ENT9, entities);
                             player.x = 0;
                             player.y = 11;
                             CurrLevel = LEVEL9;

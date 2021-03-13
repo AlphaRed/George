@@ -312,7 +312,7 @@ void drawTextBox(int n)
                 textBox("Alright, this snorkel will do for the machine!", "I'll add it with what we have already.");
             else if (player.quest[1] == 2)
                 textBox("Alright, this windmill blade will do for the machine!", "I'll  add it with what we have already.");
-            else if (player.quest[2] == 1)
+            else if (player.quest[2] == 2)
                 textBox("Alright, this old mattress has the spring I need!", "I'll add it to what we have already.");
             else if (player.quest[3] == 3)
                 textBox("Alright, this accordion will do for the machine!", " I'll add it with what we have already.");
@@ -330,7 +330,14 @@ void drawTextBox(int n)
 
         // Pilot
         case 3:
-            textBox("Dang it. This darn glider can't even fly right...", " ");
+            //if(player.quest[2] == 0)
+                //textBox("Dang it. I'm not sure if I have the confidence to", "fly this glider...");
+            if(player.quest[2] == 1 && CurrLevel == LEVEL9)
+                textBox("Whew! I made it!", "Thankfully that mattress broke my fall!");
+            else if(player.quest[2] == 2)
+                textBox("Time for another attempt!", " ");
+            else
+                textBox("Dang it. I'm not sure if I have the confidence to", "fly this glider...");
             break;
 
         // Hairdresser
