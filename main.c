@@ -536,10 +536,10 @@ int main(int argc, char* args[])
     if (loadEntities(FILE_ENT1, entities) > 0)
         return 1;
 
-    SDL_Texture* mainMenu = IMG_LoadTexture(renderer, "menu.png");
+    SDL_Texture* mainMenu = IMG_LoadTexture(renderer, "sprites/menu.png");
     if(mainMenu == NULL)
         return 1;
-    cursor = IMG_LoadTexture(renderer, "cursor.png");
+    cursor = IMG_LoadTexture(renderer, "sprites/cursor.png");
     if(cursor == NULL)
         return 1;
 

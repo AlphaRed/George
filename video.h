@@ -7,12 +7,12 @@
 #include "map.h"
 
 // Files
-#define FILE_TILES  "tiles.png"
-#define FILE_ITEMS  "items.png"
-#define FILE_CHARS  "chars.png"
-#define FILE_BG_OUTDOOR     "bg.png"
-#define FILE_BG_INDOOR  "bg1.png"
-#define FILE_FONT   "dpcomic.ttf"
+#define FILE_TILES  "sprites/tiles.png"
+#define FILE_ITEMS  "sprites/items.png"
+#define FILE_CHARS  "sprites/chars.png"
+#define FILE_BG_OUTDOOR     "sprites/bg.png"
+#define FILE_BG_INDOOR  "sprites/bg1.png"
+#define FILE_FONT   "fonts/dpcomic.ttf"
 
 #define FPS_LIMIT   60
 
