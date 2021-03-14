@@ -4,6 +4,7 @@
 
 # Codeblocks
 /bin/Release/*
+/bin/Debug/*
 *.cbp
 *.depend
 *.layout
