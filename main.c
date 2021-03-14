@@ -19,7 +19,8 @@ int debuginfo;
 
 typedef enum{
     MENU,
-    LEVEL
+    LEVEL,
+    WIN
 } gameState;
 
 gameState game;
@@ -384,6 +385,9 @@ int checkEvents(SDL_Event eve)
         case SDLK_BACKQUOTE: // toggle debug info
             debuginfo = !debuginfo;
             break;
+        case SDLK_p:
+            game = WIN;
+            break;
 #endif // DEBUG
         case SDLK_ESCAPE:
         case SDLK_RETURN:
@@ -464,6 +468,18 @@ int checkMenu(SDL_Event eve)
             }
         }
 
+    }
+    return 1;
+}
+
+int checkWin(SDL_Event eve)
+{
+    if(eve.type == SDL_QUIT)
+        return 0;
+    else if(eve.type == SDL_MOUSEBUTTONDOWN)
+    {
+        game = MENU;
+        return 1;
     }
     return 1;
 }
@@ -574,6 +590,10 @@ int main(int argc, char* args[])
         {
             quit = checkMenu(eve);
         }
+        else if(game == WIN)
+        {
+            quit = checkWin(eve);
+        }
 
         // Physics
         // should move this to the physics c file
@@ -638,6 +658,10 @@ int main(int argc, char* args[])
             Mix_PlayChannel(0, snditemget, 0);
             Mix_FadeOutMusic(MUSIC_FADE);
         }
+        // Check win
+        if(player.quest[0] == 3 && player.quest[1] == 3 &&
+           player.quest[2] == 3 && player.quest[3] == 4)
+            game = WIN;
 
         // Animation
         if ((pstate.falling == 0) && (pstate.jumping == 0) &&
@@ -681,8 +705,12 @@ int main(int argc, char* args[])
             if (loadEntities(FILE_ENT1, entities) > 0)
                 return 1;
         }
-
-
+        else if(game == WIN)
+        {
+            SDL_RenderCopy(renderer, bgIndoor, NULL, NULL);
+            drawText("You Win!", 50, 100, white);
+            drawText("Thanks for playing!", 50, 120, white);
+        }
 
         // debug text
 #ifdef DEBUG
