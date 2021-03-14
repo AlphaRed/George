@@ -2,14 +2,14 @@
 #define AUDIO_H
 
 
-#define SOUND_JUMP      "jump.wav"
-#define SOUND_ITEMGET   "item.wav"
+#define SOUND_JUMP      "sounds/jump.wav"
+#define SOUND_ITEMGET   "sounds/item.wav"
 
 extern Mix_Chunk* sndjump;
 extern Mix_Chunk* snditemget;
 
-#define MUSIC_FADE       100
-#define MUSIC_1         "song.mp3"
+#define MUSIC_FADE       200
+#define MUSIC_1         "sounds/song.mp3"
 
 extern Mix_Music* musmusic;
 
