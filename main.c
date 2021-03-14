@@ -28,9 +28,9 @@ gameState game;
 struct protagonist player;
 struct states pstate;
 
+int musicenabled;
 Mix_Chunk* sndjump;
 Mix_Chunk* snditemget;
-
 Mix_Music* musmusic;
 
 int initSDL()
@@ -369,7 +369,9 @@ int checkEvents(SDL_Event eve)
             }
             break;
         case SDLK_m:
-            Mix_VolumeMusic(0);
+            musicenabled = !musicenabled;
+            if (musicenabled) Mix_VolumeMusic(MIX_MAX_VOLUME/4);
+            else Mix_VolumeMusic(0);
             break;
 #ifdef DEBUG
         case SDLK_g: // nograv toggle
@@ -396,6 +398,7 @@ int checkEvents(SDL_Event eve)
             debuginfo = 0;
 #endif // DEBUG
             Mix_FadeOutMusic(MUSIC_FADE);
+            Mix_HaltMusic();
             break;
         default:
             break;
@@ -436,29 +439,50 @@ int checkMenu(SDL_Event eve)
 
     if(eve.type == SDL_QUIT)
         return 0;
-//    else if((eve.type == SDL_KEYDOWN) && (eve.key.repeat == 0))
-//    {
-//        switch(eve.key.keysym.sym)
-//        {
-//            case SDLK_UP:
-//                cursorY = 50;
-//                break;
-//        }
-//    }
+    /*else if((eve.type == SDL_KEYDOWN) && (eve.key.repeat == 0))
+    {
+        switch(eve.key.keysym.sym)
+        {
+            case SDLK_UP:
+                cursorY = 50;
+                break;
+        }
+    }*/
     else if(eve.type == SDL_MOUSEBUTTONDOWN)
     {
         SDL_GetMouseState(&mouseX, &mouseY);
 
+        // "Start"
         if(mouseX >= (3 * TILE_WIDTH * SCREEN_SCALE) && mouseX <= (6 * TILE_WIDTH * SCREEN_SCALE))
         {
             if(mouseY >= (4 * TILE_HEIGHT * SCREEN_SCALE) && mouseY <= (5 * TILE_HEIGHT * SCREEN_SCALE))
             {
                 game = LEVEL;
+                // reset player
+                player.x = 0.0;
+                player.y = 0.0;
+                player.dx = 0;
+                player.dy = 0;
+                for(int i = 0; i < MAX_ITEMS; i++) // empty the inventory!
+                player.inventory[i] = 0;
+                player.frame = 0;
+                player.quest[0] = 0;    // for snorkel
+                player.quest[1] = 0;    // for windmill
+                player.quest[2] = 0;    // for mattress
+                player.quest[3] = 0;    // for accordion
+                // play music
                 if (Mix_FadeInMusic(musmusic, -1, MUSIC_FADE) == -1)
                     printf("Mix ERROR: %s", Mix_GetError());
+                // load first level
+                if (loadLevel(FILE_LVL1, lvl) > 0)
+                    return 0;   // something went wrong!
+                CurrLevel = LEVEL1;
+                if (loadEntities(FILE_ENT1, entities) > 0)
+                    return 0;   // something went wrong!
                 return 1;
             }
         }
+        // "Exit"
         if(mouseX >= (3 * TILE_WIDTH * SCREEN_SCALE) && mouseX <= (5 * TILE_WIDTH * SCREEN_SCALE))
         {
             if(mouseY >= (6 * TILE_HEIGHT * SCREEN_SCALE) && mouseY <= (7 * TILE_HEIGHT * SCREEN_SCALE))
@@ -554,6 +578,7 @@ int main(int argc, char* args[])
     }
     Mix_Volume(-1, MIX_MAX_VOLUME/2);
     Mix_VolumeMusic(MIX_MAX_VOLUME/4);
+    musicenabled = 1;
 
     player.x = 0.0;
     player.y = 0.0;
@@ -686,24 +711,6 @@ int main(int argc, char* args[])
         {
             SDL_RenderCopy(renderer, mainMenu, NULL, NULL);
             //drawCursor(cursorX, cursorY);
-
-            // Reset player
-            player.x = 0.0;
-            player.y = 0.0;
-            player.dx = 0;
-            player.dy = 0;
-            for(int i = 0; i < MAX_ITEMS; i++) // empty the inventory!
-                player.inventory[i] = 0;
-            player.frame = 0;
-            player.quest[0] = 0;    // for snorkel
-            player.quest[1] = 0;    // for windmill
-            player.quest[2] = 0;    // for mattress
-            player.quest[3] = 0;    // for accordion
-            if (loadLevel(FILE_LVL1, lvl) > 0)
-                return 1;
-            CurrLevel = LEVEL1;
-            if (loadEntities(FILE_ENT1, entities) > 0)
-                return 1;
         }
         else if(game == WIN)
         {

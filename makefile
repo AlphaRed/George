@@ -1,8 +1,8 @@
-TARGET 	= bin/Debug/george
+TARGET 	= george
 SOURCES =
 CC 		= gcc
 SDL2    := $(shell sdl2-config --cflags)
-LIBS 	= $(shell sdl2-config --libs) -lSDL2_image -lSDL2_ttf
+LIBS 	= $(shell sdl2-config --libs) -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 CFLAGS 	= -g -Wall
 
 .PHONY: default all clean

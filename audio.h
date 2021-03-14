@@ -1,6 +1,7 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
+extern int musicenabled;
 
 #define SOUND_JUMP      "sounds/jump.wav"
 #define SOUND_ITEMGET   "sounds/item.wav"
