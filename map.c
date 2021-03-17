@@ -5,7 +5,6 @@
 
 struct entity entities[MAX_ENTITIES];
 int lvl[MAP_HEIGHT][MAP_WIDTH];
-Level CurrLevel = LEVEL1;
 
 int loadEntities(char* filename, struct entity entities[MAX_ENTITIES])
 {

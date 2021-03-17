@@ -97,8 +97,7 @@ typedef enum
     LEVEL7,     // cliff
     LEVEL8,     // pond
     LEVEL9      // dump
-} Level;
-extern Level CurrLevel;
+} level;
 
 #define LEVEL_MANSION           LEVEL1
 #define LEVEL_GENERATOR         LEVEL2

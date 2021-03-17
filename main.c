@@ -173,10 +173,10 @@ int checkEvents(SDL_Event eve)
                 else if (pstate.talking == 8 && player.quest[3] == 1)
                     player.quest[3]++;
                 // After talking to pilot, he will appear in dump
-                else if (pstate.talking == 3 && player.quest[2] == 0 && CurrLevel == LEVEL7)
+                else if (pstate.talking == 3 && player.quest[2] == 0 && player.location == LEVEL7)
                     player.quest[2]++;
                 // Talk to him in dump with the mattress
-                else if(pstate.talking == 3 && player.quest[2] == 1 && CurrLevel == LEVEL9)
+                else if(pstate.talking == 3 && player.quest[2] == 1 && player.location == LEVEL9)
                     player.quest[2]++;
 
                 pstate.talking = 0;
@@ -201,98 +201,98 @@ int checkEvents(SDL_Event eve)
                             loadEntities(FILE_ENT1, entities);
                             player.x = 12;
                             player.y = 10;
-                            CurrLevel = LEVEL1;
+                            player.location = LEVEL1;
                             break;
                         case EXIT2: // To machine room from outside castle
                             loadLevel(FILE_LVL2, lvl);
                             loadEntities(FILE_ENT2, entities);
                             player.x = 0;
                             player.y = 10;
-                            CurrLevel = LEVEL2;
+                            player.location = LEVEL2;
                             break;
                         case EXIT3: // To street from outside castle
                             loadLevel(FILE_LVL3, lvl);
                             loadEntities(FILE_ENT3, entities);
                             player.x = 0;
                             player.y = 11;
-                            CurrLevel = LEVEL3;
+                            player.location = LEVEL3;
                             break;
                         case EXIT4: // To outside castle from street
                             loadLevel(FILE_LVL1, lvl);
                             loadEntities(FILE_ENT1, entities);
                             player.x = 19;
                             player.y = 12;
-                            CurrLevel = LEVEL1;
+                            player.location = LEVEL1;
                             break;
                         case EXIT5: // To windmill from street
                             loadLevel(FILE_LVL4, lvl);
                             loadEntities(FILE_ENT4, entities);
                             player.x = 0;
                             player.y = 11;
-                            CurrLevel = LEVEL4;
+                            player.location = LEVEL4;
                             break;
                         case EXIT6: // To street from windmill
                             loadLevel(FILE_LVL3, lvl);
                             loadEntities(FILE_ENT3, entities);
                             player.x = 19;
                             player.y = 11;
-                            CurrLevel = LEVEL3;
+                            player.location = LEVEL3;
                             break;
                         case EXIT7: // To repair shop from street
                             loadLevel(FILE_LVL5, lvl);
                             loadEntities(FILE_ENT5, entities);
                             player.x = 0;
                             player.y = 11;
-                            CurrLevel = LEVEL5;
+                            player.location = LEVEL5;
                             break;
                         case EXIT8: // To street from repair shop
                             loadLevel(FILE_LVL3, lvl);
                             loadEntities(FILE_ENT3, entities);
                             player.x = 5;
                             player.y = 11;
-                            CurrLevel = LEVEL3;
+                            player.location = LEVEL3;
                             break;
                         case EXIT9: // To hairdressers from street
                             loadLevel(FILE_LVL6, lvl);
                             loadEntities(FILE_ENT6, entities);
                             player.x = 0;
                             player.y = 11;
-                            CurrLevel = LEVEL6;
+                            player.location = LEVEL6;
                             break;
                         case EXIT10:    // To street from hairdressers
                             loadLevel(FILE_LVL3, lvl);
                             loadEntities(FILE_ENT3, entities);
                             player.x = 14;
                             player.y = 11;
-                            CurrLevel = LEVEL3;
+                            player.location = LEVEL3;
                             break;
                         case EXIT11:    // To cliff from windmill
                             loadLevel(FILE_LVL7, lvl);
                             loadEntities(FILE_ENT7, entities);
                             player.x = 0;
                             player.y = 11;
-                            CurrLevel = LEVEL7;
+                            player.location = LEVEL7;
                             break;
                         case EXIT12:    // To windmill from cliff
                             loadLevel(FILE_LVL4, lvl);
                             loadEntities(FILE_ENT4, entities);
                             player.x = 19;
                             player.y = 11;
-                            CurrLevel = LEVEL4;
+                            player.location = LEVEL4;
                             break;
                         case EXIT13:    // To pond from cliff
                             loadLevel(FILE_LVL8, lvl);
                             loadEntities(FILE_ENT8, entities);
                             player.x = 0;
                             player.y = 11;
-                            CurrLevel = LEVEL8;
+                            player.location = LEVEL8;
                             break;
                         case EXIT14:    // To cliff from pond
                             loadLevel(FILE_LVL7, lvl);
                             loadEntities(FILE_ENT7, entities);
                             player.x = 19;
                             player.y = 11;
-                            CurrLevel = LEVEL7;
+                            player.location = LEVEL7;
                             break;
                         case EXIT15:    // To dump from pond
                             loadLevel(FILE_LVL9, lvl);
@@ -302,14 +302,14 @@ int checkEvents(SDL_Event eve)
                                 loadEntities(FILE_ENT9, entities);
                             player.x = 0;
                             player.y = 11;
-                            CurrLevel = LEVEL9;
+                            player.location = LEVEL9;
                             break;
                         case EXIT16:    // To pond from dump
                             loadLevel(FILE_LVL8, lvl);
                             loadEntities(FILE_ENT8, entities);
                             player.x = 19;
                             player.y = 11;
-                            CurrLevel = LEVEL8;
+                            player.location = LEVEL8;
                             break;
                         case ITEM0:
                         case ITEM1:
@@ -470,13 +470,14 @@ int checkMenu(SDL_Event eve)
                 player.quest[1] = 0;    // for windmill
                 player.quest[2] = 0;    // for mattress
                 player.quest[3] = 0;    // for accordion
+                player.location = LEVEL1;
                 // play music
                 if (Mix_FadeInMusic(musmusic, -1, MUSIC_FADE) == -1)
                     printf("Mix ERROR: %s", Mix_GetError());
                 // load first level
                 if (loadLevel(FILE_LVL1, lvl) > 0)
                     return 0;   // something went wrong!
-                CurrLevel = LEVEL1;
+                player.location = LEVEL1;
                 if (loadEntities(FILE_ENT1, entities) > 0)
                     return 0;   // something went wrong!
                 return 1;
@@ -556,7 +557,6 @@ int main(int argc, char* args[])
         return 1;
     if (loadLevel(FILE_LVL1, lvl) > 0)
         return 1;
-    CurrLevel = LEVEL1;
     if (loadEntities(FILE_ENT1, entities) > 0)
         return 1;
 
@@ -591,6 +591,7 @@ int main(int argc, char* args[])
     player.quest[1] = 0;    // for windmill
     player.quest[2] = 0;    // for mattress
     player.quest[3] = 0;    // for accordion
+    player.location = LEVEL1;
 
     pstate.movingLeft = 0;
     pstate.movingRight = 0;
@@ -699,13 +700,13 @@ int main(int argc, char* args[])
         // Draw
         if(game == LEVEL)
         {
-            drawBG(CurrLevel);
+            drawBG(player.location);
             drawLevel(lvl);
             drawEntities();
             drawPlayer(player.x, player.y);
             drawTextBox(pstate.talking);
             drawInventory(TILE_WIDTH, 25, TILE_WIDTH);
-            drawLvlName(CurrLevel);
+            drawLvlName(player.location);
         }
         else if(game == MENU)
         {

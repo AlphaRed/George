@@ -40,7 +40,7 @@ void blitTile(SDL_Texture* texture, SDL_Rect tileRect, int x, int y, int flip)
     SDL_RenderCopyEx(renderer, texture, &tileRect, &destRect, 0, 0, flip);
 }
 
-void drawBG(Level l)
+void drawBG(level l)
 {
     switch(l)
     {
@@ -332,7 +332,7 @@ void drawTextBox(int n)
         case 3:
             //if(player.quest[2] == 0)
                 //textBox("Dang it. I'm not sure if I have the confidence to", "fly this glider...");
-            if(player.quest[2] == 1 && CurrLevel == LEVEL9)
+            if(player.quest[2] == 1 && player.location == LEVEL9)
                 textBox("Whew! I made it!", "Thankfully that mattress broke my fall!");
             else if(player.quest[2] == 2)
                 textBox("Time for another attempt!", " ");

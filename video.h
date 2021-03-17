@@ -49,7 +49,7 @@ extern SDL_Rect character[MAX_TILES];
 extern int entityanimframe;
 
 void blitTile(SDL_Texture* image, SDL_Rect tileRect, int x, int y, int flip);
-void drawBG(Level l);
+void drawBG(level l);
 void drawLevel(int array[MAP_HEIGHT][MAP_WIDTH]);
 void drawEntities();
 void drawPlayer(float x, float y);
