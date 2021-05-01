@@ -687,7 +687,15 @@ int main(int argc, char* args[])
         // Check win
         if(player.quest[0] == 3 && player.quest[1] == 3 &&
            player.quest[2] == 3 && player.quest[3] == 4)
+        {
             game = WIN;
+            // Clear quests after you win
+            player.quest[0] = 0;    // for snorkel
+            player.quest[1] = 0;    // for windmill
+            player.quest[2] = 0;    // for mattress
+            player.quest[3] = 0;    // for accordion
+        }
+
 
         // Animation
         if ((pstate.falling == 0) && (pstate.jumping == 0) &&
