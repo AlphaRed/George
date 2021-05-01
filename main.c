@@ -20,7 +20,10 @@ int debuginfo;
 typedef enum{
     MENU,
     LEVEL,
-    WIN
+    WIN,
+    LOSE,
+    CREDITS,
+    CONTROLS
 } gameState;
 
 gameState game;
@@ -80,6 +83,30 @@ void cleanup()
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
+}
+
+// should move this bad boi too
+void resetPlayer(struct protagonist* p, struct states* s)
+{
+    p->x = 0.0;
+    p->y = 0.0;
+    p->dx = 0.0;
+    p->dy = 0.0;
+    for(int i = 0; i < MAX_ITEMS; i++) // empty the inventory!
+        p->inventory[i] = 0;
+    p->frame = 0;
+    p->quest[0] = 0;    // for snorkel
+    p->quest[1] = 0;    // for windmill
+    p->quest[2] = 0;    // for mattress
+    p->quest[3] = 0;    // for accordion
+    p->location = LEVEL1;
+
+    s->movingLeft = 0;
+    s->movingRight = 0;
+    s->falling = 0;
+    s->jumping = 0;
+    s->talking = 0;
+    s->nograv = 0;
 }
 
 // Move event functions to new file, no need to clog up main.c
@@ -459,18 +486,7 @@ int checkMenu(SDL_Event eve)
             {
                 game = LEVEL;
                 // reset player
-                player.x = 0.0;
-                player.y = 0.0;
-                player.dx = 0;
-                player.dy = 0;
-                for(int i = 0; i < MAX_ITEMS; i++) // empty the inventory!
-                player.inventory[i] = 0;
-                player.frame = 0;
-                player.quest[0] = 0;    // for snorkel
-                player.quest[1] = 0;    // for windmill
-                player.quest[2] = 0;    // for mattress
-                player.quest[3] = 0;    // for accordion
-                player.location = LEVEL1;
+                resetPlayer(&player, &pstate);
                 // play music
                 if (Mix_FadeInMusic(musmusic, -1, MUSIC_FADE) == -1)
                     printf("Mix ERROR: %s", Mix_GetError());
@@ -580,26 +596,7 @@ int main(int argc, char* args[])
     Mix_VolumeMusic(MIX_MAX_VOLUME/4);
     musicenabled = 1;
 
-    player.x = 0.0;
-    player.y = 0.0;
-    player.dx = 0;
-    player.dy = 0;
-    for(int i = 0; i < MAX_ITEMS; i++) // empty the inventory!
-        player.inventory[i] = 0;
-    player.frame = 0;
-    player.quest[0] = 0;    // for snorkel
-    player.quest[1] = 0;    // for windmill
-    player.quest[2] = 0;    // for mattress
-    player.quest[3] = 0;    // for accordion
-    player.location = LEVEL1;
-
-    pstate.movingLeft = 0;
-    pstate.movingRight = 0;
-    pstate.falling = 0;
-    pstate.jumping = 0;
-    pstate.talking = 0;
-
-    pstate.nograv = 0;
+    resetPlayer(&player, &pstate);
 
     game = MENU;
 
@@ -620,6 +617,18 @@ int main(int argc, char* args[])
         {
             quit = checkWin(eve);
         }
+        else if(game == LOSE)
+        {
+            quit = checkWin(eve);
+        }
+//        else if(game == CREDITS)
+//        {
+//
+//        }
+//        else if(game == CONTROLS)
+//        {
+//
+//        }
 
         // Physics
         // should move this to the physics c file
@@ -676,11 +685,15 @@ int main(int argc, char* args[])
             player.x = MAP_WIDTH-1;
         if(player.y < 0)
             player.y = 0;
+        printf("Player Y: %d\n", player.y);
+        printf("Map height: %d\n", MAP_HEIGHT+1);
         if(player.y > (MAP_HEIGHT)+1)
         {
             //player.y = (MAP_HEIGHT)-1;
             pstate.falling = 0;
-            game = MENU; // kill him
+            pstate.nograv = 1;
+            game = LOSE; // kill him
+            resetPlayer(&player, &pstate);
             Mix_PlayChannel(0, snditemget, 0);
             Mix_FadeOutMusic(MUSIC_FADE);
         }
@@ -690,10 +703,7 @@ int main(int argc, char* args[])
         {
             game = WIN;
             // Clear quests after you win
-            player.quest[0] = 0;    // for snorkel
-            player.quest[1] = 0;    // for windmill
-            player.quest[2] = 0;    // for mattress
-            player.quest[3] = 0;    // for accordion
+            resetPlayer(&player, &pstate);
         }
 
 
@@ -726,6 +736,12 @@ int main(int argc, char* args[])
             SDL_RenderCopy(renderer, bgIndoor, NULL, NULL);
             drawText("You Win!", 50, 100, white);
             drawText("Thanks for playing!", 50, 120, white);
+        }
+        else if(game == LOSE)
+        {
+            SDL_RenderCopy(renderer, bgIndoor, NULL, NULL);
+            drawText("You Died!", 50, 100, white);
+            drawText("Better luck next time!", 50, 120, white);
         }
 
         // debug text
