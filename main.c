@@ -484,18 +484,7 @@ int checkMenu(SDL_Event eve)
         {
             if(mouseY >= (4 * TILE_HEIGHT * SCREEN_SCALE) && mouseY <= (5 * TILE_HEIGHT * SCREEN_SCALE))
             {
-                game = LEVEL;
-                // reset player
-                resetPlayer(&player, &pstate);
-                // play music
-                if (Mix_FadeInMusic(musmusic, -1, MUSIC_FADE) == -1)
-                    printf("Mix ERROR: %s", Mix_GetError());
-                // load first level
-                if (loadLevel(FILE_LVL1, lvl) > 0)
-                    return 0;   // something went wrong!
-                player.location = LEVEL1;
-                if (loadEntities(FILE_ENT1, entities) > 0)
-                    return 0;   // something went wrong!
+                game = CONTROLS;
                 return 1;
             }
         }
@@ -527,12 +516,34 @@ int checkWin(SDL_Event eve)
 
 int checkCredits(SDL_Event eve)
 {
-
     if(eve.type == SDL_QUIT)
         return 0;
     else if(eve.type == SDL_MOUSEBUTTONDOWN)
     {
         return 0;
+    }
+    return 1;
+}
+
+int checkControls(SDL_Event eve)
+{
+    if(eve.type == SDL_QUIT)
+        return 0;
+    else if(eve.type == SDL_MOUSEBUTTONDOWN)
+    {
+        game = LEVEL;
+        // reset player
+        resetPlayer(&player, &pstate);
+        // play music
+        if (Mix_FadeInMusic(musmusic, -1, MUSIC_FADE) == -1)
+            printf("Mix ERROR: %s", Mix_GetError());
+        // load first level
+        if (loadLevel(FILE_LVL1, lvl) > 0)
+            return 0;   // something went wrong!
+        player.location = LEVEL1;
+        if (loadEntities(FILE_ENT1, entities) > 0)
+            return 0;   // something went wrong!
+        return 1;
     }
     return 1;
 }
@@ -637,10 +648,10 @@ int main(int argc, char* args[])
         {
             quit = checkCredits(eve);
         }
-//        else if(game == CONTROLS)
-//        {
-//
-//        }
+        else if(game == CONTROLS)
+        {
+            quit = checkControls(eve);
+        }
 
         // Physics
         // should move this to the physics c file
@@ -762,6 +773,15 @@ int main(int argc, char* args[])
             drawText("Isaac Volk - Art/Code/Game design", 15, 80, white);
             drawText("Sam Volk - Art/Code/Game design/Music", 15, 100, white);
             drawText("Luke Volk - Art/Moral support", 15, 120, white);
+        }
+        else if(game == CONTROLS)
+        {
+            SDL_RenderCopy(renderer, bgOutdoor, NULL, NULL);
+            drawText("Controls", 15, 15, white);
+            drawText("Move left - A", 15, 35, white);
+            drawText("Move right - D", 15, 55, white);
+            drawText("Jump - W", 15, 75, white);
+            drawText("Talk/Interact - SPACEBAR", 15, 95, white);
         }
 
         // debug text
