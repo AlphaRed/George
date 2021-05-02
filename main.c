@@ -475,7 +475,7 @@ int checkMenu(SDL_Event eve)
                 break;
         }
     }*/
-    else if(eve.type == SDL_MOUSEBUTTONDOWN)
+    else if(eve.type == SDL_MOUSEBUTTONUP) // Do UP since it prevents repeats
     {
         SDL_GetMouseState(&mouseX, &mouseY);
 
@@ -504,8 +504,8 @@ int checkMenu(SDL_Event eve)
         {
             if(mouseY >= (6 * TILE_HEIGHT * SCREEN_SCALE) && mouseY <= (7 * TILE_HEIGHT * SCREEN_SCALE))
             {
-                // Quit game
-                return 0;
+                game = CREDITS;
+                return 1;
             }
         }
 
@@ -517,10 +517,22 @@ int checkWin(SDL_Event eve)
 {
     if(eve.type == SDL_QUIT)
         return 0;
-    else if(eve.type == SDL_MOUSEBUTTONDOWN)
+    else if(eve.type == SDL_MOUSEBUTTONUP)
     {
         game = MENU;
         return 1;
+    }
+    return 1;
+}
+
+int checkCredits(SDL_Event eve)
+{
+
+    if(eve.type == SDL_QUIT)
+        return 0;
+    else if(eve.type == SDL_MOUSEBUTTONDOWN)
+    {
+        return 0;
     }
     return 1;
 }
@@ -621,10 +633,10 @@ int main(int argc, char* args[])
         {
             quit = checkWin(eve);
         }
-//        else if(game == CREDITS)
-//        {
-//
-//        }
+        else if(game == CREDITS)
+        {
+            quit = checkCredits(eve);
+        }
 //        else if(game == CONTROLS)
 //        {
 //
@@ -742,6 +754,14 @@ int main(int argc, char* args[])
             SDL_RenderCopy(renderer, bgIndoor, NULL, NULL);
             drawText("You Died!", 50, 100, white);
             drawText("Better luck next time!", 50, 120, white);
+        }
+        else if(game == CREDITS)
+        {
+            SDL_RenderCopy(renderer, bgOutdoor, NULL, NULL);
+            drawText("Credits", 15, 60, white);
+            drawText("Isaac Volk - Art/Code/Game design", 15, 80, white);
+            drawText("Sam Volk - Art/Code/Game design/Music", 15, 100, white);
+            drawText("Luke Volk - Art/Moral support", 15, 120, white);
         }
 
         // debug text
